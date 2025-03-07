@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" type ="text/css" href="css/styleHome.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+
+    <div class = "container">
+
+    <aside>
+        <div class ="top">
+            <!-- <img class="logo" src ="./img/logo.webp">  -->
+            <h2 class ="logo_h2"> Company </h2>
+            
+            <div class ="close" id ="close-btn">
+                <span class="material-symbols-outlined">close</span>
+            </div>
+        </div>
+
+        <div class ="sidebar">
+            <a href ="home">
+                <span class="material-symbols-outlined">grid_view</span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href ="training">
+                <span class="material-symbols-outlined">automation</span>
+                <h3>Training</h3>
+            </a>
+            <a href ="create">
+                <span class="material-symbols-outlined">edit</span>
+                <h3>Create</h3>
+            </a>
+            <!-- <a href ="messages">
+                <span class="material-symbols-outlined">mail</span>
+                <h3>Messages</h3>
+            <span class ="message-count"></span>
+            </a> -->
+            <a href ="content">
+                <span class="material-symbols-outlined">book_2</span>
+                <h3>Content Hub</h3>
+            </a>
+            <a href ="settings" class = "active">
+                <span class="material-symbols-outlined">manage_accounts</span>
+                <h3>Settings</h3>
+            </a>
+            <a href ="/">
+                <span class="material-symbols-outlined">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+
+    <div class ="settings">
+        <div class ="settings-top">
+            <h2>Account Settings</h2>
+            <small class = "text-muted">Manage your account settings and preferences</small>
+        </div>
+
+        <div class ="settings-middle">
+            <table>
+                <tbody>
+                    <tr>
+                        <th class ="space-d active"><span class="material-symbols-outlined">person</span>
+                        Account</th>
+                        <th class ="space-d"><span class="material-symbols-outlined">palette</span>
+                        Preferences</th>
+                        <th class ="space-d"><span class="material-symbols-outlined">notifications</span>
+                        Notifications</th>
+                        <th class ="space-d"><span class="material-symbols-outlined">key</span>
+                        API Keys</th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form class ="space-d0" action = "#" method = "POST">
+                
+                <div class = "forms-settings">
+                <h1>Profile Information</h1>
+                <p> Name </p>
+                <input type ="text" class ="business" placeholder="Demo User">
+                
+                <p> Email </p>
+                <input type ="text" class ="website" placeholder = "Demo@example.com">
+
+                <button class="button-container">
+                <span class="material-symbols-outlined">save</span>
+                Analyze Website
+                </button>
+
+                <hr>
+                
+                <h1>Change Password </h1>
+                <p>Current Password</p>    
+                <input type ="password" class ="curPassword">
+                
+                <p>New Password</p>    
+                <input type ="password" class ="curPassword">
+
+                <p>Confirm New Password</p>    
+                <input type ="password" class ="curPassword">
+
+                <button class="button-container">Update Password</button>
+
+                </div>
+
+            </form>
+
+            <form class ="space-d1" action = "#" method = "POST">       
+
+                <h1> Interface Preferences </h1>
+
+                <label>
+                    <input type="checkbox" name="fruits" value="industry">
+                    <span>Use industry jargon</span>
+                </label><br>
+            
+                <label>
+                    <input type="checkbox" name="fruits" value="banana">
+                    <span>Include data and statistics</span>
+                </label><br>
+            
+                <label>
+                    <input type="checkbox" name="fruits" value="orange">
+                    <span> Use case studies and examples</span>
+                </label><br>
+            
+                <label>
+                    <input type="checkbox" name="fruits" value="grape">
+                    <span>Include personal anecdotes</span>
+                </label>
+            
+            </form>
+
+            <form class ="space-d2" action = "#" method = "POST">
+                
+                <h1>Notifications</h1>
+
+                <label>
+                    <input type="checkbox" name="fruits" value="industry">
+                    <span>Email notifications for completed content</span>
+                </label><br>
+            
+                <label>
+                    <input type="checkbox" name="fruits" value="banana">
+                    <span>Browser notifications for new suggestions</span>
+                </label><br>
+            
+                <label>
+                    <input type="checkbox" name="fruits" value="orange">
+                    <span> Weekly summary reports</span>
+                </label><br>
+
+            </form>
+
+            <form class ="space-d3" action = "#" method = "POST">
+                
+                <h1>AI Provider API Keys</h1>
+                <p>Add your own API keys to use with specific AI providers. Your keys are encrypted and stored securely.</p>
+
+                <div class = "options">
+                    <div class = "flex-space-between">
+                        <p>OpenAI</p>
+                        <small class ="text-muted">Optional</small>
+                    </div>
+                    <div class ="flex-input">
+                        <input type ="password" placeholder ="sk-...">
+                        <button class ="saveKeyBtn"><span>Save</span></button>
+                    </div>
+                    <small class = "text-muted">Using your own API key may provide better performance and control over costs.</small>
+                </div>
+            
+                <div class = "options">
+                    <div class = "flex-space-between">
+                        <p>Anthropic Claude</p>
+                        <small class ="text-muted">Optional</small>
+                    </div>
+                    <div class ="flex-input">
+                        <input type ="password" placeholder ="sk-ant-...">
+                        <button class ="saveKeyBtn"><span>Save</span></button>
+                    </div>
+                    <small class = "text-muted">Using your own API key may provide better performance and control over costs.</small>
+                </div>
+            
+                <div class = "options">
+                    <div class = "flex-space-between">
+                        <p>Groq</p>
+                        <small class ="text-muted">Optional</small>
+                    </div>
+                    <div class ="flex-input">
+                        <input type ="password" placeholder ="gsk_...">
+                        <button class ="saveKeyBtn"><span>Save</span></button>
+                    </div>
+                    <small class = "text-muted">Using your own API key may provide better performance and control over costs.</small>
+                </div>
+
+                <div class = "options">
+                    <div class = "flex-space-between">
+                        <p>Mistral AI</p>
+                        <small class ="text-muted">Optional</small>
+                    </div>
+                    <div class ="flex-input">
+                        <input type ="password" placeholder ="YOUR MISTRAL KEY">
+                        <button class ="saveKeyBtn"><span>Save</span></button>
+                    </div>
+                    <small class = "text-muted">Using your own API key may provide better performance and control over costs.</small>
+                </div>
+
+                <div class ="remove-all-keys-flex">
+                    <div>
+                    <h1>Remove All API Keys</h1>
+                    <small class = "text-muted">Delete all stored API keys from your account</small>
+                    </div>
+                    <button class ="remove-all-keys-btn"><span>Remove All Keys</span></button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script type = "text/javascript" src ="js/mainSettings.js"></script>
+
+</body>
+</html>

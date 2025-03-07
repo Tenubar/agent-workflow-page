@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training</title>
+    <link rel="stylesheet" type ="text/css" href="css/styleHome.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+
+    <div class = "container">
+
+    <aside>
+        <div class ="top">
+            <!-- <img class="logo" src ="./img/logo.webp">  -->
+            <h2 class ="logo_h2"> Company </h2>
+            
+            <div class ="close" id ="close-btn">
+                <span class="material-symbols-outlined">close</span>
+            </div>
+        </div>
+
+        <div class ="sidebar">
+            <a href ="home">
+                <span class="material-symbols-outlined">grid_view</span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href ="training" class = "active">
+                <span class="material-symbols-outlined">automation</span>
+                <h3>Training</h3>
+            </a>
+            <a href ="create">
+                <span class="material-symbols-outlined">edit</span>
+                <h3>Create</h3>
+            </a>
+            <a href ="content">
+                <span class="material-symbols-outlined">book_2</span>
+                <h3>Content Hub</h3>
+            </a>
+            <a href ="settings">
+                <span class="material-symbols-outlined">manage_accounts</span>
+                <h3>Settings</h3>
+            </a>
+            <a href ="/">
+                <span class="material-symbols-outlined">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+
+    
+    <div class ="training">
+
+        <div class ="training-top">
+        <h2>Training</h2>
+        <small class = "text-muted">Train your AI on your business details to generate better content</small>
+        </div>
+
+        <div class ="training-middle">
+        <table>
+            <tbody>
+                <tr>
+                    <th class="space-a active" >Business Information</th>
+                    <th class="space-a">Brand Details</th>
+                    <th class="space-a">Customer Avatars</th>
+                    <th class="space-a">Personal Context</th>
+                </tr>
+            </tbody>
+        </table>
+    
+        <!--Business Information -->
+        <form action = "#" method = "POST" class ="space-a0">
+        <div class = "business-content">
+        <h5>Business Name</h5>
+        <input type ="text" class ="business" placeholder="Enter your business here">
+        </div>
+
+        <div class = "website-content">
+        <h5> Website</h5>
+        <input type ="text" class ="website" placeholder = "https://example.com">
+        <input type ="submit" class = "btn" value ="Analyze Website">
+        </div>
+        </form>
+
+        <!-- Brand Details -->
+        <div class ="brandDetails">
+        <form action = "#" method = "POST" class ="space-a1">
+        <h1>Brand Details</h1>
+        <h5> Content Analysis </h5>
+        <p>Upload Examples of your existing content to help us understand and replicate your brand voice</p>
+        
+        <!-- <div class ="upload-file">
+        <input type="file" name="file" required />
+        <span class="material-symbols-outlined">upload</span>
+        <h4>Drop Files here or click to upload</h4>
+        <small class ="text-muted">Supported formats: TXT, MD, DOC, DOCX</small>   
+        </div> -->
+
+        <div class="upload-file">
+            <input type="file" name="file" id="fileInput" required />
+            <label for="fileInput">
+              <span class="material-symbols-outlined">upload</span>
+              <h4>Drop Files Here or Click to Upload</h4>
+              <small class="text-muted">Supported formats: TXT, MD, DOC, DOCX</small>
+            </label>
+          </div>
+
+        <h5>Mission Statement</h5>
+        <textarea rows ="3" class="mission-textarea" placeholder = "What drives your business?"></textarea>
+
+        <h5>Core Values</h5>
+        <textarea rows ="3" class="mission-textarea" placeholder = "One value per line (e.g., Innovation, Integrity, Excellence)"></textarea>
+
+        <h5>Brand Story</h5>
+        <textarea rows ="3" class="mission-textarea" placeholder = "Share your brand's journey and story"></textarea>
+
+        <h5>Visual Identity</h5>
+        <p class ="text-muted">Brand Colors (HEX codes)</p>   
+        <input type ="text" placeholder = "#000000, #FFFFFF, etc.">
+
+        <h5>Typography</h5>
+        <input type ="text" placeholder = "#000000, #FFFFFF, etc.">
+
+        <h5>Key Messages</h5>
+        <textarea rows ="3" class="mission-textarea" placeholder = "Core messages that define your brand"></textarea>
+
+        </form>
+        </div>
+
+        
+
+        <!-- Customer Avatars -->
+        <div class = "customer-avatar">
+        <div class ="space-a2">
+        <h1>Customer Avatars</h1>
+        <div id ="add-avatar">
+        <span class="material-symbols-outlined">add</span>
+        <input type ="submit" class = "btn" value ="Add Avatar">
+        </div>
+
+        <div id = "form-container-avatar">
+
+        </div>
+
+    </div>
+        </div>
+
+        <!-- Personal Context -->
+        <div class ="personal-context">
+        <div class ="space-a3">
+        
+        <h1>Personal Context</h1>
+
+        <h5>Communication Style</h5>
+        <div class="dropdown">
+        <div class ="dropdown-flex">
+        <button class="dropdown-button">Select a style</button>
+        <span class="material-symbols-outlined">keyboard_arrow_down</span>
+        </div>
+        </div>
+        <ul class="dropdown-menu">
+            <li><span class="dropdown-item">Formal</span></li>
+            <li><span class="dropdown-item">Casual</span></li>
+            <li><span class="dropdown-item">Direct</span></li>
+            <li><span class="dropdown-item">Storytelling</span></li>
+        </ul>
+
+        <h5>Industry Expertice</h5>
+        <textarea rows ="3" placeholder="Describe your experience and expertise in your industry"></textarea>
+
+        <h5>Content Preferences</h5>
+
+        <form>
+        <label>
+            <input type="checkbox" name="fruits" value="industry"> Use industry jargon
+        </label><br>
+    
+        <label>
+            <input type="checkbox" name="fruits" value="banana"> Include data and statistics
+        </label><br>
+    
+        <label>
+            <input type="checkbox" name="fruits" value="orange"> Use case studies and examples
+        </label><br>
+    
+        <label>
+            <input type="checkbox" name="fruits" value="grape"> Include personal anecdotes
+        </label><br>
+    
+        <br><br>
+    
+        </form>
+
+        <h5>Writing Style Examples</h5>
+        <textarea rows ="3" placeholder="Paste example of content that matches your preferred style"></textarea>
+    
+        <h5>Topics to Avoid</h5>
+        <textarea rows ="3" placeholder="List any topics or approaches you want to avoid"></textarea>
+        <input type ="submit" class = "btn" value ="Generate Writing Profile">
+        </div>
+        </div>
+    </div>
+        </form>
+
+    </div>
+</div>
+</div>
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script type = "text/javascript" src ="js/mainTraining.js"></script>
+
+</body>
+</html>

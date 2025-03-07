@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training</title>
+    <link rel="stylesheet" type ="text/css" href="css/styleHome.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+
+    <div class = "container">
+
+    <aside>
+        <div class ="top">
+            <!-- <img class="logo" src ="./img/logo.webp">  -->
+            <h2 class ="logo_h2"> Company </h2>
+            
+            <div class ="close" id ="close-btn">
+                <span class="material-symbols-outlined">close</span>
+            </div>
+        </div>
+
+        <div class ="sidebar">
+            <a href ="home">
+                <span class="material-symbols-outlined">grid_view</span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href ="training">
+                <span class="material-symbols-outlined">automation</span>
+                <h3>Training</h3>
+            </a>
+            <a href ="create">
+                <span class="material-symbols-outlined">edit</span>
+                <h3>Create</h3>
+            </a>
+            <!-- <a href ="messages">
+                <span class="material-symbols-outlined">mail</span>
+                <h3>Messages</h3>
+            <span class ="message-count"></span>
+            </a> -->
+            <a href ="content" class = "active">
+                <span class="material-symbols-outlined">book_2</span>
+                <h3>Content Hub</h3>
+            </a>
+            <a href ="settings">
+                <span class="material-symbols-outlined">manage_accounts</span>
+                <h3>Settings</h3>
+            </a>
+            <a href ="/">
+                <span class="material-symbols-outlined">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+
+    <div class ="content">
+
+        <div class ="content-top">
+            <h2>Content Hub</h2>
+            <small class = "text-muted">Access and manage all your generated content</small>
+        </div>
+
+        <div class ="content-search-flex">
+            <div class = "content-search">
+            <span class="material-symbols-outlined">search</span>
+            <input type ="text" class ="search" placeholder="Search Content">
+            </div>
+            <button class="button-content-filter">
+            <span class="material-symbols-outlined">filter_alt</span>
+            Filter
+            </button>
+        </div>
+
+        <div class ="content-middle">
+            <table>
+                <tbody>
+                    <tr>
+                        <th class ="space-c border-active">All Content</th>
+                        <th class ="space-c">Blog Posts</th>
+                        <th class ="space-c">Social Media</th>
+                        <th class ="space-c">Email Sequences</th>
+                        <th class ="space-c">Website Copy</th>
+                        <th class ="space-c">Image Library</th>
+                    </tr>
+                </tbody>
+            </table>
+        <hr>
+        <section class ="content-section">
+            <small class = "text-muted">No content found. Start creating content in the Create section</small>
+        </section>
+
+        </div>
+
+    </div>
+    
+</div>
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script type = "text/javascript" src ="js/mainContent.js"></script>
+
+</body>
+</html>

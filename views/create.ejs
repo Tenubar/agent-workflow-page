@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+    <link rel="stylesheet" type ="text/css" href="css/styleHome.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+
+    <div class = "container">
+
+    <aside>
+        <div class ="top">
+            <!-- <img class="logo" src ="./img/logo.webp">  -->
+            <h2 class ="logo_h2"> Company </h2>
+            
+            <div class ="close" id ="close-btn">
+                <span class="material-symbols-outlined">close</span>
+            </div>
+        </div>
+
+        <div class ="sidebar">
+            <a href ="home">
+                <span class="material-symbols-outlined">grid_view</span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href ="training">
+                <span class="material-symbols-outlined">automation</span>
+                <h3>Training</h3>
+            </a>
+            <a href ="create" class = "active">
+                <span class="material-symbols-outlined">edit</span>
+                <h3>Create</h3>
+            </a>
+            <!-- <a href ="messages">
+                <span class="material-symbols-outlined">mail</span>
+                <h3>Messages</h3>
+            <span class ="message-count"></span>
+            </a> -->
+            <a href ="content">
+                <span class="material-symbols-outlined">book_2</span>
+                <h3>Content Hub</h3>
+            </a>
+            <a href ="settings">
+                <span class="material-symbols-outlined">manage_accounts</span>
+                <h3>Settings</h3>
+            </a>
+            <a href ="/">
+                <span class="material-symbols-outlined">logout</span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+
+    <div class ="create">
+        <div class ="create-top">
+            <h2>Create Content</h2>
+            <small class = "text-muted">Work with AI agents or use automated workflows to create content</small>
+        </div>
+
+        <div class ="create-middle">
+            <table>
+                <tbody>
+                    <tr>
+                        <th class ="space-b active"><span class="material-symbols-outlined">group</span>
+                        AI Employees
+                        </th>
+                        <th class ="space-b"><span class="material-symbols-outlined">account_tree</span>
+                        Workflows
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+
+        <main>
+
+            <div class = "space-b0">
+
+            <div class ="insights">
+            
+            
+            <div class = "user">
+            <div class ="worker-pic">
+            <img src = "../img/profile-pic.png">
+            </div>
+            <div class = "worker-info">
+                <h1>Name</h1>
+                <p>Description</p>
+            <div class ="worker-tags">
+                <a href="#">Blog Post</a>
+                <a href="#">Articles</a>
+                <a href="#">Newsletter</a>
+            </div>
+            <div class ="contact-user">
+                <input type ="submit" value ="Contact with user" class ="contact-toggle">
+            </div>
+            </div>
+            </div>
+            
+            
+            <div class = "user">
+            <div class ="worker-pic">
+                <img src = "../img/profile-pic.png">
+            </div>
+            <div class = "worker-info">
+                <h1>Name</h3>
+                <p>Description</p>
+            <div class ="worker-tags">
+                <a href="#">Blog Post</a>
+                <a href="#">Articles</a>
+                <a href="#">Newsletter</a>
+            </div>
+            <div class ="contact-user">
+                <input type ="submit" value ="Contact with user" class ="contact-toggle">
+            </div>
+            </div>
+            </div>
+
+            <div class = "user">
+            <div class ="worker-pic">
+                <img src = "../img/profile-pic.png">
+            </div>
+            <div class = "worker-info">
+                <h1>Name</h3>
+                <p>Description</p>
+            <div class ="worker-tags">
+                <a href="#">Blog Post</a>
+                <a href="#">Articles</a>
+                <a href="#">Newsletter</a>
+            </div>
+            <div class ="contact-user">
+                <input type ="submit" value ="Contact with user" class ="contact-toggle">
+            </div>
+            </div>
+            </div>
+
+            <div class = "user">
+            <div class ="worker-pic">
+                <img src = "../img/profile-pic.png">
+            </div>
+            <div class = "worker-info">
+                <h1>Name</h3>
+                <p>Description</p>
+            <div class ="worker-tags">
+                <a href="#">Blog Post</a>
+                <a href="#">Articles</a>
+                <a href="#">Newsletter</a>
+            </div>
+            <div class ="contact-user">
+                <input type ="submit" value ="Contact with user" class ="contact-toggle">
+            </div>
+            </div>
+            </div>
+
+            <div class = "user">
+            <div class ="worker-pic">
+                <img src = "../img/profile-pic.png">
+            </div>
+            <div class = "worker-info">
+                <h1>Name</h3>
+                <p>Description</p>
+            <div class ="worker-tags">
+                <a href="#">Blog Post</a>
+                <a href="#">Articles</a>
+                <a href="#">Newsletter</a>
+            </div>
+            <div class ="contact-user">
+                <input type ="submit" value ="Contact with user" class ="contact-toggle">
+            </div>
+            </div>
+            </div>
+
+            <div class = "user">
+            <div class ="worker-pic">
+                <img src = "../img/profile-pic.png">
+            </div>
+            <div class = "worker-info">
+                <h1>Name</h3>
+                <p>Description</p>
+            <div class ="worker-tags">
+                <a href="#">Blog Post</a>
+                <a href="#">Articles</a>
+                <a href="#">Newsletter</a>
+            </div>
+            <div class ="contact-user">
+                <input type ="submit" value ="Contact with user" class ="contact-toggle">
+            </div>
+            </div>
+            </div>
+
+        </div>
+        </div>
+
+
+        <!--Chat Logic-->
+        <div id="chat-window">
+        <div id="chat-header">
+            Chat with user
+        <div class ="close-chat"><span class="material-symbols-outlined">close</span></div>
+        </div>
+        <div id="chat-messages">
+            <!-- Messages will be added here -->
+        </div>
+        <div id="chat-input">
+            <input type="text" id="message-input" placeholder="Write you message...">
+            <button id="send-button"><span class="material-symbols-outlined">send</span></button>
+        </div>
+        </div>
+
+
+        <div class ="space-b1">
+        <div class ="workflow-insights">
+
+
+        <div class = "workflow-user" id ="success-story">
+            <div class = "workflow-info">
+                <h1>Success Story</h1>
+                <p>Create compelling case studies and success stories</p>
+            <div class ="workflow-tags">
+                <a href="#">Marketing</a>
+                <a href="#">Social Proof</a>
+            </div>
+            <div class ="workflow-run" id ="workflow-0">
+                <span class="material-symbols-outlined">prompt_suggestion</span>
+                <h1>Run Workflow</h1>
+            </div>
+            </div>
+        </div>
+
+        <div class = "workflow-user">
+            <div class = "workflow-info">
+                <h1>Blog to Social</h1>
+                <p>Convert blog posts into engaging social media content</p>
+            <div class ="workflow-tags">
+                <a href="#">Social Media</a>
+                <a href="#">Content</a>
+            </div>
+            <div class ="workflow-run" id ="workflow-1">
+                <span class="material-symbols-outlined">prompt_suggestion</span>
+                <h1>Run Workflow</h1>
+            </div>
+            </div>
+        </div>
+
+        <div class = "workflow-user">
+            <div class = "workflow-info">
+                <h1>SEO Blog Post</h1>
+                <p>Generate SEO-optimized blog content that ranks</p>
+            <div class ="workflow-tags">
+                <a href="#">Content</a>
+                <a href="#">SEO</a>
+            </div>
+            <div class ="workflow-run" id ="workflow-2">
+                <span class="material-symbols-outlined">prompt_suggestion</span>
+                <h1>Run Workflow</h1>
+            </div>
+            </div>
+        </div>
+
+        <div class = "workflow-user">
+            <div class = "workflow-info">
+                <h1>Website Copy</h1>
+                <p>Create converting website copy for any page</p>
+            <div class ="workflow-tags">
+                <a href="#">Web</a>
+                <a href="#">Conversion</a>
+            </div>
+            <div class ="workflow-run" id ="workflow-3">
+                <span class="material-symbols-outlined">prompt_suggestion</span>
+                <h1>Run Workflow</h1>
+            </div>
+            </div>
+        </div>
+
+        <!-- Workflows generate Form -->
+
+
+        <div id="formContainer">
+            <div id="formContent">
+
+                <!-- Success Story -->
+                <div class = "workflow-id-0">
+                <h1>Blog Topic</h1>
+                <input type="text" id="blogTopic" placeholder="Enter blog topic">
+          
+                <h1>Target Keywords:</h1>
+                <textarea id="targetKeywords" placeholder="Enter target keywords"></textarea>
+          
+                <h1>Word Count</h1>
+                <input type="number" id="wordCount" placeholder="Enter word count">
+          
+                <h1>Content Goal</h1>
+                <select id="contentGoal">
+                    <option value="educate">Educate</option>
+                    <option value="convert">Convert</option>
+                    <option value="build authority">Build Authority</option>
+                    <option value="product showcase">Product Showcase</option>
+                </select>
+                </div>
+
+                <!-- Blog to Social -->
+                <div class = "workflow-id-1">
+                <h1>Blog to social</h1>
+                <p>Blog Content</p>
+                <textarea id="targetKeywords" placeholder="Enter target keywords"></textarea>
+                <p>Target Platforms</p>
+                <div style ="display:flex; gap:1rem">
+                    <label>
+                        <input type="checkbox" name="fruits" value="industry"> LinkedIn
+                        <input type="checkbox" name="fruits" value="industry"> Twitter
+                        <input type="checkbox" name="fruits" value="industry"> Facebook
+                        <input type="checkbox" name="fruits" value="industry"> Instagram
+                    </label>
+                </div>
+          
+                <h1>Content Goal</h1>
+                
+                <select id="contentGoal">
+                    <option value="engagement">Engagement</option>
+                    <option value="convert">Traffic</option>
+                    <option value="brand awareness">Brand Awareness</option>
+                    <option value="lead generation">Lead Generation</option>
+                </select>
+                </div>
+
+
+                <!-- SEO Blog Post -->
+                <div class = "workflow-id-2">
+                <h1>SEO Blog Post</h1>
+                <p>Blog Topic</p>
+                <input type="text" id="blogTopic"> 
+
+                <p>Target Platforms</p>
+                <textarea id="targetKeywords" placeholder="Enter target keywords"></textarea>
+
+                <h1>Word Count</h1>
+                <input type="number" id="blogTopic" value = "1000"> 
+          
+                <h1>Content Goal</h1>
+                <select id="contentGoal">
+                    <option value="educate">Educate</option>
+                    <option value="convert">Convert</option>
+                    <option value="build authority">Build Authority</option>
+                    <option value="product showcase">Product Showcase</option>
+                </select>
+                </div>
+
+                <!-- SEO Blog Post -->
+                <div class = "workflow-id-3">
+                <h1>Website Copy</h1>
+                <p>Page Type</p>
+                <select id="pageType">
+                    <option value="home">Home</option>
+                    <option value="about">About</option>
+                    <option value="services">Services</option>
+                    <option value="contact">Contact</option>
+                </select>
+
+                <div style ="display:flex; gap:1rem">
+                    <label>
+                        <input type="checkbox" name="hero" value="hero"> Hero
+                        <input type="checkbox" name="features" value="features"> Features
+                        <input type="checkbox" name="benefits" value="benefits"> Benefits
+                        <input type="checkbox" name="tetimonials" value="testimonials"> Tetimonials
+                        <input type="checkbox" name="faq" value="faq"> FAQ
+                        <input type="checkbox" name="cta" value="cta"> CTA
+
+                    </label>
+                </div>
+ 
+                <p>Brand Voice</p>
+                <select id="brandVoice">
+                    <option value="professional">Professional</option>
+                    <option value="friendly">Friendly</option>
+                    <option value="technical">Technical</option>
+                    <option value="casual">Casual</option>
+                </select>
+
+                </div>
+
+            </div>
+             
+
+            <div id="formActions">
+                <button id="cancelButton">Cancel</button>
+                <button id="generateButton">Generate Content</button>
+            </div>
+          </div>
+          
+          <div id="overlay"></div>
+
+    </div>
+     </div>
+
+        </main>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script type = "text/javascript" src ="js/mainCreate.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type ="text/css" href="css/styleHome.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+    <nav>
+        <div class ="container">
+            <aside>
+                <div class ="top">
+                    <!-- <img class="logo" src ="./img/logo.webp">  -->
+                    <h2 class ="logo_h2"> Company </h2>
+                    
+                    <div class ="close" id ="close-btn">
+                        <span class="material-symbols-outlined">close</span>
+                    </div>
+                </div>
+
+                <div class ="sidebar">
+                    <a href ="home" class ="active">
+                        <span class="material-symbols-outlined">grid_view</span>
+                        <h3>Dashboard</h3>
+                    </a>
+                    <a href ="training">
+                        <span class="material-symbols-outlined">automation</span>
+                        <h3>Training</h3>
+                    </a>
+                    <a href ="create">
+                        <span class="material-symbols-outlined">edit</span>
+                        <h3>Create</h3>
+                    </a>
+                    <!-- <a href ="messages">
+                        <span class="material-symbols-outlined">mail</span>
+                        <h3>Messages</h3>
+                    <span class ="message-count"></span>
+                    </a> -->
+                    <a href ="content">
+                        <span class="material-symbols-outlined">book_2</span>
+                        <h3>Content Hub</h3>
+                    </a>
+                    <a href ="settings">
+                        <span class="material-symbols-outlined">manage_accounts</span>
+                        <h3>Settings</h3>
+                    </a>
+                    <a href ="/">
+                        <span class="material-symbols-outlined">logout</span>
+                        <h3>Logout</h3>
+                    </a>
+                </div>
+            </aside>
+
+            <main>
+                <h1>Dashboard</h1>
+                <div class ="date">
+                    <input type ="date" id ="dateInput">
+                </div>
+
+                <div class ="insights">
+                    <!--Active Proyects--> 
+                    <div class ="proyects">
+                        <div class ="middle">
+                            <div class = "left">
+                                <span class="material-symbols-outlined">show_chart</span>
+                                <h5>Active Proyects</h5>
+                            </div>
+                            <h1>14</h1>
+                        </div>
+                        <small class="text-muted">Last 24 Hours </small>
+                    </div>
+                    <!--Team Members--> 
+                    <div class ="team">
+                        <div class ="middle">
+                            <div class = "left">
+                                <span class="material-symbols-outlined">group</span>
+                                <h5>Team Members</h5>
+                            </div>
+                            <h1>14</h1>
+                        </div>
+                        <small class="text-muted">Last 24 Hours </small>
+                    </div>
+                    <!--Content Pieces--> 
+                    <div class ="content">
+                        <div class ="middle">
+                            <div class = "left">
+                                <span class="material-symbols-outlined">description</span>
+                                <h5>Content Pieces</h5>
+                            </div>
+                            <h1>14</h1>
+                        </div>
+                        <small class="text-muted">Last 24 Hours </small>
+                    </div>
+                    <!--Ai Conversations--> 
+                    <div class ="conversations">
+                        <div class ="middle">
+                            <div class = "left">
+                                <span class="material-symbols-outlined">chat</span>
+                                <h5>AI Conversations</h5>
+                            </div>
+                            <h1>14</h1>
+                        </div>
+                        <small class="text-muted">Last 24 Hours </small>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </nav>
+
+<script type = "text/javascript" src ="js/mainHome.js"></script>
+</body>
+</html>
