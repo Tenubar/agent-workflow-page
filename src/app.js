@@ -345,10 +345,32 @@ router.post("/create-workflow/:id", async (req,res) =>{
 let webhookData = false;
 
 // webhooks
-router.post('/webhook', (req, res)=>{
+// router.post('/webhook', (req, res)=>{
+//     console.log('Webhook received:', req.body);
+//     webhookData = req.body;
+//     res.status(200).send('Webhook received successfully');
+// });
+
+// Webhook endpoint
+app.post('/webhook', (req, res) => {
     console.log('Webhook received:', req.body);
-    webhookData = req.body;
+    webhookData = req.body; // Store the data from the webhook
     res.status(200).send('Webhook received successfully');
+});
+
+// Frontend route
+app.get('/test', (req, res) => {
+    const html = `
+        <html>
+            <head>
+                <title>Home</title>
+            </head>
+            <body>
+                <h1>${webhookData ? 'Info received!' : 'Waiting for info...'}</h1>
+            </body>
+        </html>
+    `;
+    res.send(html);
 });
 
 
