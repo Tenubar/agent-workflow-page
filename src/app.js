@@ -9,6 +9,8 @@ import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { EventEmitter } from 'events';
+import cors from 'cors';
+
 const eventEmitter = new EventEmitter();
 
 dotenv.config();
@@ -16,6 +18,7 @@ const app = express();
 const router = Router();
 const PORT = 3000;
 
+app.use(cors());
 app.use(router);
 router.use(express.json());
 router.use(cookieParser());
@@ -337,6 +340,21 @@ router.post("/create-workflow/:id", async (req,res) =>{
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// webhooks
+router.post('/webhook', (req, res)=>{
+    console.log('Webhook received:', req.body);
+    webhookData = req.body;
+    res.status(200).send('Webhook received successfully');
+});
+
+router.get('/webhook-data', (req, res) => {
+    if (webhookData) {
+      res.status(200).json(webhookData);
+    } else {
+      res.status(404).send('No data available');
     }
 });
 
