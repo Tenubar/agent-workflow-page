@@ -379,7 +379,7 @@ let webhookData = {};
 // Middleware to authenticate token
 function auth(req, res, next) {
     const token = req.headers['authorization'];
-    console.log(token);
+    console.log('token is: ' + token);
     try {
         next();
     } catch (error) {
