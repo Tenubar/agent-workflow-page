@@ -108,7 +108,6 @@ router.post('/authenticate', async (req, res) => {
 // Token verification middleware
 const authenticateToken = async (req, res, next) => {
     const token = req.cookies.auth_token;
-    console.log(token);
     if (!token) {
         res.clearCookie('auth_token');
         return res.status(401).send('Access denied. Please log in.');
@@ -117,7 +116,6 @@ const authenticateToken = async (req, res, next) => {
     try {
         const decoded = jwt.decode(token);
         const user = await modelUsers.findById(decoded.id);
-        console.log(user);
   
     if (!user) {
         res.clearCookie('auth_token');
@@ -354,19 +352,52 @@ router.post("/create-workflow/:id", async (req,res) =>{
 
 
 
-let webhookData = [];
+// let webhookData = [];
+
+// // Webhook endpoint
+// router.post('/webhook', authenticateToken, async (req, res) => {
+//     webhookData = req.body; 
+//     res.status(200).send('Webhook received successfully');
+// });
+
+
+// // Frontend route
+// router.get('/test', (req, res) => {
+//     try {
+//         const workflowRunOutput = webhookData.find(item => item.key === 'workflow_run_output');
+//         const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
+//         res.status(200).json(contents);
+//     } catch (error) {
+//         console.error('Error in /test route:', error);
+//         res.status(500).json({ message: 'Internal Server Error' });
+//     }
+// });
+
+
+let webhookData = {};
+
+// Middleware to authenticate token
+function auth(req, res, next) {
+    const token = req.headers['authorization'];
+    console.log(token);
+    try {
+        next();
+    } catch (error) {
+        console.error('Token validation error:', error);
+        res.status(403).json({ message: 'Invalid token' });
+    }
+}
 
 // Webhook endpoint
-router.post('/webhook', authenticateToken, async (req, res) => {
-    webhookData = req.body; 
+router.post('/webhook', auth, async (req, res) => {
+    webhookData = req.body;
     res.status(200).send('Webhook received successfully');
 });
 
-
 // Frontend route
-router.get('/test', authenticateToken, async (req, res) => {
+router.get('/test', (req, res) => {
     try {
-        const workflowRunOutput = webhookData.find(item => item.key === 'workflow_run_output');
+        const workflowRunOutput = webhookData[userId]?.find(item => item.key === 'workflow_run_output');
         const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
         res.status(200).json(contents);
     } catch (error) {
@@ -376,14 +407,6 @@ router.get('/test', authenticateToken, async (req, res) => {
 });
 
 
-
-// router.get('/webhook-data', (req, res) => {
-//     if (webhookData) {
-//       res.status(200).json(webhookData);
-//     } else {
-//       res.status(404).send('No data available');
-//     }
-// });
 
 
 // User Routes
