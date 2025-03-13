@@ -378,11 +378,11 @@ router.post("/create-workflow/:id", async (req,res) =>{
 // Global Value (Changed for Database)
 // let webhookData = {};
 
-app.get('/webhook', (req, res) => {
-    const data = req.query; // Extract the data from query parameters
-    console.log(data);
-    res.status(200).send('Webhook received');
-});
+// app.get('/webhook', (req, res) => {
+//     const data = req.query; // Extract the data from query parameters
+//     console.log(data);
+//     res.status(200).send('Webhook received');
+// });
 
 // router.post('/webhook/:id', async (req, res) => {
 //     const userId = req.params.id;
