@@ -281,7 +281,7 @@ function createWorkflow(){
                 const response = await fetch('/test');
                 const data = await response.json();
                 // Update the textarea with the server's message
-                console.log('Response Data:', data); // Add this line to inspect the data
+                contentWorkflow.value = JSON.stringify(data, null, 2);
             } catch (error) {
                 console.error('Error fetching status:', error);
             }
