@@ -378,8 +378,9 @@ let webhookData = {};
 
 // Middleware to authenticate token
 function auth(req, res, next) {
-    const token = req.headers['authorization'];
-    console.log('token is: ' + token);
+    // const token = req.headers['authorization'];
+    const token = req.cookies.auth_token;
+    console.log('cookies token is: ' + token);
     try {
         next();
     } catch (error) {
@@ -389,7 +390,7 @@ function auth(req, res, next) {
 }
 
 // Webhook endpoint
-router.post('/webhook', auth, async (req, res) => {
+router.post('/webhook', auth, (req, res) => {
     webhookData = req.body;
     res.status(200).send('Webhook received successfully');
 });
