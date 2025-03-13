@@ -349,42 +349,23 @@ router.post("/create-workflow/:id", async (req,res) =>{
 //     res.status(200).send('Webhook received successfully');
 // });
 
-let userWebhookData = {};
+
+
+
+let webhookData = [];
 
 // Webhook endpoint
-router.post('/webhook', (req, res) => {
-    const authToken = req.cookies.auth_token;
-    if(!authToken){
-        return res.status(400).send('User not authenticated');
-    }
-    if (!userWebhookData[authToken]) {
-        userWebhookData[authToken] = [];
-    }
-    userWebhookData[authToken] = req.body; // Store the data based on auth_token
+router.post('/webhook', authenticateToken, async (req, res) => {
+    webhookData = req.body; 
     res.status(200).send('Webhook received successfully');
 });
 
-    // console.log(`Webhook received for user ${authToken}:`, req.body);
-    // console.log('Webhook received:', req.body);
-    // webhookData = req.body; // Store the data from the webhook
-    // res.status(200).send('Webhook received successfully');
-
 
 // Frontend route
-router.get('/test', (req, res) => {
-    const authToken = req.cookies.auth_token; // Retrieve the user's auth_token
-    if (!authToken || !userWebhookData[authToken]) {
-        return res.status(400).json(['No data available for this user']);
-    }
-
-    const webhookData = userWebhookData[authToken]; // Get user-specific data
+router.get('/test', authenticateToken, async (req, res) => {
     const workflowRunOutput = webhookData.find(item => item.key === 'workflow_run_output');
     const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
     res.status(200).json(contents);
-
-    // const workflowRunOutput = webhookData.find(item => item.key === 'workflow_run_output');
-    // const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
-    // res.status(200).json(contents);
 });
 
 
