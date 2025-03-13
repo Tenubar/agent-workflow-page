@@ -108,6 +108,7 @@ router.post('/authenticate', async (req, res) => {
 // Token verification middleware
 const authenticateToken = async (req, res, next) => {
     const token = req.cookies.auth_token;
+    console.log(token);
     if (!token) {
         res.clearCookie('auth_token');
         return res.status(401).send('Access denied. Please log in.');
@@ -116,6 +117,7 @@ const authenticateToken = async (req, res, next) => {
     try {
         const decoded = jwt.decode(token);
         const user = await modelUsers.findById(decoded.id);
+        console.log(user);
   
     if (!user) {
         res.clearCookie('auth_token');
