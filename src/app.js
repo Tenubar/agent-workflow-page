@@ -342,6 +342,7 @@ router.post("/create-workflow/:id", async (req,res) =>{
         res.status(500).json({ error: "Internal server error" });
     }
 });
+let webhookData = false;
 
 // webhooks
 router.post('/webhook', (req, res)=>{
