@@ -280,16 +280,14 @@ function createWorkflow(){
                 const response = await fetch('/test');
                 const data = await response.json();
                 // Update the textarea with the server's message
-                contentWorkflow.value = webhookData 
-                ? JSON.stringify(data, null, 2) 
-                : 'Waiting for info...';
+                contentWorkflow.value = JSON.stringify(data, null, 2);
             } catch (error) {
                 console.error('Error fetching status:', error);
             }
         }
         setInterval(fetchStatus, 2000);
     });
-    stepDiv.appendChild(contentWorkflow);
+            stepDiv.appendChild(contentWorkflow);
 
 
         
