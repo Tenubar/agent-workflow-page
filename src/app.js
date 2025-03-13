@@ -363,9 +363,14 @@ router.post('/webhook', authenticateToken, async (req, res) => {
 
 // Frontend route
 router.get('/test', authenticateToken, async (req, res) => {
-    const workflowRunOutput = webhookData.find(item => item.key === 'workflow_run_output');
-    const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
-    res.status(200).json(contents);
+    try {
+        const workflowRunOutput = webhookData.find(item => item.key === 'workflow_run_output');
+        const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
+        res.status(200).json(contents);
+    } catch (error) {
+        console.error('Error in /test route:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 });
 
 
