@@ -352,14 +352,14 @@ let webhookData = false;
 // });
 
 // Webhook endpoint
-app.post('/webhook', (req, res) => {
+router.post('/webhook', (req, res) => {
     console.log('Webhook received:', req.body);
     webhookData = req.body; // Store the data from the webhook
     res.status(200).send('Webhook received successfully');
 });
 
 // Frontend route
-app.get('/test', (req, res) => {
+router.get('/test', (req, res) => {
     const html = `
         <html>
             <head>
@@ -374,13 +374,13 @@ app.get('/test', (req, res) => {
 });
 
 
-router.get('/webhook-data', (req, res) => {
-    if (webhookData) {
-      res.status(200).json(webhookData);
-    } else {
-      res.status(404).send('No data available');
-    }
-});
+// router.get('/webhook-data', (req, res) => {
+//     if (webhookData) {
+//       res.status(200).json(webhookData);
+//     } else {
+//       res.status(404).send('No data available');
+//     }
+// });
 
 
 // User Routes
