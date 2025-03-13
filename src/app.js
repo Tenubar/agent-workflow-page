@@ -46,6 +46,7 @@ router.post('/register', async(req, res)=>{
         const {username, password} = req.body;
         const authTokenKey = crypto.randomBytes(32).toString('hex');
         const agents = [];
+        const webhookData = [];
         const user = new modelUsers({
             username,
             password,
@@ -54,7 +55,8 @@ router.post('/register', async(req, res)=>{
             authTokenKey,
             agentCount: 0,
             workflowCount: 0,
-            agents
+            agents,
+            webhookData
         });
         await user.save();
         res.send(`
@@ -141,7 +143,7 @@ const authenticateToken = async (req, res, next) => {
 eventEmitter.on('userFirstLogin', async (username) => {
     console.log(`${username} logged in for the first time`);
 
-    // await modelUsers.updateOne({ username }, { $set: { loggedBefore: true } });
+    await modelUsers.updateOne({ username }, { $set: { loggedBefore: true } });
 
     // trigger addition actions here, such as notifications
 });
@@ -376,43 +378,65 @@ router.post("/create-workflow/:id", async (req,res) =>{
 // Global Value (Changed for Database)
 // let webhookData = {};
 
-// Push Webhook Data to Database
+app.get('/webhook', (req, res) => {
+    const data = req.query; // Extract the data from query parameters
+    console.log(data);
+    res.status(200).send('Webhook received');
+});
+
 // router.post('/webhook/:id', async (req, res) => {
 //     const userId = req.params.id;
 //     const webhookText = req.body;
 
 //     try {
-//         const newWebhook = await modelUsers.findByIdAndUpdate(userId,{
-//             $push: {webhookData: {webhookText}}
-//         },
-//         {new: true}
-//         )
+//         const newWebhook = await modelUsers.findByIdAndUpdate(
+//             userId,
+//             { $push: { webhookData: { webhookText } } },
+//             { new: true }
+//         );
+
 //         if (!newWebhook) {
 //             return res.status(404).json({ error: "Error at creating the new agent" });
 //         }
-//         res.status(200).json({ message: "Agent created", newAgent });
-
+//         res.status(200).json({ message: "Webhook Data created", newWebhook });
 //     } catch (error) {
 //         console.error(error);
 //         res.status(500).json({ error: "Internal server error" });
-// }
+//     }
 // });
 
 
-router.get('/webhook/:id', async (req, res) => {
-    const userId = req.params.id;
+// router.get('/webhook/:id', async (req, res) => {
+//     const userId = req.params.id;
 
-    try {
-        const user = await modelUsers.findById(userId);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-        res.status(200).json(user.webhookData); // Return webhook data
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-});
+//     try {
+//         const user = await modelUsers.findById(userId);
+//         if (!user) {
+//             return res.status(404).json({ error: "User not found" });
+//         }
+//         res.status(200).json(user.webhookData); // Return webhook data
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// });
+
+
+
+// router.get('/webhook/:id', async (req, res) => {
+//     const userId = req.params.id;
+
+//     try {
+//         const user = await modelUsers.findById(userId);
+//         if (!user) {
+//             return res.status(404).json({ error: "User not found" });
+//         }
+//         res.status(200).json(user.webhookData); // Return webhook data
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// });
 
 
 

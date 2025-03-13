@@ -29,9 +29,9 @@ const userSchema = new mongoose.Schema(
         workflowCount:{
             type: Number
         },
-        webhookData:{
+        webhookData:[{
             type: String
-        },
+        }],
         agents: [
             { title: {type: String}, background: {type: String}}
         ]
