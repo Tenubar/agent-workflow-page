@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
-import Stringifier_ from "postcss/lib/stringifier";
 const saltRounds = 10;
 
 const userSchema = new mongoose.Schema(
