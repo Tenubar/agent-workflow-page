@@ -360,7 +360,7 @@ router.post('/webhook', (req, res) => {
 
 // Frontend route
 router.get('/test', (req, res) => {
-    res.status(200).json({ message: webhookData ? 'Info Received!' : 'Waiting for info...' });
+    res.status(200).json(webhookData || {message: 'Waiting for info...'});
 });
 
 
