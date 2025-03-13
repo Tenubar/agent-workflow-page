@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
+import Stringifier_ from "postcss/lib/stringifier";
 const saltRounds = 10;
 
 const userSchema = new mongoose.Schema(
@@ -27,6 +28,9 @@ const userSchema = new mongoose.Schema(
         },
         workflowCount:{
             type: Number
+        },
+        webhookData:{
+            type: String
         },
         agents: [
             { title: {type: String}, background: {type: String}}

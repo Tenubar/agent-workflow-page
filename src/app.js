@@ -373,39 +373,65 @@ router.post("/create-workflow/:id", async (req,res) =>{
 //     }
 // });
 
+// Global Value (Changed for Database)
+// let webhookData = {};
 
-let webhookData = {};
+// Push Webhook Data to Database
+// router.post('/webhook/:id', async (req, res) => {
+//     const userId = req.params.id;
+//     const webhookText = req.body;
 
-// Middleware to authenticate token
-function auth(req, res, next) {
-    // const token = req.headers['authorization'];
-    const token = req.cookies.auth_token;
-    console.log('cookies token isssss: ' + token);
+//     try {
+//         const newWebhook = await modelUsers.findByIdAndUpdate(userId,{
+//             $push: {webhookData: {webhookText}}
+//         },
+//         {new: true}
+//         )
+//         if (!newWebhook) {
+//             return res.status(404).json({ error: "Error at creating the new agent" });
+//         }
+//         res.status(200).json({ message: "Agent created", newAgent });
+
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: "Internal server error" });
+// }
+// });
+
+
+router.get('/webhook/:id', async (req, res) => {
+    const userId = req.params.id;
+
     try {
-        next();
+        const user = await modelUsers.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        res.status(200).json(user.webhookData); // Return webhook data
     } catch (error) {
-        console.error('Token validation error:', error);
-        res.status(403).json({ message: 'Invalid token' });
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
     }
-}
-
-// Webhook endpoint
-router.post('/webhook', auth, (req, res) => {
-    webhookData = req.body;
-    res.status(200).send('Webhook received successfully');
 });
+
+
+
+    // webhookData = req.body;
+    // console.log('data:' + webhookData);
+    // res.status(200).send('Webhook received successfully');
+
 
 // Frontend route
-router.get('/test', (req, res) => {
-    try {
-        const workflowRunOutput = webhookData?.find(item => item.key === 'workflow_run_output');
-        const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
-        res.status(200).json(contents);
-    } catch (error) {
-        console.error('Error in /test route:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
+// router.get('/test', (req, res) => {
+//     try {
+//         const workflowRunOutput = webhookData?.find(item => item.key === 'workflow_run_output');
+//         const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
+//         res.status(200).json(contents);
+//     } catch (error) {
+//         console.error('Error in /test route:', error);
+//         res.status(500).json({ message: 'Internal Server Error' });
+//     }
+// });
 
 
 

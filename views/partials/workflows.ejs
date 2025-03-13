@@ -273,12 +273,15 @@ function createWorkflow(){
         background: "var(--color-light)"
     });
 
+   
+
+
     buttonSaveDiv.addEventListener('click',()=>{
         async function fetchStatus() {
-            
-            
             try {
-                const response = await fetch('/test');
+                const userId = id;
+                const response = await axios.get(`/webhook/${userId}`);
+                // const response = await fetch('/test');
                 const data = await response.json();
                 
                 // Update the textarea with the server's message
