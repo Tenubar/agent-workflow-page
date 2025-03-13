@@ -280,8 +280,11 @@ function createWorkflow(){
             try {
                 const response = await fetch('/test');
                 const data = await response.json();
-                // Update the textarea with the server's message
-                contentWorkflow.value = JSON.stringify(data, null, 2);
+
+                const JsonResponse = JSON.stringify(data, null, 2);
+                const formattedResponse = `${JsonResponse[0]},\n\n\n\n${JsonResponse[1]}`;
+                // Update the textarea
+                contentWorkflow.value = formattedResponse;
             } catch (error) {
                 console.error('Error fetching status:', error);
             }
