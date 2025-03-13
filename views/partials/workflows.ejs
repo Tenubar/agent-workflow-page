@@ -308,21 +308,43 @@ function createWorkflow(){
 
 function pollForWorkflowOutput(workflowRunId, headers) {
     const getUrl = `https://api-v3.mindpal.io/api/workflow-run-result/retrieve-by-id?run_id=${workflowRunId}`;
+    let interval;
 
-    const interval = setInterval(() => {
+    // Start the polling interval
+    interval = setInterval(() => {
         // Perform the GET request
         axios.get(getUrl, { headers })
             .then(getResponse => {
                 console.log('GET Response:', getResponse.data);
+
+                const workflowOutput = getResponse.data.workflow_run_output;
+
+                // Check if all indexes are reached
+                if (workflowOutput && workflowOutput.length > 0) {
                     // Populate the textarea with the output (formatted as JSON)
-                    contentWorkflow.value = JSON.stringify(getResponse.data.workflow_run_output, null, 2); // Display it cleanly formatted
-                    // Append the textarea to the document body or a specific container
+                    contentWorkflow.value = JSON.stringify(workflowOutput, null, 2); // Display it cleanly formatted
+
+                    // Stop polling if the output is considered "complete"
+                    if (isPollingComplete(workflowOutput)) {
+                        console.log('Polling completed. Stopping...');
+                        clearInterval(interval); // Stop polling
+                    }
+                } else {
+                    console.log('No data available yet...');
+                }
             })
             .catch(error => {
                 console.error('Error during polling:', error);
                 clearInterval(interval); // Stop polling on error
             });
     }, 3000); // Poll every 3 seconds
+}
+
+// Helper function to determine if polling is complete
+function isPollingComplete(workflowOutput) {
+    // Custom logic to determine if all indexes have been processed
+    // Example: Check if there's a specific "completed" property or status
+    return workflowOutput.every(output => output.status === 'completed');
 }
         stepDiv.appendChild(contentWorkflow);
 }
