@@ -358,11 +358,17 @@ router.post('/webhook', (req, res) => {
     res.status(200).send('Webhook received successfully');
 });
 
+// router.post('/webhookLast', (req, res) => {
+//     console.log('last Webhook received:', req.body);
+//     lastWebhookData = req.body; // Store the data from the webhook
+//     res.status(200).send('Webhook received successfully');
+// });
+
 // Frontend route
 router.get('/test', (req, res) => {
     const workflowRunOutput = webhookData.find(item => item.key === 'workflow_run_output');
-    const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message']
-    res.status(200).json(workflowRunOutput?.value.map(item => item.content) || { message: 'Waiting for message' });
+    const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
+    res.status(200).json(contents);
 });
 
 
