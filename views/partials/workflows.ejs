@@ -257,7 +257,6 @@ function createWorkflow(){
     stepDiv.appendChild(form);
     }
     else{
-
         heading.textContent = 'Product Name Generator';
 
         span_save.classList.add('material-symbols-outlined');
@@ -274,80 +273,97 @@ function createWorkflow(){
         background: "var(--color-light)"
     });
 
-        buttonSaveDiv.addEventListener('click',()=>{
+    buttonSaveDiv.addEventListener('click',()=>{
+        async function fetchStatus() {
+            
+            try {
+                const response = await fetch('/test');
+                const data = await response.json();
+                // Update the textarea with the server's message
+                contentWorkflow.value = data.message;
+            } catch (error) {
+                console.error('Error fetching status:', error);
+            }
+        }
+        setInterval(fetchStatus, 2000);
+    });
+    stepDiv.appendChild(contentWorkflow);
 
-        const apiKey = 'sk-7wCiJRnOFz5jkQxZCFuuMw20250312224040';
-        const workFlowId = '67d213cdfaf90882fbf642ee';
 
-        const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workFlowId}&workflow_run_title=local%20run&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&groq_api_key=${apiKey}&google_api_key=${apiKey}`
-        const headers = {
-          'accept': 'application/json',
-          'x-api-key': apiKey,
-          'Content-Type': 'application/json'
-        };
+        
 
-        const data = {
-          "Product Features": "can",
-          "Target Audience": "adults"
-        };
 
-        // Perform the POST request
-    axios.post(url, data, { headers })
-        .then(response => {
-            console.log('POST Response:', response.data);
+//         const apiKey = 'sk-7wCiJRnOFz5jkQxZCFuuMw20250312224040';
+//         const workFlowId = '67d213cdfaf90882fbf642ee';
 
-            // Extract the workflow_run_id from the POST response
-            const workflowRunId = response.data.workflow_run_id;
-            console.log('Workflow Run ID:', workflowRunId);
+//         const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workFlowId}&workflow_run_title=local%20run&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&groq_api_key=${apiKey}&google_api_key=${apiKey}`
+//         const headers = {
+//           'accept': 'application/json',
+//           'x-api-key': apiKey,
+//           'Content-Type': 'application/json'
+//         };
 
-            // Start polling the server for output
-            pollForWorkflowOutput(workflowRunId, headers);
-        })
-        .catch(error => console.error('Error:', error));
-});
+//         const data = {
+//           "Product Features": "can",
+//           "Target Audience": "adults"
+//         };
 
-function pollForWorkflowOutput(workflowRunId, headers) {
-    const getUrl = `https://api-v3.mindpal.io/api/workflow-run-result/retrieve-by-id?run_id=${workflowRunId}`;
-    let interval;
+//         // Perform the POST request
+//     axios.post(url, data, { headers })
+//         .then(response => {
+//             console.log('POST Response:', response.data);
 
-    // Start the polling interval
-    interval = setInterval(() => {
-        // Perform the GET request
-        axios.get(getUrl, { headers })
-            .then(getResponse => {
-                console.log('GET Response:', getResponse.data);
+//             // Extract the workflow_run_id from the POST response
+//             const workflowRunId = response.data.workflow_run_id;
+//             console.log('Workflow Run ID:', workflowRunId);
 
-                const workflowOutput = getResponse.data.workflow_run_output;
+//             // Start polling the server for output
+//             pollForWorkflowOutput(workflowRunId, headers);
+//         })
+//         .catch(error => console.error('Error:', error));
+// });
 
-                // Check if all indexes are reached
-                if (workflowOutput && workflowOutput.length > 0) {
-                    // Populate the textarea with the output (formatted as JSON)
-                    contentWorkflow.value = JSON.stringify(workflowOutput, null, 2); // Display it cleanly formatted
+// function pollForWorkflowOutput(workflowRunId, headers) {
+//     const getUrl = `https://api-v3.mindpal.io/api/workflow-run-result/retrieve-by-id?run_id=${workflowRunId}`;
+//     let interval;
 
-                    // Stop polling if the output is considered "complete"
-                    if (isPollingComplete(workflowOutput)) {
-                        console.log('Polling completed. Stopping...');
-                        clearInterval(interval); // Stop polling
-                    }
-                } else {
-                    console.log('No data available yet...');
-                }
-            })
-            .catch(error => {
-                console.error('Error during polling:', error);
-                clearInterval(interval); // Stop polling on error
-            });
-    }, 3000); // Poll every 3 seconds
-}
+//     // Start the polling interval
+//     interval = setInterval(() => {
+//         // Perform the GET request
+//         axios.get(getUrl, { headers })
+//             .then(getResponse => {
+//                 console.log('GET Response:', getResponse.data);
+
+//                 const workflowOutput = getResponse.data.workflow_run_output;
+
+//                 // Check if all indexes are reached
+//                 if (workflowOutput && workflowOutput.length > 0) {
+//                     // Populate the textarea with the output (formatted as JSON)
+//                     contentWorkflow.value = JSON.stringify(workflowOutput, null, 2); // Display it cleanly formatted
+
+//                     // Stop polling if the output is considered "complete"
+//                     if (isPollingComplete(workflowOutput)) {
+//                         console.log('Polling completed. Stopping...');
+//                         clearInterval(interval); // Stop polling
+//                     }
+//                 } else {
+//                     console.log('No data available yet...');
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error('Error during polling:', error);
+//                 clearInterval(interval); // Stop polling on error
+//             });
+//     }, 3000); // Poll every 3 seconds
+};
 
 // Helper function to determine if polling is complete
-function isPollingComplete(workflowOutput) {
-    // Custom logic to determine if all indexes have been processed
-    // Example: Check if there's a specific "completed" property or status
-    return workflowOutput.every(output => output.status === 'completed');
-}
-        stepDiv.appendChild(contentWorkflow);
-}
+// function isPollingComplete(workflowOutput) {
+//     // Custom logic to determine if all indexes have been processed
+//     // Example: Check if there's a specific "completed" property or status
+//     return workflowOutput.every(output => output.status === 'completed');
+// }
+// }
     
 
 

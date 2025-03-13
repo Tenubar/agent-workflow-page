@@ -360,18 +360,9 @@ router.post('/webhook', (req, res) => {
 
 // Frontend route
 router.get('/test', (req, res) => {
-    const html = `
-        <html>
-            <head>
-                <title>Home</title>
-            </head>
-            <body>
-                <h1>${webhookData ? 'Info received!' : 'Waiting for info...'}</h1>
-            </body>
-        </html>
-    `;
-    res.send(html);
+    res.status(200).json({ message: webhookData ? 'Info Received!' : 'Waiting for info...' });
 });
+
 
 
 // router.get('/webhook-data', (req, res) => {
