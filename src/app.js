@@ -380,7 +380,7 @@ let webhookData = {};
 function auth(req, res, next) {
     // const token = req.headers['authorization'];
     const token = req.cookies.auth_token;
-    console.log('cookies token is: ' + token);
+    console.log('cookies token isssss: ' + token);
     try {
         next();
     } catch (error) {
