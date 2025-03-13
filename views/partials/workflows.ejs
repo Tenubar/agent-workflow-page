@@ -280,16 +280,14 @@ function createWorkflow(){
             try {
                 const response = await fetch('/test');
                 const data = await response.json();
-
-                const JsonResponse = JSON.stringify(`${data[0]},\n\n${data[1]}`);
-                // Update the textarea
-                contentWorkflow.value = JsonResponse;
+                
+                // Update the textarea with the server's message
+                contentWorkflow.value = JSON.stringify(data, null, 2);
             } catch (error) {
                 console.error('Error fetching status:', error);
             }
         }
         setInterval(fetchStatus, 2000);
-        // buttonSaveDiv.disabled = true;
     });
             stepDiv.appendChild(contentWorkflow);
 
