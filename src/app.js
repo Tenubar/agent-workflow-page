@@ -346,17 +346,18 @@ router.post("/create-workflow/:id", async (req,res) =>{
 // webhooks
 router.post('/webhook', (req, res)=>{
     console.log('Webhook received:', req.body);
-    webhookData = req.body;
+    // webhookData = req.body;
     res.status(200).send('Webhook received successfully');
 });
 
-router.get('/webhook-data', (req, res) => {
-    if (webhookData) {
-      res.status(200).json(webhookData);
-    } else {
-      res.status(404).send('No data available');
-    }
-});
+
+// router.get('/webhook-data', (req, res) => {
+//     if (webhookData) {
+//       res.status(200).json(webhookData);
+//     } else {
+//       res.status(404).send('No data available');
+//     }
+// });
 
 
 // User Routes
