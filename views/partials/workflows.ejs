@@ -281,8 +281,8 @@ function createWorkflow(){
                 const response = await fetch('/test');
                 const data = await response.json();
 
-                const JsonResponse = JSON.stringify(data, null, 2);
-                const formattedResponse = `${JsonResponse[0]},\n\n\n\n${JsonResponse[1]}`;
+                // const JsonResponse = JSON.stringify(data, null, 2);
+                const formattedResponse = `${data[0]},\n\n\n\n${data[1]}`;
                 // Update the textarea
                 contentWorkflow.value = formattedResponse;
             } catch (error) {
@@ -290,6 +290,7 @@ function createWorkflow(){
             }
         }
         setInterval(fetchStatus, 2000);
+        // buttonSaveDiv.disabled = true;
     });
             stepDiv.appendChild(contentWorkflow);
 
