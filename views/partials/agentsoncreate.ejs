@@ -1,0 +1,614 @@
+<script>
+
+const id = "<%= id %>";
+const agentCount = "<%= agentCount %>";
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const userId = id;
+    const userAgents = agentCount;
+
+    getAgents();
+
+    // // Create new Agent
+    // const trigger_new_agent = document.getElementById('button-new-agent');
+    // trigger_new_agent.addEventListener('click', () => {
+        
+    //     // Form container
+    //     const formContainer = document.createElement('div');
+    //     formContainer.style.position = 'fixed';
+    //     formContainer.style.top = '10%';
+    //     formContainer.style.left = '50%';
+    //     formContainer.style.width = "40vw";
+    //     formContainer.style.transform = "translateX(-50%)";
+    //     formContainer.style.backgroundColor = 'white';
+    //     formContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+    //     formContainer.style.padding = '20px';
+    //     formContainer.style.zIndex = '1000';
+    //     formContainer.style.borderRadius = 'var(--border-radius-2)';
+
+    //     // Close button
+    //     const closeButton = document.createElement('button');
+    //     closeButton.textContent = "\u00D7";
+    //     closeButton.style.float = 'right';
+    //     closeButton.style.marginBottom = '10px';
+    //     closeButton.style.background = "transparent";
+    //     closeButton.style.fontSize = "25px";
+    //     closeButton.style.color = "var(--color-info-dark)";
+    //     closeButton.style.cursor = "pointer";
+    //     closeButton.addEventListener('click', () => {
+    //         document.body.removeChild(formContainer);
+    //     });
+    //     formContainer.appendChild(closeButton);
+
+    //     // Form
+    //     const form = document.createElement('form');
+    //     form.addEventListener('submit', async (event) => {
+    //         event.preventDefault();
+    //         await createAgent();
+    //     });
+    //     form.style.display = "grid";
+    //     form.style.rowGap = "0.6rem";
+
+    //       // Create with Ai Button
+    //     const createAi = document.createElement('div');
+    //     createAi.setAttribute('id','fill-agent-ai');
+    //     createAi.style.display ="flex";
+    //     createAi.style.gap = "0.5rem";
+    //     createAi.style.alignItems = "center";
+    //     createAi.style.justifyContent = "center";
+    //     createAi.style.cursor = "pointer";
+    //     createAi.style.padding = "8px";
+    //     createAi.style.background = "var(--color-light)";
+    //     createAi.style.borderRadius = "var(--border-radius-1)";
+    //     createAi.style.color = "var(--color-info-dark)";
+    //     createAi.style.marginBottom = "8px";
+    //     createAi.style.maxWidth = 'fit-content';
+    //     const createAiP = document.createElement('p');
+    //     createAiP.textContent = "Create with Ai";
+    //     const spanElement = document.createElement('span');
+    //     spanElement.setAttribute('class', 'material-symbols-outlined');
+    //     spanElement.textContent = 'bolt';
+
+
+    //     createAi.appendChild(spanElement);
+    //     createAi.appendChild(createAiP);
+    //     form.appendChild(createAi);
+        
+
+    //     // Agent title label and input
+    //     const titleLabel = document.createElement('label');
+    //     titleLabel.setAttribute('for', 'agent-title');
+    //     titleLabel.textContent = 'Agent Title: ';
+    //     form.appendChild(titleLabel);
+
+    //     const titleInput = document.createElement('input');
+    //     titleInput.setAttribute('type', 'text');
+    //     titleInput.setAttribute('id', 'agent-title');
+    //     titleInput.setAttribute('name', 'title');
+    //     titleInput.style.display = 'block';
+    //     titleInput.style.marginBottom = '10px';
+    //     titleInput.style.background = "var(--color-background)";
+    //     titleInput.style.borderRadius = "var(--border-radius-1)";
+    //     titleInput.style.height = "32px";
+    //     titleInput.style.width = "100%";
+    //     titleInput.style.padding = "8px";
+    //     titleInput.style.border = "solid 2px var(--color-primary)";
+    //     form.appendChild(titleInput);   
+
+
+    //     // Agent background label and textarea
+    //     const backgroundLabel = document.createElement('label');
+    //     backgroundLabel.setAttribute('for', 'agent-background');
+    //     backgroundLabel.textContent = 'Agent Background: ';
+    //     form.appendChild(backgroundLabel);
+
+    //     const backgroundTextarea = document.createElement('textarea');
+    //     backgroundTextarea.setAttribute('id', 'agent-background');
+    //     backgroundTextarea.setAttribute('name', 'background');
+    //     backgroundTextarea.style.display = 'block';
+    //     backgroundTextarea.style.marginBottom = '10px';
+    //     backgroundTextarea.style.background = "var(--color-background)";
+    //     backgroundTextarea.style.borderRadius = "var(--border-radius-1)";
+    //     backgroundTextarea.style.height = "250px";
+    //     backgroundTextarea.style.width = "100%";
+    //     backgroundTextarea.style.padding = "8px";
+    //     backgroundTextarea.style.border = "2px solid var(--color-primary)";
+    //     backgroundTextarea.style.resize = "none";
+    //     backgroundTextarea.style.overflow = "auto";
+    //     form.appendChild(backgroundTextarea);
+
+
+    //     // Submit button
+    //     const submitButton = document.createElement('button');
+    //     submitButton.setAttribute('type', 'submit');
+    //     submitButton.textContent = 'Submit';
+    //     submitButton.style.position = 'relative';
+    //     submitButton.style.left = "50%";
+    //     submitButton.style.transform = "translateX(-50%)";
+    //     submitButton.style.display = "flex";
+    //     submitButton.style.justifyContent = "center";
+    //     submitButton.style.marginTop = "0.5rem";
+    //     submitButton.style.background = "var(--color-primary)";
+    //     submitButton.style.padding = "8px 18px"
+    //     submitButton.style.width = "72px";
+    //     submitButton.style.textAlign = "center";
+    //     submitButton.style.fontSize = "14px";
+    //     submitButton.style.borderRadius = "var(--border-radius-1)";
+    //     submitButton.style.color = "var(--color-light)";
+    //     submitButton.style.cursor = "pointer";
+    //     form.appendChild(submitButton);
+    //     formContainer.appendChild(form);
+
+
+    //     document.body.appendChild(formContainer);
+    // });
+
+
+// GET ALL AGENTS-ID BY USER ID
+async function getAgents() {
+    const userId = id;
+    try {
+        const response = await axios.get(`/get-agents/${userId}`);
+        const agentTitles = response.data.titles;
+        const agentBackground = response.data.backgrounds;
+        const agentID = response.data.agentId;
+        const createAgentDiv = document.querySelector(".insights");
+
+        let count = 0;
+        agentTitles.forEach((title, index) => {
+
+  
+        // Create the main container div
+        const userDiv = document.createElement('div');
+        userDiv.setAttribute('data-id', agentID[index]);
+        userDiv.className = 'user';
+        userDiv.addEventListener('click', async (event) => {
+                event.preventDefault();
+                const buttonUser = event.currentTarget;
+                const agentId = buttonUser.getAttribute('data-id');
+                await getAgentById(agentId);  
+        });
+
+        // Create the worker-pic div
+        const workerPicDiv = document.createElement('div');
+        workerPicDiv.className = 'worker-pic';
+
+        // Add image to worker-pic
+        const img = document.createElement('img');
+        img.src = '../img/profile-pic.png';
+        workerPicDiv.appendChild(img);
+
+        // Append worker-pic div to userDiv
+        userDiv.appendChild(workerPicDiv);
+
+        // Create the worker-info div
+        const workerInfoDiv = document.createElement('div');
+        workerInfoDiv.className = 'worker-info';
+
+        // Add h1 element
+        const h1 = document.createElement('h1');
+        h1.textContent = title || 'No title';
+        workerInfoDiv.appendChild(h1);
+
+        // Add p element
+        const p = document.createElement('p');
+        p.textContent = agentBackground[index] || 'No description';
+        workerInfoDiv.appendChild(p);
+
+        // Create the worker-tags div
+        const workerTagsDiv = document.createElement('div');
+        workerTagsDiv.className = 'worker-tags';
+
+        // Add links to worker-tags
+        const tags = ['Blog Post', 'Articles', 'Newsletter'];
+        tags.forEach(tag => {
+        const a = document.createElement('a');
+        a.href = '#';
+        a.textContent = tag;
+        workerTagsDiv.appendChild(a);
+        });
+
+        // Append worker-tags div to workerInfoDiv
+        workerInfoDiv.appendChild(workerTagsDiv);
+
+        // Create the contact-user div
+        const contactUserDiv = document.createElement('div');
+        contactUserDiv.className = 'contact-user';
+
+        // Add input element
+        const input = document.createElement('input');
+        input.setAttribute('data-id', agentID[index]);
+        input.type = 'submit';
+        input.value = 'Chat with AI';
+        input.className = 'contact-toggle';
+        input.addEventListener('click', async (event)=>{
+            event.preventDefault();
+            const button = event.currentTarget;
+            const chatId = button.getAttribute('data-id'); 
+            await chatAgent(chatId);
+        });
+        
+        contactUserDiv.appendChild(input);
+
+        // Append contact-user div to workerInfoDiv
+        workerInfoDiv.appendChild(contactUserDiv);
+
+        // Append worker-info div to userDiv
+        userDiv.appendChild(workerInfoDiv);
+
+        // Append the entire structure to the document body (or another parent element)
+        createAgentDiv.appendChild(userDiv);
+
+        count++;
+            
+        });
+    } catch (error) {
+        console.log(error);
+
+        // reset the frame
+    }
+}
+
+// GET AGENT-ID BY USER ID
+async function getAgentById(agentId){
+    const userId = id;
+    const agentID = agentId;
+
+    try {
+        // Fetch the agent data from the database
+        const response = await axios.get(`/get-agent/${userId}/${agentId}`);
+        const agentData = response.data;
+
+        // Form container
+        const formContainer = document.createElement('div');
+        formContainer.style.position = 'fixed';
+        formContainer.style.top = '10%';
+        formContainer.style.left = '50%';
+        formContainer.style.width = "40vw";
+        formContainer.style.transform = "translateX(-50%)";
+        formContainer.style.backgroundColor = 'white';
+        formContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+        formContainer.style.padding = '20px';
+        formContainer.style.zIndex = '1000';
+        formContainer.style.borderRadius = 'var(--border-radius-2)';
+
+        // Close button
+        const closeButton = document.createElement('button');
+        closeButton.textContent = "\u00D7";
+        closeButton.style.float = 'right';
+        closeButton.style.marginBottom = '10px';
+        closeButton.style.background = "transparent";
+        closeButton.style.fontSize = "25px";
+        closeButton.style.color = "var(--color-info-dark)";
+        closeButton.style.cursor = "pointer";
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(formContainer);
+        });
+        formContainer.appendChild(closeButton);
+
+
+        // Form
+        const form = document.createElement('form');
+        form.setAttribute('data-id',agentID);
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const button = event.currentTarget;
+            const agentId = button.getAttribute('data-id');
+            await updateAgent(agentId);
+        });
+        form.style.display = "grid";
+        form.style.rowGap = "0.6rem";
+
+        // Create with Ai Button
+        const createAi = document.createElement('div');
+        createAi.setAttribute('id','fill-agent-ai');
+        createAi.style.display ="flex";
+        createAi.style.gap = "0.5rem";
+        createAi.style.alignItems = "center";
+        createAi.style.justifyContent = "center";
+        createAi.style.cursor = "pointer";
+        createAi.style.padding = "8px";
+        createAi.style.background = "var(--color-light)";
+        createAi.style.borderRadius = "var(--border-radius-1)";
+        createAi.style.color = "var(--color-info-dark)";
+        createAi.style.marginBottom = "8px";
+        createAi.style.maxWidth = 'fit-content';
+        const createAiP = document.createElement('p');
+        createAiP.textContent = "Create with Ai";
+        const spanElement = document.createElement('span');
+        spanElement.setAttribute('class', 'material-symbols-outlined');
+        spanElement.textContent = 'bolt';
+
+
+        createAi.appendChild(spanElement);
+        createAi.appendChild(createAiP);
+        form.appendChild(createAi);
+        
+
+        // Agent title label and input
+        const titleLabel = document.createElement('label');
+        titleLabel.setAttribute('for', 'agent-title');
+        titleLabel.textContent = 'Agent Title: ';
+        form.appendChild(titleLabel);
+
+
+        const titleInput = document.createElement('input');
+        titleInput.setAttribute('type', 'text');
+        titleInput.setAttribute('id', 'agent-title');
+        titleInput.setAttribute('name', 'title');
+        titleInput.style.display = 'block';
+        titleInput.style.marginBottom = '10px';
+        titleInput.style.background = "var(--color-background)";
+        titleInput.style.borderRadius = "var(--border-radius-1)";
+        titleInput.style.height = "32px";
+        titleInput.style.width = "100%";
+        titleInput.style.padding = "8px";
+        titleInput.style.border = "solid 2px var(--color-primary)";
+        titleInput.value = agentData.title;
+        form.appendChild(titleInput);   
+
+
+        // Agent background label and textarea
+        const backgroundLabel = document.createElement('label');
+        backgroundLabel.setAttribute('for', 'agent-background');
+        backgroundLabel.textContent = 'Agent Background: ';
+        form.appendChild(backgroundLabel);
+
+        const backgroundTextarea = document.createElement('textarea');
+        backgroundTextarea.setAttribute('id', 'agent-background');
+        backgroundTextarea.setAttribute('name', 'background');
+        backgroundTextarea.style.display = 'block';
+        backgroundTextarea.style.marginBottom = '10px';
+        backgroundTextarea.style.background = "var(--color-background)";
+        backgroundTextarea.style.borderRadius = "var(--border-radius-1)";
+        backgroundTextarea.style.height = "250px";
+        backgroundTextarea.style.width = "100%";
+        backgroundTextarea.style.padding = "8px";
+        backgroundTextarea.style.border = "2px solid var(--color-primary)";
+        backgroundTextarea.style.resize = "none";
+        backgroundTextarea.style.overflow = "auto";
+        backgroundTextarea.value = agentData.background;
+        form.appendChild(backgroundTextarea);
+
+
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.className = 'buttons';
+        buttonsDiv.style.display = 'flex';
+        buttonsDiv.style.alignItems = 'center';
+        buttonsDiv.style.justifyContent = 'center';
+        buttonsDiv.style.columnGap = "2rem";
+
+        form.appendChild(buttonsDiv);
+
+        // Submit button
+        const submitButton = document.createElement('button');
+        submitButton.setAttribute('type', 'submit');
+        submitButton.textContent = 'Update';
+        submitButton.style.position = 'relative';
+        submitButton.style.display = "flex";
+        submitButton.style.justifyContent = "center";
+        submitButton.style.background = "var(--color-primary)";
+        submitButton.style.padding = "6px 12px"
+        submitButton.style.textAlign = "center";
+        submitButton.style.fontSize = "14px";
+        submitButton.style.borderRadius = "var(--border-radius-1)";
+        submitButton.style.color = "var(--color-light)";
+        submitButton.style.cursor = "pointer";
+        buttonsDiv.appendChild(submitButton);
+
+        // Chat with Agent
+
+        const chatButton = document.createElement('button');
+        chatButton.textContent = 'Chat';
+        chatButton.setAttribute('data-id', agentID);
+        chatButton.style.position = 'relative';
+        chatButton.style.display = "flex";
+        chatButton.style.justifyContent = "center";
+        chatButton.style.background = "var(--color-primary)";
+        chatButton.style.padding = "6px 12px"
+        chatButton.style.textAlign = "center";
+        chatButton.style.fontSize = "14px";
+        chatButton.style.borderRadius = "var(--border-radius-1)";
+        chatButton.style.color = "var(--color-light)";
+        chatButton.style.cursor = "pointer";
+        chatButton.addEventListener('click', async (event)=>{
+            event.preventDefault();
+            const button = event.currentTarget;
+            const chatId = button.getAttribute('data-id'); 
+            await chatAgent(chatId);
+        });
+        buttonsDiv.appendChild(chatButton);
+
+        // Delete Button
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.setAttribute('data-id', agentID);
+        deleteButton.style.position = 'relative';
+        deleteButton.style.display = "flex";
+        deleteButton.style.justifyContent = "center";
+        deleteButton.style.background = "var(--color-primary)";
+        deleteButton.style.padding = "6px 12px"
+        deleteButton.style.textAlign = "center";
+        deleteButton.style.fontSize = "14px";
+        deleteButton.style.borderRadius = "var(--border-radius-1)";
+        deleteButton.style.color = "var(--color-light)";
+        deleteButton.style.cursor = "pointer";
+        deleteButton.addEventListener('click', async (event)=>{
+            event.preventDefault();
+            const button = event.currentTarget;
+            const agentId = button.getAttribute('data-id');
+            await deleteAgent(agentId);
+        });
+        buttonsDiv.appendChild(deleteButton);
+
+        formContainer.appendChild(form);
+        document.body.appendChild(formContainer);
+
+    } catch (error) {
+        alert("An error occurred while retrieving the agent");
+    }
+
+}
+
+// UPDATE AGENT
+async function updateAgent(agentID) {
+    // You also need the agentId
+    const userId = id;
+
+    const titleInput = document.getElementById('agent-title').value;
+    const backgroundInput = document.getElementById('agent-background').value;
+
+    try {
+        const response = await axios.put(`/update-agent/${userId}/${agentID}`, {
+            newTitle: titleInput,
+            newBackground: backgroundInput
+        });
+        alert("Agent updated successfully!");
+        window.location.reload();
+
+    } catch (error) {
+        console.error(error.response.data.error);
+        alert("An error occurred while updating agent count.");
+    }
+}
+
+
+// DELETE AGENT
+async function deleteAgent(agentID) {
+    const userId = id;
+
+    try {
+        const response = await axios.delete(`/delete-agent/${userId}/${agentID}`);
+
+        alert("Agent deleted successfully!");
+        window.location.reload();
+
+
+    } catch (error) {
+        console.error(error.response.data.error);
+        alert("An error occurred while updating agent count.");
+    }
+}
+
+async function chatAgent(chatId){
+    const userId = id;
+    const agentID = chatId;
+    try {
+        const response = await axios.get(`/chat-agent/${userId}/${agentID}`);
+
+    if (response.status === 200) {
+    const { title, background } = response.data;
+    window.location.href = `/chat?title=${encodeURIComponent(title)}&background=${encodeURIComponent(background)}`;
+    }else{
+        console.error('Error changing the location');
+    }
+    }catch(error){
+        console.error("Error fetching agent data:", error.message);    
+    }
+}
+
+// // POST NEW AGENT
+// async function createAgent(){
+//     const userId = id;
+
+//     const titleInput = document.getElementById('agent-title').value;
+//     const backgroundInput = document.getElementById('agent-background').value;
+
+//     try {
+//         const response = await axios.post(`/create-agent/${userId}`,{
+//             title: titleInput,
+//             background: backgroundInput
+//         });
+
+//         console.log("Server response received:", response.data);
+//         alert("Agent created successfully!");
+//         window.location.href = '/home'
+//     } catch (error) {
+//         console.error(error.response.data.error);
+//         alert("An error occurred while creating new agent.");
+//     }
+
+// }
+
+// // UPDATE AGENT
+// async function updateAgent(agentID) {
+//     // You also need the agentId
+//     const userId = id;
+
+//     const titleInput = document.getElementById('agent-title').value;
+//     const backgroundInput = document.getElementById('agent-background').value;
+
+//     try {
+//         const response = await axios.put(`/update-agent/${userId}/${agentID}`, {
+//             newTitle: titleInput,
+//             newBackground: backgroundInput
+//         });
+
+//         console.log(response.data.message);
+//         alert("Agent updated successfully!");
+//         window.location.href = '/home'
+
+//     } catch (error) {
+//         console.error(error.response.data.error);
+//         alert("An error occurred while updating agent count.");
+//     }
+//     }
+
+
+// // DELETE AGENT
+// async function deleteAgent(agentID) {
+//     const userId = id;
+
+//     try {
+//         const response = await axios.delete(`/delete-agent/${userId}/${agentID}`);
+
+//         alert("Agent deleted successfully!");
+//         window.location.href = '/home'
+
+//     } catch (error) {
+//         console.error(error.response.data.error);
+//         alert("An error occurred while updating agent count.");
+//     }
+// }
+
+// async function chatAgent(chatId){
+//     const userId = id;
+//     const agentID = chatId;
+//     try {
+//         const response = await axios.get(`/chat-agent/${userId}/${agentID}`);
+
+//     if (response.status === 200) {
+//     const { title, background } = response.data;
+//     window.location.href = `/chat?title=${encodeURIComponent(title)}&background=${encodeURIComponent(background)}`;
+//     }else{
+//         console.error('Error changing the location');
+//     }
+//     }catch(error){
+//         console.error("Error fetching agent data:", error.message);    
+//     }
+// }
+
+
+
+
+// async function chatAgent(chatId){
+//     const userId = id;
+//     const agentId = chatId;
+
+//     try {
+//         const response = await axios.get(`/chat-agent/${userId}/${agentId}`);
+//         const agentData = response.data;
+
+//         if (agentData) {
+//             window.location.href = `/chat?title=${agentData.title}&background=${agentData.background}`;
+//         }else{
+//             console.error("Agent data not found!");
+//         } 
+//     }catch(error){
+//         console.error("Error fetching agent data:", error.message);    }
+// }
+
+});
+
+</script>

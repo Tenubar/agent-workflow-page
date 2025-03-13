@@ -7,57 +7,56 @@
     <link rel="stylesheet" type ="text/css" href="css/styleHome.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
+    <%- include('partials/agentsoncreate') %>
+
     <div class = "container">
 
-    <aside>
-        <div class ="top">
-            <!-- <img class="logo" src ="./img/logo.webp">  -->
-            <h2 class ="logo_h2"> Company </h2>
-            
-            <div class ="close" id ="close-btn">
-                <span class="material-symbols-outlined">close</span>
+        <aside>
+            <div class ="top">
+                <img class="logo" src ="./img/sokka_logo.png">
+                <img class ="logo_h2" src ="./img/sokka_banner.png"> 
+                <!-- <h2 class ="logo_h2"> Company </h2> -->
+                
+                <div class ="close" id ="close-btn">
+                    <span class="material-symbols-outlined">keyboard_tab_rtl</span>
+                </div>
             </div>
-        </div>
 
-        <div class ="sidebar">
-            <a href ="home">
-                <span class="material-symbols-outlined">grid_view</span>
-                <h3>Dashboard</h3>
-            </a>
-            <a href ="training">
-                <span class="material-symbols-outlined">automation</span>
-                <h3>Training</h3>
-            </a>
-            <a href ="create" class = "active">
-                <span class="material-symbols-outlined">edit</span>
-                <h3>Create</h3>
-            </a>
-            <!-- <a href ="messages">
-                <span class="material-symbols-outlined">mail</span>
-                <h3>Messages</h3>
-            <span class ="message-count"></span>
-            </a> -->
-            <a href ="content">
-                <span class="material-symbols-outlined">book_2</span>
-                <h3>Content Hub</h3>
-            </a>
-            <a href ="settings">
-                <span class="material-symbols-outlined">manage_accounts</span>
-                <h3>Settings</h3>
-            </a>
-            <a href ="/">
-                <span class="material-symbols-outlined">logout</span>
-                <h3>Logout</h3>
-            </a>
-        </div>
-    </aside>
+            <div class ="sidebar">
+                <a href ="home">
+                    <span class="material-symbols-outlined">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href ="training">
+                    <span class="material-symbols-outlined">automation</span>
+                    <h3>Training</h3>
+                </a>
+                <a href ="create" class ="active">
+                    <span class="material-symbols-outlined">edit</span>
+                    <h3>Create</h3>
+                </a>
+                <a href ="content">
+                    <span class="material-symbols-outlined">book_2</span>
+                    <h3>Content Hub</h3>
+                </a>
+                <a href ="settings">
+                    <span class="material-symbols-outlined">manage_accounts</span>
+                    <h3>Settings</h3>
+                </a>
+                <a href ="logout">
+                    <span class="material-symbols-outlined">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
 
     <div class ="create">
         <div class ="create-top">
-            <h2>Create Content</h2>
+            <h1>Create Content</h1>
             <small class = "text-muted">Work with AI agents or use automated workflows to create content</small>
         </div>
 
@@ -80,135 +79,9 @@
             <div class = "space-b0">
 
             <div class ="insights">
-            
-            
-            <div class = "user">
-            <div class ="worker-pic">
-            <img src = "../img/profile-pic.png">
-            </div>
-            <div class = "worker-info">
-                <h1>Name</h1>
-                <p>Description</p>
-            <div class ="worker-tags">
-                <a href="#">Blog Post</a>
-                <a href="#">Articles</a>
-                <a href="#">Newsletter</a>
-            </div>
-            <div class ="contact-user">
-                <input type ="submit" value ="Contact with user" class ="contact-toggle">
+                
             </div>
             </div>
-            </div>
-            
-            
-            <div class = "user">
-            <div class ="worker-pic">
-                <img src = "../img/profile-pic.png">
-            </div>
-            <div class = "worker-info">
-                <h1>Name</h3>
-                <p>Description</p>
-            <div class ="worker-tags">
-                <a href="#">Blog Post</a>
-                <a href="#">Articles</a>
-                <a href="#">Newsletter</a>
-            </div>
-            <div class ="contact-user">
-                <input type ="submit" value ="Contact with user" class ="contact-toggle">
-            </div>
-            </div>
-            </div>
-
-            <div class = "user">
-            <div class ="worker-pic">
-                <img src = "../img/profile-pic.png">
-            </div>
-            <div class = "worker-info">
-                <h1>Name</h3>
-                <p>Description</p>
-            <div class ="worker-tags">
-                <a href="#">Blog Post</a>
-                <a href="#">Articles</a>
-                <a href="#">Newsletter</a>
-            </div>
-            <div class ="contact-user">
-                <input type ="submit" value ="Contact with user" class ="contact-toggle">
-            </div>
-            </div>
-            </div>
-
-            <div class = "user">
-            <div class ="worker-pic">
-                <img src = "../img/profile-pic.png">
-            </div>
-            <div class = "worker-info">
-                <h1>Name</h3>
-                <p>Description</p>
-            <div class ="worker-tags">
-                <a href="#">Blog Post</a>
-                <a href="#">Articles</a>
-                <a href="#">Newsletter</a>
-            </div>
-            <div class ="contact-user">
-                <input type ="submit" value ="Contact with user" class ="contact-toggle">
-            </div>
-            </div>
-            </div>
-
-            <div class = "user">
-            <div class ="worker-pic">
-                <img src = "../img/profile-pic.png">
-            </div>
-            <div class = "worker-info">
-                <h1>Name</h3>
-                <p>Description</p>
-            <div class ="worker-tags">
-                <a href="#">Blog Post</a>
-                <a href="#">Articles</a>
-                <a href="#">Newsletter</a>
-            </div>
-            <div class ="contact-user">
-                <input type ="submit" value ="Contact with user" class ="contact-toggle">
-            </div>
-            </div>
-            </div>
-
-            <div class = "user">
-            <div class ="worker-pic">
-                <img src = "../img/profile-pic.png">
-            </div>
-            <div class = "worker-info">
-                <h1>Name</h3>
-                <p>Description</p>
-            <div class ="worker-tags">
-                <a href="#">Blog Post</a>
-                <a href="#">Articles</a>
-                <a href="#">Newsletter</a>
-            </div>
-            <div class ="contact-user">
-                <input type ="submit" value ="Contact with user" class ="contact-toggle">
-            </div>
-            </div>
-            </div>
-
-        </div>
-        </div>
-
-
-        <!--Chat Logic-->
-        <div id="chat-window">
-        <div id="chat-header">
-            Chat with user
-        <div class ="close-chat"><span class="material-symbols-outlined">close</span></div>
-        </div>
-        <div id="chat-messages">
-            <!-- Messages will be added here -->
-        </div>
-        <div id="chat-input">
-            <input type="text" id="message-input" placeholder="Write you message...">
-            <button id="send-button"><span class="material-symbols-outlined">send</span></button>
-        </div>
-        </div>
 
 
         <div class ="space-b1">

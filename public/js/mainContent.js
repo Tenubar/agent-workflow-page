@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+    $("#close-btn").click(function () {
+        $(".container").toggleClass("collapsed");
+    });
+
     $(".space-c").click(function() {
     $(".space-c").removeClass("border-active"); 
     $(this).addClass("border-active"); 

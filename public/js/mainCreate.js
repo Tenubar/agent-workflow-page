@@ -1,46 +1,20 @@
 $(document).ready(function() {
-    $(".space-b").click(function() {
-    $(".space-b").removeClass("active"); 
-    $(this).addClass("active"); 
 
-    for (let i = 0; i<2; i++){
-        $(".space-b"+ i).css("display", "none");
-    }
-    var index = $(this).index();
-    $(".space-b"+index).css("display", "block");
+  $("#close-btn").click(function () {
+    $(".container").toggleClass("collapsed");
+  });
 
-    });
+  $(".space-b").click(function() {
+  $(".space-b").removeClass("active"); 
+  $(this).addClass("active"); 
 
-    // Toggle Chat
+  for (let i = 0; i<2; i++){
+      $(".space-b"+ i).css("display", "none");
+  }
+  var index = $(this).index();
+  $(".space-b"+index).css("display", "block");
 
-    $(".contact-toggle").click(function(){
-        $("#chat-window").toggle();
-    });
-
-    $("#send-button").click(function() {
-        var message = $("#message-input").val();
-        if (message) {
-          var now = new Date();
-          var timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
-          var messageHtml = `
-            <div class="message">
-              <span class="user">User:</span>
-              <span class="timestamp">${timestamp}</span>
-              <p>${message}</p>
-            </div>
-          `;
-          $("#chat-messages").append(messageHtml);
-          $("#message-input").val('');
-
-          // Scroll to bottom of chat messages
-          $("#chat-messages").scrollTop($("#chat-messages")[0].scrollHeight);
-        }
-      });
-
-      $(".close-chat").click(function(){
-        $("#chat-window").toggle();
-      });
-
+  });
 
   // Workflow Forms
   $("#workflow-0").click(function() {
@@ -94,6 +68,11 @@ $(document).ready(function() {
       $("#overlay").fadeOut();
   });
 
+$('.contact-user').click(function(){
+  window.open('/chat', '_blank');
+})
 
 });
+
+
 

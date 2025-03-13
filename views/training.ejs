@@ -10,51 +10,57 @@
 </head>
 <body>
 
+    <script>
+        const username = "<%= username %>";
+        console.log("Username:", username);
+    </script>
+
     <div class = "container">
 
-    <aside>
-        <div class ="top">
-            <!-- <img class="logo" src ="./img/logo.webp">  -->
-            <h2 class ="logo_h2"> Company </h2>
-            
-            <div class ="close" id ="close-btn">
-                <span class="material-symbols-outlined">close</span>
+        <aside>
+            <div class ="top">
+                <img class="logo" src ="./img/sokka_logo.png">
+                <img class ="logo_h2" src ="./img/sokka_banner.png"> 
+                <!-- <h2 class ="logo_h2"> Company </h2> -->
+                
+                <div class ="close" id ="close-btn">
+                    <span class="material-symbols-outlined">keyboard_tab_rtl</span>
+                </div>
             </div>
-        </div>
 
-        <div class ="sidebar">
-            <a href ="home">
-                <span class="material-symbols-outlined">grid_view</span>
-                <h3>Dashboard</h3>
-            </a>
-            <a href ="training" class = "active">
-                <span class="material-symbols-outlined">automation</span>
-                <h3>Training</h3>
-            </a>
-            <a href ="create">
-                <span class="material-symbols-outlined">edit</span>
-                <h3>Create</h3>
-            </a>
-            <a href ="content">
-                <span class="material-symbols-outlined">book_2</span>
-                <h3>Content Hub</h3>
-            </a>
-            <a href ="settings">
-                <span class="material-symbols-outlined">manage_accounts</span>
-                <h3>Settings</h3>
-            </a>
-            <a href ="/">
-                <span class="material-symbols-outlined">logout</span>
-                <h3>Logout</h3>
-            </a>
-        </div>
-    </aside>
+            <div class ="sidebar">
+                <a href ="home">
+                    <span class="material-symbols-outlined">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href ="training" class ="active">
+                    <span class="material-symbols-outlined">automation</span>
+                    <h3>Training</h3>
+                </a>
+                <a href ="create">
+                    <span class="material-symbols-outlined">edit</span>
+                    <h3>Create</h3>
+                </a>
+                <a href ="content">
+                    <span class="material-symbols-outlined">book_2</span>
+                    <h3>Content Hub</h3>
+                </a>
+                <a href ="settings">
+                    <span class="material-symbols-outlined">manage_accounts</span>
+                    <h3>Settings</h3>
+                </a>
+                <a href ="logout">
+                    <span class="material-symbols-outlined">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
 
     
     <div class ="training">
 
         <div class ="training-top">
-        <h2>Training</h2>
+        <h1>Training</h1>
         <small class = "text-muted">Train your AI on your business details to generate better content</small>
         </div>
 
@@ -72,13 +78,13 @@
     
         <!--Business Information -->
         <form action = "#" method = "POST" class ="space-a0">
-        <div class = "business-content">
         <h5>Business Name</h5>
+        <div class = "business-info-flex">
         <input type ="text" class ="business" placeholder="Enter your business here">
         </div>
 
-        <div class = "website-content">
         <h5> Website</h5>
+        <div class = "business-info-flex">
         <input type ="text" class ="website" placeholder = "https://example.com">
         <input type ="submit" class = "btn" value ="Analyze Website">
         </div>

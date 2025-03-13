@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+    $("#close-btn").click(function () {
+        $(".container").toggleClass("collapsed");
+    });
+
     $(".space-d").click(function() {
     $(".space-d").removeClass("active"); 
     $(this).addClass("active"); 

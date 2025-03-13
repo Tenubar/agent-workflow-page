@@ -1,5 +1,5 @@
 :root{
-    --color-primary: hsl(244, 89%, 65%);
+    /* --color-primary: hsl(244, 89%, 65%);
     --color-danger: #f04134de;
     --color-success: #45be45;
     --color-warning: #ffb71c;
@@ -10,14 +10,27 @@
     --color-light: #e5dbdb;
     --color-primary-variant: #ebd9d9;
     --color-dark-variant: #6b6b6b;  
-    --color-background: #f3f3f3;
+    --color-background: #f3f3f3; */
+
+    --color-primary: #0077B6; /* Cool Blue */
+    --color-danger: #f04134de; /* Retained from original */
+    --color-success: #45be45; /* Retained from original */
+    --color-warning: #ffb71c; /* Retained from original */
+    --color-white: #FFFFFF; /* White */
+    --color-info-dark: #002D62; /* Midnight Blue */
+    --color-info-light: #00B4D8; /* Deep Sky Blue */
+    --color-dark: #000000; /* Black */
+    --color-light: #e5dbdb; /* Retained from original */
+    --color-primary-variant: #0077B6; /* Adjusted to Cool Blue as a variant */
+    --color-dark-variant: #6b6b6b; /* Retained from original */
+    --color-background: #f3f3f3; /* Retained from original */
 
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
     --border-radius-2: 0.8rem;
     --border-radius-3: 1.2rem;
 
-    --card-padding: 1.8rem;
+    --card-padding: 1.4rem;
     --padding-1: 1.2rem;
 
     --box-shadow: 0rem 0rem 1rem 0rem var(--color-light);
@@ -43,24 +56,26 @@ html{
 body{
     width: 100vw;
     height: 100vh;
-    font-family: "Poppins", sans-serif;
-    font-style: normal;
+    font-family: "Oxygen", sans-serif;
+    font-weight: 400;
     font-size: 0.88rem;
     background: var(--color-background);
-    user-select: none;
+    /* user-select: none; */
     overflow-x: hidden;
 }
 
 .container{
-    display:grid;
+    display: grid;
     width: 96%;
-    margin: 0 0 auto;
+    margin: 2.4rem 0 auto 0;
     gap: 1.8rem;
     grid-template-columns: 14rem auto 1rem;
 }
 
 a{
-    color: var(--color-dark);
+    font-family: "Oxygen", sans-serif;
+    font-weight: 400;
+    font-size: 0.82rem;
 }
 
 img{
@@ -68,31 +83,77 @@ img{
     width: 100%;
 }
 
+p{
+    font-family: "Oxygen", sans-serif;
+    font-weight: 400;
+    font-size: 0.88rem;
+}
 
 h1{
-    font-weight: 400;
-    font-size: 1.4rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 500;
 }
 
 h2{
-    font-size: 1.4rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.95rem;
 }
 
 h3{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
     font-size: 0.87rem;
 }
 
 h4{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
     font-size: 0.8rem;
 }
 
 h5{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
     font-size: 1.1em;
 }
 
 small{
+    font-family: "Oxygen", sans-serif;
+    font-weight: 300;
     font-size: 0.8rem;
 }
+
+button{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+input{
+    font-family: "Oxygen", sans-serif;
+    font-weight: 400;
+    font-size: 0.88rem;
+}
+
+label{
+    font-family: "Oxygen", sans-serif;
+    font-weight: 400;
+    font-size: 0.88rem;
+}
+
+textarea{
+    font-family: "Oxygen", sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+table{
+    font-family: 'Inter', 'sans-serif';
+    font-weight: 600;
+}
+
 
 .profile-photo{
     width: 2.8rem;
@@ -102,7 +163,7 @@ small{
 }
 
 .text-muted{
-    color: var(--color-info-light);
+    color: var(--color-dark-variant);
 }
 
 p{
@@ -133,30 +194,59 @@ aside{
     height: 100vh;
 }
 
-aside h2{
-    color: white;
-}
-
 aside .top{
-    height: 17vh;
+    height: 19vh;
     display: flex;
     position: fixed;
     align-items: center;
     width: 172px;
-    background: #2c284b;
+    background: var(--color-info-dark);
     justify-content: center;
+    top: 0;
+    transition: width 0.3s ease;
+    user-select:none;
 }
 
 aside .logo{
-    display: flex;
-    gap: 0.8rem;
     width: 3rem;
-    height: 1.5rem;
+    height: 3rem;
 }
 
-aside .close{
+aside .logo{
     display:none;
 }
+
+aside .logo_h2{
+    width: 12rem;
+    height: 6rem;
+    padding: 12px 24px 12px 18px;
+}
+
+
+aside .close{
+    display: flex;
+    color: var(--color-info-light);
+    background: var(--color-background);
+    align-items: center;
+    border-radius: 50%;
+    padding: 3px;
+    cursor: pointer;
+    box-shadow: 0rem 0rem 0.33rem 0rem var(--color-info-light);
+    position: absolute;
+    transition: left 0.3s ease;
+    left: 158px;
+    user-select: none;
+}
+
+aside .close span{
+    font-size: 22px;
+    transition: transform 0.3s ease;
+}
+
+aside .close:hover{
+    filter:brightness(1.11)
+}
+
 
 aside .sidebar{
     /* background: var(--color-background); */
@@ -164,8 +254,14 @@ aside .sidebar{
     flex-direction: column;
     height: 86vh;
     position: fixed;
-    top: 7rem;
-    background: #2c284b;
+    top: 8rem;
+    background: var(--color-info-dark);
+    width:172px;
+    transition: width 0.3s ease;
+}
+
+aside h2{
+    color: white;
 }
 
 aside h3{
@@ -180,7 +276,7 @@ aside .sidebar a{
     align-items: center;
     position: relative;
     height: 3.7rem;
-    transition: all 300msease;
+    transition: all 300ms ease;
     width: 155px;
 }
 
@@ -190,16 +286,26 @@ aside .sidebar a span{
     transition: all 120ms ease;
 }
 
+aside .sidebar a.active h3{
+    color: var(--color-white);
+}
+
 aside .sidebar a:last-child{
     position: absolute;
     bottom: 2rem;
     width: 100%;
 }
 
+aside .sidebar a.active:before{
+    left:-20px;
+    transition: left 0.3s ease;
+}
+
 aside .sidebar a.active{
-    background: #333855;
+    background: var(--color-primary);
     color: var(--color-white);
     margin-left: 0;
+    left:0;
     border-radius: var(--border-radius-1);
 }
 
@@ -228,6 +334,36 @@ aside .sidebar .message-count{
     border-radius: var(--border-radius-2);
 }
 
+
+/* Collapsed (when `.collapsed` is added) */
+.container.collapsed aside .logo {
+    display: block;
+}
+.container.collapsed aside .logo_h2 {
+    display: none;
+}
+.container.collapsed aside .sidebar, .container.collapsed aside .top {
+    width: 84px;
+}
+.container.collapsed aside h2 {
+    display: none;
+}
+.container.collapsed aside .sidebar h3 {
+    display: none;
+}
+.container.collapsed aside .sidebar a {
+    width: 5.6rem;
+}
+.container.collapsed aside .sidebar a:last-child {
+    position: relative;
+    margin-top: 1.8rem;
+}
+.container.collapsed aside .close {
+    left: 74px;
+    transform: scaleX(-1);
+}
+
+
 main{
     margin-top: 1.7rem;
 }
@@ -248,17 +384,19 @@ main .date input[type="date"]{
 main .insights{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.6rem;
+    column-gap: 2rem;
+    row-gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 main .insights > div{
     background: var(--color-white);
     padding: var(--card-padding);
-    border-radius: var(--card-border-radius);
-    margin-top: 1rem;
+    border-radius: var(--border-radius-1);
     box-shadow: var(--box-shadow);
-    width: 15rem;
+    margin-top: 1.4rem;
 }
+
 
 .workflow-insights{
     display: grid;
@@ -269,22 +407,31 @@ main .insights > div{
 .workflow-insights > div{
     background: var(--color-white);
     padding: var(--card-padding);
-    border-radius: var(--card-border-radius);
+    border-radius: var(--border-radius-1);
+    border: 2px solid transparent;
     margin-top: 1rem;
     box-shadow: var(--box-shadow);
     width: 20rem;
+    cursor: pointer;
+    transition: border 0.3s ease;
 }
+
+.workflow-insights > div:hover{
+    border: 2px solid var(--color-light);
+}
+
 
 main .insights > div:hover{
     box-shadow: none;
 }
 
 main .insights > div span{
-    background: var(--color-primary);
+    background: #e4e7e9;
     padding: 0.5rem;
-    border-radius: var(--border-radius-2);
-    color: var(--color-white);
-    font-size: 2rem;
+    border-radius: var(--border-radius-1);
+    color: var(--color-primary);
+    font-size: 1rem;
+    user-select: none;
 }
 
 main .insights > div .middle{
@@ -295,7 +442,7 @@ main .insights > div .middle{
 main .insights .left{
     display: flex;
     align-items: center;
-    column-gap: 0.7rem;
+    justify-content: space-between;
 }
 
 
@@ -309,15 +456,120 @@ main .insights h5{
     white-space: nowrap;
 }
 
+#button-new-agent, #button-new-workflow{
+    display: flex;
+    align-items: center;
+    column-gap: 0.2rem;
+    background: var(--color-white);
+    width: 160px;
+    justify-content: center;
+    border-radius: var(--border-radius-1);
+    color: var(--color-info-dark);
+    padding: 5px;
+    font-weight: 600;
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#button-new-agent:hover, #button-new-workflow:hover{
+    background-color: var(--color-info-light);
+    color: var(--color-light);
+}
+
 .proyects h1, .team h1, .content h1, .conversations h1{
     font-size: 1.8rem;
     font-weight: 500;
-    text-align: right;
+    text-align: left;
 }
 
 .proyects h5, .team h5, .content h5, .conversations h5{
     font-weight: 500;
 }
+
+
+.border-agents{
+    display: block;
+    padding: 8px;
+    border-radius: var(--border-radius-1);
+    background: white;
+}
+
+.agents-dashboard, .workflows-dashboard{
+    display: grid;
+    padding: var(--card-padding);
+    justify-content: left;
+    column-gap: 3rem;
+    row-gap: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+
+.agents-dashboard button, .workflows-dashboard button{
+    background:none;
+    color: var(--color-white);
+    cursor:pointer;
+}
+
+
+.agents-display{
+    display: grid;
+    gap: 0.5rem;
+    padding: 9px 12px 9px 12px;
+    border-radius: var(--border-radius-1);
+    background: var(--color-white);
+    box-shadow: var(--box-shadow-2);
+    width: 160px;
+}
+
+.agents-display span{
+    color:var(--color-info-light);
+    font-size: 1.4rem;
+}
+
+
+.suggested-workflow-1{
+    display: grid;
+    gap: 0.5rem;
+    padding: 9px 12px 9px 12px;
+    border-radius: var(--border-radius-1);
+    background: var(--color-white);
+    box-shadow: var(--box-shadow-2);
+    width: 210px;
+}
+
+.suggested-workflow-1 h2{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size:13px;
+}
+
+.run-agent{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--color-primary);
+    border-radius: var(--border-radius-1);
+    padding: 4px 4px 6px 8px;
+    width: 60%;
+    color: var(--color-white);
+    margin-top: 0.2rem;
+    cursor: pointer;
+    border: 1px solid #7f7fbf;
+}
+
+.run-agent span{
+    color: var(--color-white);
+}
+
+.run-agent:hover{
+    filter:brightness(0.8);
+}
+
 
 /* Training */
 
@@ -330,9 +582,8 @@ main .insights h5{
     border-radius: var(--border-radius-1);
     cursor: pointer;
     font-size: 14px;
-    font-family: 'Poppins';
     text-align: center;
-    border: 2px solid var(--color-info-dark);
+    border: 2px solid var(--color-light);
 }
 
 .dropdown:hover {
@@ -345,9 +596,11 @@ main .insights h5{
     align-items: center;
 }
 
+.dropdown span{
+    color: var(--color-info-dark);
+}
+
 .dropdown-button {
-    font-size: 14px;
-    font-family: 'Poppins';
     text-align: center;
     cursor: pointer;
     width: 100%;
@@ -355,6 +608,7 @@ main .insights h5{
     padding: 0;
     border: none;
     background: transparent;
+    color: var(--color-info-dark);
 }
 
 .dropdown-menu {
@@ -391,7 +645,6 @@ main .insights h5{
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-family: Arial, sans-serif;
 }
 
 /* Heading styles */
@@ -424,7 +677,7 @@ main .insights h5{
 }
 
 /* Button style */
-.personal-context .btn {
+/* .personal-context .btn {
     background-color: var(--color-success);
     color: white;
     padding: 12px 18px;
@@ -434,11 +687,8 @@ main .insights h5{
     font-size: 1em;
     margin-top: 4px;
     margin-bottom: 16px;
-}
+} */
 
-.personal-context .btn:hover {
-    background-color: #3e8e41;
-}
 
 
 .personal-context label{
@@ -455,42 +705,47 @@ main .insights h5{
 
 .btn{
     position: relative;
-    padding: 0.3rem;
+    padding: 0.6rem;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     outline: none;
     cursor: pointer;
     border-radius: var(--border-radius-1);
     color: var(--color-white);
-    border: 2px solid var(--color-info-dark);
-    color: var(--color-dark);
-    background: transparent;
-    font-family: 'Poppins';
+    color: var(--color-white);
+    background: var(--color-info-light);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
 }
 
-.business-content{
-    margin-top: 2.4rem;
-    margin-bottom: 2.4rem;
+.btn:hover{
+    background-color: var(--color-info-dark);
 }
+
+.business-info-flex{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-top: 0.7rem;
+    column-gap: 0.5rem;
+}
+
 
 .training-top{
     margin-top: 1.4rem;
 }
 
 .training-middle{
-    padding: 1rem;
+    padding: 1.6rem;
     margin-top: 2rem;
     background: var(--color-white);
     border-radius: var(--border-radius-2);
 }
 
-/* padding: 1rem;
-margin-top: 2.8rem;
-margin-left: 1.4rem; */
-
 
 tr{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     gap: 3rem;
 } 
 
@@ -502,7 +757,7 @@ th{
 }
 
 .training-middle form{
-    margin-top: 1.1rem;
+    margin-top: 2.5rem;
 }
 
 .forms-fills{
@@ -513,9 +768,7 @@ th{
     padding: 0.4rem;
     border-radius: var(--border-radius-1);
     height: 2.4rem;
-    margin-top:0.4rem;
-    font-family: inherit;
-    border: 2px solid var(--color-primary-variant); 
+    border: 2px solid var(--color-light);
 }
 
 .training-middle textarea {
@@ -527,7 +780,6 @@ th{
     border-radius: 4px;
     box-sizing: border-box;
     resize: vertical; 
-    font-family: inherit; 
     background: var(--color-background);
 }
 
@@ -538,12 +790,12 @@ th{
 
 .customer-avatar .btn{
     background: none;
-    color: var(--color-dark);
+    color: var(--color-info-light);
     border:none;
 }
 
 .customer-avatar span{
-    color: var(--color-dark);
+    color: var(--color-info-light);
 }
 
 #add-avatar{
@@ -551,20 +803,17 @@ th{
     align-items: center;
     margin: 1.4rem 0;
     width: 190px;
-    gap: 7px;
     background-color: transparent;
     justify-content: center;
     padding: 6px 11px;
     border: none;
     border-radius: var(--border-radius-1);
     cursor: pointer;
-    font-size: 14px;
-    font-family: 'Poppins';
     text-align: center;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    border: 2px solid var(--color-dark);
+    border: 2px solid var(--color-info-light);
 }
 
 .space-a0{
@@ -624,7 +873,8 @@ th{
 }
 
 .training-middle h5{
-    color: var(--color-info-dark);
+    color: var(--color-dark);
+    margin-top: 1.8rem;
 }
 
 .brandDetails p{
@@ -765,11 +1015,7 @@ th{
 }
 
 
-table th.border-active{
-    border-radius: var(--border-radius-1);
-    color: var(--color-info-dark);
-    border: 2px solid black;
-}
+
 
 section.content-section{
     display: flex;
@@ -796,11 +1042,14 @@ section .content-avaliable{
     padding: 10px 20px;
     border-radius: var(--border-radius-1);
     cursor: pointer;
-    font-size: 14px;
-    font-family: 'Poppins';
     text-align: center;
-    background: white;
-    border: 2px solid var(--color-info-dark);
+    background: var(--color-info-light);
+    color: var(--color-white);
+    transition: background-color 0.3s ease;
+}
+
+.button-container:hover {
+    background-color: var(--color-info-dark);
 }
 
 .button-container .material-symbols-outlined {
@@ -822,17 +1071,27 @@ section .content-avaliable{
     margin-right: 16px;
 }
 
+table th.border-active{
+    border-radius: var(--border-radius-1);
+    color: var(--color-info-dark);
+    border: 2px solid var(--color-info-dark);
+}
+
 table th{
     color: var(--color-dark-variant);
     cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
+
 
 table th.active{
     color: var(--color-info-dark);
     position: relative;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-table th.active:before{
+/* table th.active:before{
     content: "";
     width: 100%;
     height: 2px;
@@ -842,15 +1101,34 @@ table th.active:before{
     bottom: -10px;
     display: block;
     border-radius: var(--border-radius-2);
-    transition: 120ms ease;
+    transition: width 0.3s ease, left 0.3s ease;
+} */
+
+table th::after{
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+table th.active::after {
+    left: 50%;
+    width: 100%;
 }
 
 table th.active:hover{
     color: var(--color-dark);
+    transition: filter 0.3s ease;
 }
 
 table th:hover{
-    color: var(--color-dark);
+    filter:brightness(1.1);
 }
 
 table th.border-active:hover{
@@ -870,20 +1148,28 @@ table th.border-active:hover{
 }
 
 .create-middle{
-    padding: 1rem;
+    padding: 1.6rem;
     margin-top: 2rem;
-    max-width: 80rem;
     background: var(--color-white);
     border-radius: var(--border-radius-1);
 }
 
 main .insights .user{
     display: flex;
-    gap: 0.3rem;
-    margin-left: 1.5rem;
+    gap: 0.8rem;
+    padding: 14px 14px 14px 14px;
     grid-template-columns: (2, 0.3fr);
     background: var(--color-white);
-    border: 2px solid var(--color-primary-variant);
+    border: 2px solid var(--color-light);
+    border-radius: var(--border-radius-1);
+    box-shadow: var(--box-shadow);
+    margin-top:1.4rem;
+    cursor: pointer;
+    transition: border 0.3ms ease;
+}
+
+main .insights .user:hover{
+    border: 2px solid var(--color-light);
 }
 
 main .insights .user img{
@@ -903,7 +1189,14 @@ main .insights .user img{
 .workflow-info h1 {
     font-size: 16px;
     margin: 0 0 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 .workflow-info p {
     font-size: 12px;
     margin: 0 0 6px;
@@ -911,8 +1204,9 @@ main .insights .user img{
     overflow: auto;
 }
 .workflow-tags {
-    margin: 1px 0 8px 0;
+    margin: 12px 0 12px 0;
 }
+
 .workflow-tags a {
     display: inline-block;
     color: #ffffff;
@@ -927,7 +1221,7 @@ main .insights .user img{
     font-size: 11px;
 }
 .workflow-tags a:hover {
-    background-color: #0056b3;
+    background-color: var(--color-info-dark);
     color:white;
 }
 
@@ -936,14 +1230,18 @@ main .insights .user img{
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    background-color: var(--color-success);
+    background-color: var(--color-primary);
     color: #ffffff;
     border: none;
     padding: 6px 12px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
     width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.workflow-run:hover{
+    background-color: var(--color-info-dark);
 }
 
 .workflow-run h1{
@@ -991,7 +1289,7 @@ main .insights .user img{
 
 .settings h1{
     margin-top: 2.4rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: 1rem;
 }
 
 .settings-middle{
@@ -1016,8 +1314,7 @@ main .insights .user img{
     width: 60vw;
     margin-top: 0.4rem;
     margin-bottom: 1rem;
-    border: 2px solid var(--color-primary-variant);
-    font-family: inherit;
+    border: 2px solid var(--color-light);
 }
 
 .forms-settings input[type="password"]{
@@ -1027,8 +1324,7 @@ main .insights .user img{
     width: 60vw;
     margin-top: 0.4rem;
     margin-bottom: 1rem;
-    border: 2px solid var(--color-primary-variant);
-    font-family: inherit;
+    border: 2px solid var(--color-light);
 }
 
 
@@ -1084,7 +1380,7 @@ main .insights .user img{
     padding: 12px;
     border-radius: 6px;
     background: transparent;
-    border: 2px solid var(--color-primary-variant);
+    border: 2px solid var(--color-light);
 }
 
 .settings-middle input:hover{
@@ -1097,24 +1393,30 @@ main .insights .user img{
 
 .space-d3 button{
     height: 42px;
-    background: transparent;
     border-radius: 6px;
     cursor:pointer;
 }
 
 .saveKeyBtn{
     width: 100px;
-    border: 2px solid var(--color-info-light);
+    background: var(--color-info-light);
+    color: var(--color-white);
+    border-radius: var(--border-radius-1);
+    transition: background-color 0.3s ease;
 }
 
 .saveKeyBtn:hover{
-    border: 2px solid rgb(83, 82, 82);
-    background: rgba(165, 165, 165, 0.089);
+    background-color: var(--color-info-dark);
+}
+
+.saveKeyBtn:hover{
+    background: var(--color-info-dark);
 }
 
 .remove-all-keys-btn{
     width: 150px;
     border: var(--color-danger);
+    background:transparent;
 }
 
 .remove-all-keys-btn span{
@@ -1127,7 +1429,6 @@ main .insights .user img{
 }
 
 .space-d3 button span{
-    font-family: 'Poppins';
     font-size: 14px;
 }
 
@@ -1166,6 +1467,7 @@ main .insights .user img{
     border-radius: var(--border-radius-1);
     color: var(--color-dark);
     padding: 4px;
+    user-select: none;
 }
 
 .remove-all-keys-btn{
@@ -1194,13 +1496,27 @@ main .insights .user img{
 }
 
 .worker-info h1 {
-    font-size: 1.4em;
+    font-size: 0.95rem;
     margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .worker-info p {
     font-size: 0.8rem;
     color: var(--color-info-dark);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    height: 50px;
 }
 
 .worker-tags {
@@ -1217,6 +1533,11 @@ main .insights .user img{
     margin-right: 4px;
     margin-top: 3px;
     font-size: 0.8em;
+    /* Ellipsis */
+    max-width: 12ch; 
+    overflow: hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .worker-tags a:hover {
@@ -1230,19 +1551,20 @@ main .insights .user img{
 
 
 .contact-user input[type="submit"] {
-    background-color: var(--color-success);
+    background-color: var(--color-info-light);
     color: white;
     padding: 8px 12px;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--border-radius-1);
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 0.88rem;
     width: 100%;
-    font-family: 'Poppins';
+    font-family: 'Inter', 'sans-serif';
+    transition: background-color 0.3s ease;
 }
 
 .contact-user input[type="submit"]:hover {
-    background-color: #3e8e41;
+    background-color: var(--color-info-dark);
 }
 
 
@@ -1386,7 +1708,7 @@ main .insights .user img{
 #formContent textarea {
     resize: vertical;
     height: 100px;
-    font-family:'Poppins';
+    font-family:'Inter';
 }
 
 #formActions {
@@ -1518,7 +1840,17 @@ main .insights .user img{
     color: #333;
 }
 
-
+.welcome-message {
+    padding: 20px;
+    background-color: #f0f8ff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    z-index: 1000;
+    display: none; 
+}
 
 .workflow-id-0{
     display: none;
@@ -1537,11 +1869,16 @@ main .insights .user img{
 }
 
 
+
 /* Media Queries*/
 
 @media screen and (max-width: 1200px){
 
     main .insights {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .agents-dashboard{
         grid-template-columns: repeat(3, 1fr);
     }
 
@@ -1564,16 +1901,22 @@ main .insights .user img{
 
 }
 
-@media screen and (max-width: 860px){
+@media screen and (max-width: 930px){
     main .insights{
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .agents-dashboard{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
 }
 
 @media screen and (max-width: 865px){
     .workflow-insights{
         grid-template-columns: 1fr;
     }
+
 }
 
 @media screen and (max-width: 660px){
@@ -1583,7 +1926,21 @@ main .insights .user img{
     grid-template-columns: 7rem auto 23rem;
     }
     aside .logo{
-        display: none;
+        display: block;
+    }
+
+    aside .logo_h2{
+        display:none;
+    }
+    
+
+    aside .sidebar, aside .top{
+        width:84px;
+        transition: width 0.3s ease;
+    }
+
+    aside h2{
+        display:none;
     }
 
     aside .sidebar h3{
@@ -1592,18 +1949,33 @@ main .insights .user img{
 
     aside .sidebar a{
         width: 5.6rem;
+        transition: width 0.3s ease;
     }
 
     aside .sidebar a:last-child{
         position: relative;
         margin-top: 1.8rem;
+        transition: margin-top 0.3s ease, position 0.3s ease;
     }
+
+    aside .close{
+        left: 74px;
+        transform: scaleX(-1);
+    }
+
     main .insights{
         grid-template-columns: 1fr;
     }
 
     .workflow-insights{
         grid-template-columns: 1fr;
+    }
+
+    .agents-dashboard{
+        grid-template-columns: 1fr;
+    }
+    tr{
+        grid-template-columns: repeat(2, 1fr);
     }
 }
   

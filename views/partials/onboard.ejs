@@ -1,0 +1,348 @@
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oxygen:wght@300;400;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+    <style>
+
+        h1{
+            font-family: 'Inter', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        p{
+            font-family: "Oxygen", sans-serif;
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
+
+        .onboarding-outline{
+            display: block;
+            position: fixed;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            filter: opacity(0.2);
+            z-index: 3;
+        }
+
+        .onboarding-container {
+            display: block;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            background-color: #fff;
+            border-radius: var(--border-radius-2);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0px 0px 14px 8px rgba(0, 0, 0, 0.1);
+            z-index: 4;
+            overflow-y: auto;
+            height: 90vh;   
+            place-content: center;
+        }
+
+        .onboarding-container img{
+            display: block;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 7rem;
+            height: 7rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .onboarding-container img.hidden{
+            display: none;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: grid;
+            row-gap: 1rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 2.5rem;
+        }
+
+        .navigation button {
+            width: 9rem;
+        }
+
+        .arrow {
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-1);
+            margin: 0 10px;
+            transition: background-color 0.3s;
+            display:none;
+        }
+
+        .skip {
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: #b3fdf08f;
+            border: none;
+            border-radius: var(--border-radius-1);
+            margin: 0 10px;
+            color: #2d2c2c;
+            font-weight: 700;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .tour{
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: #ea00ff8f;
+            border: none;
+            border-radius: var(--border-radius-1);
+            margin: 0 10px;
+            color: #ffffff;
+            font-weight: 700;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .skip:hover {
+            color: white;
+            background-color: rgb(121, 120, 180)
+        }
+
+        .arrow:hover {
+            background-color: #0056b3;
+        }
+
+        .tour:hover{
+            color: black;
+            background-color: #03dbe2;
+        }
+
+        .arrow:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .finish{
+            cursor: pointer;
+            padding: 10px 15px;
+            background-color: var(--color-success);
+            border: none;
+            border-radius: var(--border-radius-1);
+            margin: 0 10px;
+            color: #ffffff;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+            display:none;
+        }
+
+        .finish:hover{
+            background-color: green;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius-2);
+            box-sizing: border-box;
+            height: 7vh;
+            align-items: center;
+            align-content: center;
+        }
+
+        .generate-ai-btn{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position:relative;
+            left: 50%;
+            transform: translate(-50%);
+            gap: 0.6rem;
+            background-color: var(--color-info-light);
+            color: white;
+            padding: 8px 8px;
+            border: none;
+            border-radius: var(--border-radius-1);
+            cursor: pointer;
+            width: 18vw;
+            font-weight: 600; 
+            transition: background-color 0.3s ease;
+        }
+        
+
+        .generate-ai-btn:hover {
+            background-color: var(--color-info-dark);
+        }
+
+        #businessForm{
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+    </style>
+<body>
+
+
+<div class ="onboarding-outline"></div>
+    <div class="onboarding-container">
+        <img id ="onboard-img" src ="./img/confetti.svg" class = "onboarding-img"></img>
+
+        <div class="step active" data-step="1">
+            <h1>Welcome aboard!</h1>
+            <p>To get a fell of the place, take our guided tour where we'll get you set up and show you how to start customizing your workspace</p>
+        </div>
+
+        <div class="step" data-step="2">
+            <h1>Tell us a little about you!</h1>
+            <div class ="generate-ai-btn">
+                <span class="material-symbols-outlined">stylus_note</span>
+                <div type="button" onclick="autogenerate()">Autogenerate with AI</div>
+            </div>
+            <form id="businessForm">
+                <label for="themselves">About Yourself:</label>
+                <textarea id="themselves" name="themselves" rows="4" placeholder="Tell us about yourself"></textarea>
+    
+                <label for="business">About Your Business:</label>
+                <textarea id="business" name="business" rows="4" placeholder="Describe your business"></textarea>
+    
+                <label for="offers">Your Offers:</label>
+                <textarea id="offers" name="offers" rows="4" placeholder="What products or services do you offer?"></textarea>
+    
+                <label for="niche">Your Niche:</label>
+                <input type="text" id="niche" name="niche" placeholder="Specify your niche">
+    
+            </form>
+        </div>
+
+        <div class="step" data-step="3">
+            <h1>Advanced Tips</h1>
+            <p>Learn advanced tips and tricks to maximize your experience.</p>
+        </div>
+
+        <div class="step" data-step="4">
+            <h1>Get Started</h1>
+            <p>Ready to dive in? Let's start using our platform to achieve your goals!</p>
+        </div>
+
+        <div class="navigation">
+            <button class="skip" id="skip"> Skip</button>
+            <button class="tour" id="tour"> Take a Tour </button>
+            <button class="finish" id="finish">Finish</button>
+            <button class="arrow" id="prev" disabled>&lt; Previous</button>
+            <button class="arrow" id="next">Next &gt;</button>
+        </div>
+    </div>
+
+    <script>
+        const steps = document.querySelectorAll('.step');
+        const tourButton = document.getElementById('tour');
+        const skipButton = document.getElementById('skip');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const finishButton = document.getElementById('finish');
+        const imgBoard1 = document.getElementById('onboard-img');
+        const formText = document.getElementById('themselves');
+        let currentStep = 1;
+
+        formText?.addEventListener('input',()=>{
+            nextStep();
+        });
+
+        function nextStep() {
+            nextButton.disabled = formText.value.length === 0 && currentStep === 2;
+        }
+
+        function showStep(stepNumber) {
+            steps.forEach(step => step.classList.remove('active'));
+            document.querySelector(`.step[data-step="${stepNumber}"]`).classList.add('active');
+
+            prevButton.disabled = stepNumber === 1;
+            nextButton.disabled = stepNumber === steps.length;
+            nextStep();
+        }
+
+        tourButton.addEventListener('click', () => {
+            if (currentStep < steps.length) {
+                currentStep++;
+                showStep(currentStep);
+            }if(currentStep>1){
+                skipButton.style.display ="none";
+                tourButton.style.display ="none";
+                imgBoard1.style.display = "none";
+                prevButton.style.display ="block";
+                nextButton.style.display ="block";
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentStep < steps.length) {
+                currentStep++;
+                showStep(currentStep);
+            }if(currentStep>1){
+                skipButton.style.display ="none";
+                tourButton.style.display ="none";
+                prevButton.style.display ="block";
+                nextButton.style.display ="block";
+            }if(currentStep===4){
+                prevButton.style.display ="none";
+                nextButton.style.display ="none";
+                finishButton.style.display = "block";
+                imgBoard1.style.display = "block";
+            }
+            if(currentStep===2){
+                imgBoard1.style.display = "none";
+            }if(currentStep===1){
+                imgBoard1.style.display = "block";
+            }
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }if(currentStep===1){
+                skipButton.style.display ="block";
+                tourButton.style.display ="block";
+                prevButton.style.display ="none";
+                nextButton.style.display ="none";
+            }if(currentStep===4){
+                prevButton.style.display ="none";
+                nextButton.style.display ="none";
+                finishButton.style.display = "block";
+                imgBoard1.style.display = "block";
+            }
+            if(currentStep===2){
+                imgBoard1.style.display = "none";
+            }if(currentStep===1){
+                imgBoard1.style.display = "block";
+            }
+        });
+
+        skipButton.addEventListener('click', () => {
+            window.location.href = '/home'
+        });
+
+        finishButton.addEventListener('click', () => {
+            window.location.href = '/home'
+        });
+
+    </script>
+</body>

@@ -1,0 +1,364 @@
+<script>
+
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    let new_worflow;
+    
+    const userId = id;
+    const userWorkflows = workflowCount;
+
+    // Create new Agent
+    const trigger_new_workflow = document.getElementById('button-new-workflow');
+    trigger_new_workflow.addEventListener('click', () => {
+        new_worflow = true;
+        createWorkflow();
+    });
+
+    const trigger_workflow = document.querySelector('.run-agent'); 
+    trigger_workflow.addEventListener('click', () => {
+        new_worflow = false;
+        createWorkflow();
+    });
+
+
+function createWorkflow(){
+    // Create a container div with class and data attributes
+    const stepDiv = document.createElement('div');
+    stepDiv.classList.add('step');
+    stepDiv.setAttribute('data-step', '2');
+    Object.assign(stepDiv.style, {
+    display: 'grid',
+    position: 'fixed',
+    top: '10vh',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    background: 'white',
+    zIndex: '1',
+    padding: '18px 24px 32px 24px',
+    maxHeight: '82vh',
+    borderRadius: 'var(--border-radius-2)',
+    rowGap: '0.72rem'
+    });
+
+    const outline = document.createElement('div');
+
+    Object.assign(outline.style, {
+        position: 'fixed',        
+        top: '0',                    
+        left: '0',                   
+        width: '100%',               
+        height: '100%',              
+        zIndex: '0',
+        background: "#4e677963",               
+        pointerEvents: 'none'        
+    });
+
+
+    const flexContainer = document.createElement('div');
+    Object.assign(flexContainer.style,{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        columnGap: "2rem"
+    });
+
+    // Close button
+    const closeButton = document.createElement('div');
+    Object.assign(closeButton.style, {
+        display: 'block',
+        width: '1rem',
+        height: '1rem',
+        backgroundColor: '#f44336',
+        color: 'white',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        userSelect: 'none',
+        marginLeft: 'auto'
+    });
+
+    closeButton.addEventListener('click', () => {
+        stepDiv.remove();
+        outline.remove();
+        closeButton.remove();
+    });
+
+    // Add the heading
+    const heading = document.createElement('h1');
+    Object.assign(heading.style,{
+        textAlign: "center",
+        fontSize: "18px"
+    })
+    stepDiv.appendChild(closeButton);
+    stepDiv.appendChild(heading);
+    stepDiv.appendChild(flexContainer);
+
+    // Create the AI button container
+    const generateAiBtnDiv = document.createElement('div');
+    generateAiBtnDiv.classList.add('generate-ai-btn');
+    Object.assign(generateAiBtnDiv.style,{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        columnGap: "0.4rem",
+        padding: "6px",
+        borderRadius: "var(--border-radius-1)",
+        background: "var(--color-background)",
+        color: "var(--color-info-dark)",
+        cursor: "pointer",
+    });
+
+    // Add the icon span
+    const span = document.createElement('span');
+    span.classList.add('material-symbols-outlined');
+    span.textContent = 'stylus_note';
+    generateAiBtnDiv.appendChild(span);
+
+    
+
+    // Save the workflow
+    const saveContent = document.createElement('div');
+    saveContent.classList.add('save-workflow');
+    Object.assign(saveContent.style,{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        columnGap: "0.4rem",
+        padding: "6px",
+        borderRadius: "var(--border-radius-1)",
+        background: "var(--color-background)",
+        color: "var(--color-info-dark)",
+        cursor: "pointer",
+    });
+
+    // Add the icon span
+    const span_save = document.createElement('span');
+    // span_save.classList.add('material-symbols-outlined');
+    // span_save.textContent = 'save';
+    saveContent.appendChild(span_save);
+
+    // Add the button with an onclick event
+    const buttonSaveDiv = document.createElement('div');
+    buttonSaveDiv.setAttribute('type', 'button');
+    buttonSaveDiv.setAttribute('onclick', '');
+    // buttonSaveDiv.textContent = 'Save';
+    saveContent.appendChild(buttonSaveDiv);
+
+    // Append the AI button container to stepDiv
+    flexContainer.appendChild(saveContent);
+    
+    // Delete the workflow
+    const deleteContent = document.createElement('div');
+    deleteContent.classList.add('delete-workflow');
+    Object.assign(deleteContent.style,{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        columnGap: "0.4rem",
+        padding: "6px",
+        borderRadius: "var(--border-radius-1)",
+        background: "var(--color-background)",
+        color: "var(--color-info-dark)",
+        cursor: "pointer",
+    });
+
+    // Add the icon span
+    const span_delete = document.createElement('span');
+    span_delete.classList.add('material-symbols-outlined');
+    span_delete.textContent = 'delete';
+    deleteContent.appendChild(span_delete);
+
+    // Add the button with an onclick event
+    const buttonDeleteDiv = document.createElement('div');
+    buttonDeleteDiv.setAttribute('type', 'button');
+    buttonDeleteDiv.setAttribute('onclick', '');
+    buttonDeleteDiv.textContent = 'Delete';
+    deleteContent.appendChild(buttonDeleteDiv);
+
+    // Append the AI button container to stepDiv
+    flexContainer.appendChild(deleteContent);
+
+    // Boolean
+
+    if(new_worflow){
+
+    heading.textContent = 'Create a new Workflow';
+
+    // Add the button with an onclick event
+    const buttonDiv = document.createElement('div');
+    buttonDiv.setAttribute('type', 'button');
+    buttonDiv.setAttribute('onclick', 'autogenerate()');
+    buttonDiv.textContent = 'Autogenerate with AI';
+    generateAiBtnDiv.appendChild(buttonDiv);
+
+    // Append the AI button container to stepDiv
+    flexContainer.appendChild(generateAiBtnDiv);
+
+    span_save.classList.add('material-symbols-outlined');
+    span_save.textContent = 'save';
+
+    buttonSaveDiv.textContent = 'Save';
+
+    // Create the form
+    const form = document.createElement('form');
+    form.id = 'businessForm';
+    Object.assign(form.style,{
+    width: "50vw",
+    height: "60vh",
+    padding: "12px",
+    overflowY: "auto"
+    });
+
+    // Add form labels and inputs
+    const fields = [
+        { label: 'About Yourself:', id: 'themselves', type: 'textarea', placeholder: 'Tell us about yourself', rows: 4 },
+        { label: 'About Your Business:', id: 'business', type: 'textarea', placeholder: 'Describe your business', rows: 4 },
+        { label: 'Your Offers:', id: 'offers', type: 'textarea', placeholder: 'What products or services do you offer?', rows: 4 },
+        { label: 'Your Niche:', id: 'niche', type: 'input', placeholder: 'Specify your niche' }
+    ];
+
+    fields.forEach(field => {
+        const label = document.createElement('label');
+        label.setAttribute('for', field.id);
+        label.textContent = field.label;
+        form.appendChild(label);
+
+        if (field.type === 'textarea') {
+            const textarea = document.createElement('textarea');
+            textarea.id = field.id;
+            textarea.name = field.id;
+            textarea.rows = field.rows;
+            textarea.placeholder = field.placeholder;
+            textarea.style.resize = "none";
+            textarea.style.height = "10vh";
+            textarea.style.marginTop = "0.6rem";
+            textarea.style.marginBottom = "0.6rem";
+            form.appendChild(textarea);
+        } else if (field.type === 'input') {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = field.id;
+            input.name = field.id;
+            input.placeholder = field.placeholder;
+            input.style.height = "5vh";
+            input.style.background = "var(--color-light)";
+            input.style.borderRadius = "var(--border-radius-1)";
+            input.style.padding = "12px";
+            input.style.color = "var(--color-info-dark)";
+            input.style.marginTop = "1rem";
+            input.style.marginLeft = "1rem";
+            input.style.width = "70%";
+            form.appendChild(input);
+        }
+    });
+    // Append the form to stepDiv
+    stepDiv.appendChild(form);
+    }
+    else{
+
+        heading.textContent = 'Product Name Generator';
+
+        span_save.classList.add('material-symbols-outlined');
+        span_save.textContent = 'automation';
+
+        buttonSaveDiv.textContent = 'Run Workflow';
+
+        const contentWorkflow = document.createElement('textarea');
+        Object.assign(contentWorkflow.style,{
+        width: "50vw",
+        height: "60vh",
+        padding: "12px",
+        overflowY: "auto",
+        background: "var(--color-light)"
+    });
+
+        buttonSaveDiv.addEventListener('click',()=>{
+
+        const apiKey = 'sk-7wCiJRnOFz5jkQxZCFuuMw20250312224040';
+        const workFlowId = '67d213cdfaf90882fbf642ee';
+
+        const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workFlowId}&workflow_run_title=local%20run&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&groq_api_key=${apiKey}&google_api_key=${apiKey}`
+        const headers = {
+          'accept': 'application/json',
+          'x-api-key': apiKey,
+          'Content-Type': 'application/json'
+        };
+
+        const data = {
+          "Product Features": "can",
+          "Target Audience": "adults"
+        };
+
+        // Perform the POST request
+    axios.post(url, data, { headers })
+        .then(response => {
+            console.log('POST Response:', response.data);
+
+            // Extract the workflow_run_id from the POST response
+            const workflowRunId = response.data.workflow_run_id;
+            console.log('Workflow Run ID:', workflowRunId);
+
+            // Start polling the server for output
+            pollForWorkflowOutput(workflowRunId, headers);
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+function pollForWorkflowOutput(workflowRunId, headers) {
+    const getUrl = `https://api-v3.mindpal.io/api/workflow-run-result/retrieve-by-id?run_id=${workflowRunId}`;
+
+    const interval = setInterval(() => {
+        // Perform the GET request
+        axios.get(getUrl, { headers })
+            .then(getResponse => {
+                console.log('GET Response:', getResponse.data);
+                    // Populate the textarea with the output (formatted as JSON)
+                    contentWorkflow.value = JSON.stringify(getResponse.data.workflow_run_output, null, 2); // Display it cleanly formatted
+                    // Append the textarea to the document body or a specific container
+            })
+            .catch(error => {
+                console.error('Error during polling:', error);
+                clearInterval(interval); // Stop polling on error
+            });
+    }, 3000); // Poll every 3 seconds
+}
+        stepDiv.appendChild(contentWorkflow);
+}
+    
+
+
+    document.body.appendChild(stepDiv);
+    document.body.appendChild(outline);
+
+
+}
+});
+
+
+
+//POST NEW WORKFLOW
+async function createWorkflow(){
+    const userId = id;
+
+    const titleInput = document.getElementById('agent-title').value;
+    const backgroundInput = document.getElementById('agent-background').value;
+
+    try {
+        const response = await axios.post(`/create-workflow/${userId}`,{
+            title: titleInput,
+            background: backgroundInput
+        });
+
+        console.log("Server response received:", response.data);
+        alert("Agent created successfully!");
+        window.location.href = '/home'
+    } catch (error) {
+        console.error(error.response.data.error);
+        alert("An error occurred while creating new agent.");
+    }
+
+}
+
+</script>

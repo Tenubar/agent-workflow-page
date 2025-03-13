@@ -1,5 +1,24 @@
-const today = new Date();
+$(document).ready(function () {
+    $("#close-btn").click(function () {
+        $(".container").toggleClass("collapsed");
+    });
 
-const formattedDate = today.toISOString().split('T')[0];
+    $(".button-new-agent").click(function(){
+        
+    });
+});
 
-document.getElementById('dateInput').value = formattedDate;
+
+
+
+
+
+// const welcomeMessage = document.getElementById('welcomeMessage');
+// if (welcomeMessage.innerText.trim()) {
+//     welcomeMessage.style.display = 'block';
+// }
+
+// // Close the message and notify the backend
+// function closeMessage() {
+//     welcomeMessage.style.display = 'none';
+// }

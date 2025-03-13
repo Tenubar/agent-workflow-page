@@ -15,8 +15,23 @@ const userSchema = new mongoose.Schema(
         },
         apiKey:{
             type: String
-        }
-    },
+        },
+        loggedBefore:{
+            type: Boolean
+        },
+        authTokenKey:{
+            type: String
+        },
+        agentCount:{
+            type: Number
+        },
+        workflowCount:{
+            type: Number
+        },
+        agents: [
+            { title: {type: String}, background: {type: String}}
+        ]
+        },
 );
 
 userSchema.pre('save', function(next){

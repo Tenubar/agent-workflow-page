@@ -7,22 +7,40 @@
     <link rel="stylesheet" type ="text/css" href="css/styleHome.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Oxygen:wght@300;400;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+
+    <script>
+        const id = "<%= id %>";
+        const agentCount = "<%= agentCount %>";
+        const workflowCount = "<%= workflowCount %>";
+    </script>
+
+    <% if (welcomeMessage) { %>
+        <%- include('partials/onboard') %>
+    <% } %>
+
+    <%- include('partials/agents') %>
+
+    <%- include('partials/workflows') %>
+
     <nav>
         <div class ="container">
             <aside>
                 <div class ="top">
-                    <!-- <img class="logo" src ="./img/logo.webp">  -->
-                    <h2 class ="logo_h2"> Company </h2>
+                    <img class="logo" src ="./img/sokka_logo.png">
+                    <img class ="logo_h2" src ="./img/sokka_banner.png"> 
+                    <!-- <h2 class ="logo_h2"> Company </h2> -->
                     
                     <div class ="close" id ="close-btn">
-                        <span class="material-symbols-outlined">close</span>
+                        <span class="material-symbols-outlined">keyboard_tab_rtl</span>
                     </div>
                 </div>
 
                 <div class ="sidebar">
-                    <a href ="home" class ="active">
+                    <a href ="home" id = "dashboardLink" class ="active">
                         <span class="material-symbols-outlined">grid_view</span>
                         <h3>Dashboard</h3>
                     </a>
@@ -47,7 +65,7 @@
                         <span class="material-symbols-outlined">manage_accounts</span>
                         <h3>Settings</h3>
                     </a>
-                    <a href ="/">
+                    <a href ="logout">
                         <span class="material-symbols-outlined">logout</span>
                         <h3>Logout</h3>
                     </a>
@@ -55,20 +73,23 @@
             </aside>
 
             <main>
-                <h1>Dashboard</h1>
-                <div class ="date">
+
+
+                <h1> Projects</h1>
+
+                <!-- <div class ="date">
                     <input type ="date" id ="dateInput">
-                </div>
+                </div> -->
 
                 <div class ="insights">
                     <!--Active Proyects--> 
                     <div class ="proyects">
                         <div class ="middle">
                             <div class = "left">
+                                <h5>Time Saved</h5>
                                 <span class="material-symbols-outlined">show_chart</span>
-                                <h5>Active Proyects</h5>
                             </div>
-                            <h1>14</h1>
+                            <h1>0</h1>
                         </div>
                         <small class="text-muted">Last 24 Hours </small>
                     </div>
@@ -76,10 +97,10 @@
                     <div class ="team">
                         <div class ="middle">
                             <div class = "left">
+                                <h5>Agents</h5>
                                 <span class="material-symbols-outlined">group</span>
-                                <h5>Team Members</h5>
                             </div>
-                            <h1>14</h1>
+                            <h1><%= agentCount %></h1>
                         </div>
                         <small class="text-muted">Last 24 Hours </small>
                     </div>
@@ -87,10 +108,10 @@
                     <div class ="content">
                         <div class ="middle">
                             <div class = "left">
+                                <h5>Workflows</h5>
                                 <span class="material-symbols-outlined">description</span>
-                                <h5>Content Pieces</h5>
                             </div>
-                            <h1>14</h1>
+                            <h1>0</h1>
                         </div>
                         <small class="text-muted">Last 24 Hours </small>
                     </div>
@@ -98,18 +119,66 @@
                     <div class ="conversations">
                         <div class ="middle">
                             <div class = "left">
+                                <h5>Ai Conversations</h5>
                                 <span class="material-symbols-outlined">chat</span>
-                                <h5>AI Conversations</h5>
                             </div>
-                            <h1>14</h1>
+                            <h1>0</h1>
                         </div>
                         <small class="text-muted">Last 24 Hours </small>
                     </div>
+                </div>
+
+                <div>
+                    <div class = "border-agents">
+                        <h5>Agents</h5>
+                    </div>
+
+                    <div class ="agents-wrapper">
+                        <!--Active Proyects--> 
+                        <div class ="agents-dashboard"> 
+
+                            <div id ="button-new-agent">
+                                <div>Create New</div>
+                                <span class="material-symbols-outlined">add</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class = "border-agents">
+                        <h5>Workflows</h5>
+                    </div>
+
+                    <div class ="workflows-wrapper">
+
+                <div class ="workflows-dashboard">
+
+
+                    <div id ="button-new-workflow">
+                        <div>Create New</div>
+                        <span class="material-symbols-outlined">add</span>
+                    </div>
+
+                    <div class ="suggested-workflow-1">
+                        <span class="material-symbols-outlined">lan</span>
+                        <h2>Product Name Generator</h2>
+                        <small class = "text-muted"></small>
+                        <div class ="run-agent">
+                            <button>Run</button>
+                            <span class="material-symbols-outlined">prompt_suggestion</span>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
                 </div>
             </main>
         </div>
     </nav>
 
+
+<script src="js/jquery-3.7.1.min.js"></script>
 <script type = "text/javascript" src ="js/mainHome.js"></script>
+
 </body>
 </html>

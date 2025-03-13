@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+    $("#close-btn").click(function () {
+        $(".container").toggleClass("collapsed");
+    });
+
     $(".space-a").click(function() {
     $(".space-a").removeClass("active"); 
     $(this).addClass("active"); 
@@ -14,6 +19,7 @@ $(document).ready(function() {
     $(".add-avatar").click(function(){
         document.createElement()
     });
+
 
 });
 
@@ -160,14 +166,3 @@ $(document).ready(function() {
     })();
 
 });
-
-
-// $(".upload-file").click(function () {
-//     $.post("/open-explorer", function (data) {
-//       console.log(data); 
-//       alert(data); 
-//     }).fail(function (xhr) {
-//       console.error(xhr.responseText);
-//       alert("Failed to open File Explorer");
-//     });
-//   });

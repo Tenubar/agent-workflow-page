@@ -1,0 +1,146 @@
+<body>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.chat-window {
+    width: 70vw;
+    height: 90vh;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-header{
+    background: #007bff;
+}
+
+.chat-title {
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+
+.chat-background{
+    text-align: center;
+    margin: 0px 16px 16px 16px;
+    color: white;
+    font-size: 13px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    word-wrap: break-word;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: scroll;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.chat-input button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.message {
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.user-message {
+    background-color: #e2f0ff;
+    text-align: left;
+}
+
+.ai-message {
+    background-color: #f9f9f9;
+    text-align: left;
+}
+
+.back-container {
+    display: flex;
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    align-items: flex-start;
+    background-color: #90cef1;
+    border-radius: 12px;
+}
+
+.go-back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    font-size: 32px;
+    font-weight: bold;
+    color: #007bff; /* Link color */
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.go-back:hover {
+    background-color: #b3e3ff; /* Optional hover effect */
+}
+
+</style>
+
+<script>
+    
+window.addEventListener('DOMContentLoaded', () => {
+
+
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get('title');
+    const background = params.get('background');
+
+    const chatTitle = document.querySelector('.chat-title');
+    const chatBackground = document.querySelector('.chat-background');
+    chatTitle.textContent = title || 'Ai Asistant';
+    chatBackground.textContent = background || 'Ai Asistant';
+
+    // Log the retrieved values
+    console.log('Title:', title || 'No title provided');
+    console.log('Background:', background || 'No background provided' );
+});
+
+</script>
+
+</body>
