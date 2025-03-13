@@ -361,7 +361,8 @@ router.post('/webhook', (req, res) => {
 // Frontend route
 router.get('/test', (req, res) => {
     const workflowRunOutput = webhookData.find(item => item.key === 'workflow_run_output');
-    res.status(200).json(workflowRunOutput || { message: 'Waiting for message' });
+    const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message']; 
+    res.status(200).json(contents);
 });
 
 
