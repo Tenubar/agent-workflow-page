@@ -367,16 +367,9 @@ router.post("/create-workflow/:id", async (req,res) =>{
 // });
 
 // Global Value (Changed for Database)
-// let webhookData = {};
 
 
-
-
-
-
-
-
-
+let webhookData = {};
 
 // router.post('/webhook', (req, res) => {
 //     const Webhookdata = req.body; 
@@ -386,10 +379,8 @@ router.post("/create-workflow/:id", async (req,res) =>{
 
 // webhooks
 router.post('/webhook', (req, res)=>{
-    let webhookData = [];
-    console.log('Webhook received:', req.body);
     webhookData = req.body;
-    res.status(200).send('Webhook received successfully');
+    res.status(200).send(webhookData);
 });
 
 // router.post('/webhook/:id', async (req, res) => {
