@@ -19,13 +19,15 @@ const router = Router();
 const PORT = 3000;
 
 app.use(cors());
-app.use(router);
-router.use(express.json());
-router.use(cookieParser());
+app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(path.resolve(), 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(path.resolve(), 'views'));
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(express.static(path.join(path.resolve(), 'public')));
+app.use(router);
+
+
 dbconnect();
 
 // Options for HTTP-only cookies
@@ -379,9 +381,10 @@ router.post("/create-workflow/:id", async (req,res) =>{
 // let webhookData = {};
 
 router.post('/webhook', (req, res) => {
-    const data = req.body; 
-    console.log(data);
-    res.status(200).send('Webhook received successfully');
+    const Webhookdata = req.body; 
+    console.log(Webhookdata);
+    // res.status(200).send('Webhook received successfully');
+    res.status(200).json(Webhookdata);
 });
 
 // router.post('/webhook/:id', async (req, res) => {
