@@ -280,10 +280,11 @@ function createWorkflow(){
         async function fetchStatus() {
             try {
                 const userId = id;
-                const response = await axios.get(`/webhook/${userId}`);
+                const response = await axios.post(`/webhook`);
                 // const response = await fetch('/test');
-                const data = await response.json();
                 
+                const data = await response.json();
+
                 // Update the textarea with the server's message
                 contentWorkflow.value = JSON.stringify(data, null, 2);
             } catch (error) {
