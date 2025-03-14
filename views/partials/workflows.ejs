@@ -300,6 +300,11 @@ buttonSaveDiv.addEventListener('click',()=>{
                 const socket = io(); // Connect to server WebSocket
                 socket.emit("registerSocket", { workflowRunId });
 
+                // Handle a response from the server (if the server emits a confirmation event)
+                socket.on("socketRegistered", ({ message }) => {
+                    console.log(message);
+                });
+
                 const getDataBtn = document.createElement('div');
                 getDataBtn.classList.add('get-workflow-by-id');
                 getDataBtn.addEventListener('click',()=>{

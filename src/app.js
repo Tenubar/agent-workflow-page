@@ -357,15 +357,25 @@ router.post("/create-workflow/:id", async (req,res) =>{
 io.on("connection", (socket) => {
     console.log("Client connected");
 
-    socket.on("registerSocket", async ({ userId }) => {
-        try {
-            // Update the user's socketId in the database
-            await modelUsers.findByIdAndUpdate(userId, { socketId: socket.id });
+    // socket.on("registerSocket", async ({ userId }) => {
+    //     try {
+    //         // Update the user's socketId in the database
+    //         await modelUsers.findByIdAndUpdate(userId, { socketId: socket.id });
 
-            console.log(`Socket ID ${socket.id} registered for user: ${userId}`);
-        } catch (error) {
-            console.error("Error registering socket ID:", error);
-        }
+    //         console.log(`Socket ID ${socket.id} registered for user: ${userId}`);
+    //     } catch (error) {
+    //         console.error("Error registering socket ID:", error);
+    //     }
+    // });
+
+    // Listen for the registerSocket event from the client
+    socket.on("registerSocket", ({ workflowRunId }) => {
+        // Join the client to the room identified by workflowRunId
+        socket.join(workflowRunId);
+        console.log(`Socket ${socket.id} joined room: ${workflowRunId}`);
+
+        // Emit a confirmation back to the client
+        socket.emit("socketRegistered", { message: `Registered to room ${workflowRunId}` });
     });
 
     // Handle client disconnect
@@ -401,9 +411,15 @@ router.post('/api/save-workflow-id', async (req, res) => {
 
 
 router.post("/api/webhook", (req, res) => {
-
     const data = req.body;
     console.log(data);
+
+    const workflow_run_id = req.body.workflow_run_id;
+
+    io.to(workflow_run_id).emit("updateTextarea", { message: data });
+    return res.status(200).send("Data sent to client");
+});
+
     // const { workflowRunId, data } = req.body;
 
     // // Match query in the database
@@ -417,7 +433,6 @@ router.post("/api/webhook", (req, res) => {
     // }
 
     // res.status(404).send("Workflow not found");
-});
 
 
 // router.post("/api/webhook", (req, res) => {
