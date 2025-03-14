@@ -411,6 +411,9 @@ router.post('/api/save-workflow-id', async (req, res) => {
 
 
 router.post("/api/webhook", (req, res) => {
+    // Add CORS headers for this specific route
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    
     const data = req.body;
     console.log(data);
 
