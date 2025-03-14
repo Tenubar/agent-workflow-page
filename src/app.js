@@ -380,7 +380,7 @@ router.post("/create-workflow/:id", async (req,res) =>{
 
 router.post('/webhook', (req, res) => {
     const data = req.body; 
-    res.status(200).send('Webhook received');
+    res.status(200).json(data);
 });
 
 // router.post('/webhook/:id', async (req, res) => {

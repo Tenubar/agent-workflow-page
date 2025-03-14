@@ -276,14 +276,14 @@ function createWorkflow(){
    
 
 
+
     buttonSaveDiv.addEventListener('click',()=>{
         async function fetchStatus() {
             try {
                 const userId = id;
-                const response = await axios.post(`/webhook`);
-                // const response = await fetch('/test');
-                
-                const data = await response.json();
+                const response = await axios.post('/webhook');
+                // const data = await response.json();
+                const data = response.data;
 
                 // Update the textarea with the server's message
                 contentWorkflow.value = JSON.stringify(data, null, 2);
