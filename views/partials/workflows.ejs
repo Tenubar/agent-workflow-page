@@ -272,87 +272,125 @@ function createWorkflow(){
         background: "var(--color-light)"
 });
 
-buttonSaveDiv.addEventListener('click',()=>{
-        const userId = id;
-            // Trigger Workflow
-            try {
-            const apiKey = 'sk--dUmIovpvZ3Vb83tCd9Ieg20250313174645';
-            const workflowID = '67d31c6b83d521810bc0c88e';
-            const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workflowID}&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&google_api_key=${apiKey}&groq_api_key=${apiKey}`;
-            const headers = {
-            'accept': 'application/json',
-            'x-api-key': apiKey,
-            'Content-Type': 'application/json'
-            };
-            const data = {
+
+    // Method 2 Proxy
+
+    buttonSaveDiv.addEventListener("click", async () => {
+    try {
+        const workflowID = "67d31c6b83d521810bc0c88e"; // Workflow ID
+        const data = {
             "Goal of the Email Campaign": "Obtain more views in my youtube channel",
-            "Target Audience": "Adults"
-            };
-            axios.post(url, data, { headers })
-            .then(async(response) => {
+            "Target Audience": "Adults",
+        };
 
-                // Storage Workflow Run ID Logic
-                const workflowRunId = response.data.workflow_run_id; 
-                console.log(workflowRunId);
+        const response = await axios.post("/proxy/workflow", {
+            workflowID, // Send workflowID to backend
+            data, // Send workflow details
+        });
 
-                // Socket.io Logic
-                const socket = io(); // Connect to server WebSocket
-                socket.emit("registerSocket", { workflowRunId });
+        const workflowRunId = response.data.workflow_run_id; // Use the response from the backend
+        console.log(`Workflow Run ID: ${workflowRunId}`);
 
-                // Handle a response from the server (if the server emits a confirmation event)
-                // socket.on("socketRegistered", ({ message }) => {
-                //     console.log(message);
-                // });
+        // Socket.IO Logic
+        const socket = io();
+        socket.emit("registerSocket", { workflowRunId });
 
-                // const getDataBtn = document.createElement('div');
-                // getDataBtn.classList.add('get-workflow-by-id');
-                // getDataBtn.addEventListener('click',()=>{
-                //     pollForWorkflowOutput(workflowRunId, headers);
-                // })
-                // Object.assign(getDataBtn.style,{
-                //     display: "flex",
-                //     alignItems: "center",
-                //     justifyContent: "center",
-                //     columnGap: "0.4rem",
-                //     padding: "6px",
-                //     borderRadius: "var(--border-radius-1)",
-                //     background: "var(--color-background)",
-                //     color: "var(--color-info-dark)",
-                //     cursor: "pointer",
-                //     width: "50vw",
-                //     height: "10vh",
-                //     padding: "12px",
-                // }); 
-                // stepDiv.appendChild(getDataBtn);
+        // Handle server confirmation
+        socket.on("socketRegistered", ({ message }) => {
+            console.log(message);
+        });
 
-                // socket.on("updateTextarea", (data) => {
-                //     contentWorkflow.value += data.message + "\n";
-                // });
-
-                const dbUrl = `/api/save-workflow-id`; // Endpoint to save data
-
-                    const saveData = { 
-                        userId: userId, // Pass user ID
-                        workflowRunId: workflowRunId // Pass the Workflow Run ID
-                    };
-
-                    try {
-                        // POST request to save workflowRunId to database
-                        const saveResponse = await axios.post(dbUrl, saveData, {
-                            headers: { 'Content-Type': 'application/json' }
-                        });
-                        console.log('Saved to database:', saveResponse.data);
-                    } catch (dbError) {
-                        console.error('Error saving to database:', dbError);
-                    }
-            })
-                
-            .catch(error => console.error('Error:', error));
-
-            } catch (error) {
-                console.error('Error in fetchStatus:', error);
-            }
+        socket.on("updateTextarea", (data) => {
+            contentWorkflow.value += data.message + "\n";
+        });
+        
+    } catch (error) {
+        console.error("Error:", error.response ? error.response.data : error.message);
+    }
 });
+
+
+// buttonSaveDiv.addEventListener('click',()=>{
+//         const userId = id;
+//             // Trigger Workflow
+//             try {
+//             const apiKey = 'sk--dUmIovpvZ3Vb83tCd9Ieg20250313174645';
+//             const workflowID = '67d31c6b83d521810bc0c88e';
+//             const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workflowID}&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&google_api_key=${apiKey}&groq_api_key=${apiKey}`;
+//             const headers = {
+//             'accept': 'application/json',
+//             'x-api-key': apiKey,
+//             'Content-Type': 'application/json'
+//             };
+//             const data = {
+//             "Goal of the Email Campaign": "Obtain more views in my youtube channel",
+//             "Target Audience": "Adults"
+//             };
+//             axios.post(url, data, { headers })
+//             .then(async(response) => {
+
+//                 // Storage Workflow Run ID Logic
+//                 const workflowRunId = response.data.workflow_run_id; 
+//                 console.log(workflowRunId);
+
+//                 // Socket.io Logic
+//                 const socket = io(); // Connect to server WebSocket
+//                 socket.emit("registerSocket", { workflowRunId });
+
+//                 // Handle a response from the server (if the server emits a confirmation event)
+//                 // socket.on("socketRegistered", ({ message }) => {
+//                 //     console.log(message);
+//                 // });
+
+//                 // const getDataBtn = document.createElement('div');
+//                 // getDataBtn.classList.add('get-workflow-by-id');
+//                 // getDataBtn.addEventListener('click',()=>{
+//                 //     pollForWorkflowOutput(workflowRunId, headers);
+//                 // })
+//                 // Object.assign(getDataBtn.style,{
+//                 //     display: "flex",
+//                 //     alignItems: "center",
+//                 //     justifyContent: "center",
+//                 //     columnGap: "0.4rem",
+//                 //     padding: "6px",
+//                 //     borderRadius: "var(--border-radius-1)",
+//                 //     background: "var(--color-background)",
+//                 //     color: "var(--color-info-dark)",
+//                 //     cursor: "pointer",
+//                 //     width: "50vw",
+//                 //     height: "10vh",
+//                 //     padding: "12px",
+//                 // }); 
+//                 // stepDiv.appendChild(getDataBtn);
+
+//                 // socket.on("updateTextarea", (data) => {
+//                 //     contentWorkflow.value += data.message + "\n";
+//                 // });
+
+//                 const dbUrl = `/api/save-workflow-id`; // Endpoint to save data
+
+//                     const saveData = { 
+//                         userId: userId, // Pass user ID
+//                         workflowRunId: workflowRunId // Pass the Workflow Run ID
+//                     };
+
+//                     try {
+//                         // POST request to save workflowRunId to database
+//                         const saveResponse = await axios.post(dbUrl, saveData, {
+//                             headers: { 'Content-Type': 'application/json' }
+//                         });
+//                         console.log('Saved to database:', saveResponse.data);
+//                     } catch (dbError) {
+//                         console.error('Error saving to database:', dbError);
+//                     }
+//             })
+                
+//             .catch(error => console.error('Error:', error));
+
+//             } catch (error) {
+//                 console.error('Error in fetchStatus:', error);
+//             }
+// });
 
 stepDiv.appendChild(contentWorkflow);
 

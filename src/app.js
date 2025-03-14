@@ -410,6 +410,39 @@ router.post('/api/save-workflow-id', async (req, res) => {
 });
 
 
+// Proxy route for making the external API request
+app.post("/proxy/workflow", async (req, res) => {
+    try {
+        const apiKey = "sk--dUmIovpvZ3Vb83tCd9Ieg20250313174645"; // Keep API keys secure in the backend
+        const workflowID = req.body.workflowID; // Retrieve workflow ID from client request
+        const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workflowID}`;
+
+        // Headers for the external API
+        const headers = {
+            "accept": "application/json",
+            "x-api-key": apiKey,
+            "Content-Type": "application/json",
+        };
+
+        // Data to send to the external API
+        const data = req.body.data; // The workflow details, e.g., "Goal" and "Target Audience"
+
+        // Make the request to the external API
+        const apiResponse = await axios.post(url, data, { headers });
+
+        // Send the response from the external API back to the client
+        res.status(apiResponse.status).json(apiResponse.data);
+    } catch (error) {
+        console.error("Error in proxy:", error.response ? error.response.data : error.message);
+        res.status(error.response ? error.response.status : 500).json({
+            error: "Error making the request to the external API.",
+            details: error.response ? error.response.data : error.message,
+        });
+    }
+});
+
+
+
 router.post("/api/webhook", (req, res) => {
     // Add CORS headers for this specific route
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -422,8 +455,8 @@ router.post("/api/webhook", (req, res) => {
     const workflow_run_id = req.body.workflow_run_id;
     console.log(workflow_run_id);
 
-    // io.to(workflow_run_id).emit("updateTextarea", { message: data });
-    // return res.status(200).send("Data sent to client");
+    io.to(workflow_run_id).emit("updateTextarea", { message: data });
+    return res.status(200).send("Data sent to client");
 });
 
     // const { workflowRunId, data } = req.body;
