@@ -311,12 +311,10 @@ buttonSaveDiv.addEventListener('click',()=>{
             };
             const data = {
             "Goal of the Email Campaign": "none",
-            "References": "none",
             "Target Audience": "Adults"
             };
             axios.post(url, data, { headers })
             .then(async(response) => {
-
 
                 const workflowRunId = response.data.workflow_run_id; 
                 console.log(workflowRunId);
