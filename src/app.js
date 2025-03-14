@@ -416,7 +416,7 @@ app.post("/proxy/workflow", async (req, res) => {
     try {
         const apiKey = "sk--dUmIovpvZ3Vb83tCd9Ieg20250313174645"; // Keep API keys secure in the backend
         const workflowID = req.body.workflowID; // Retrieve workflow ID from client request
-        const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workflowID}`;
+        const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workflowID}&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&google_api_key=${apiKey}&groq_api_key=${apiKey}`;
 
         // Headers for the external API
         const headers = {
