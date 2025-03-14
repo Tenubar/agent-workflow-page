@@ -301,7 +301,7 @@ function createWorkflow(){
         });
 
         socket.on("updateTextarea", async ({ data }) => {
-            const index = data.index;
+            // const index = data.index;
             contentWorkflow.value += data.message + "\n"; // Append message to workflow
 
             const dbUrl = `/api/save-workflow-id`; // Backend API endpoint
