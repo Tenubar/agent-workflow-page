@@ -28,16 +28,16 @@ const userSchema = new mongoose.Schema(
         workflowCount:{
             type: Number
         },
-        workflowRunId:[{
-            type: String
-        }],
+        workflowRunId:[
+            {title: {type: String}, output:{type: String}, runId:{type:String}}
+        ],
         socketId:{
             type: String
         },
         agents: [
             { title: {type: String}, background: {type: String}}
         ]
-        },
+    },
 );
 
 userSchema.pre('save', function(next){

@@ -387,13 +387,20 @@ io.on("connection", (socket) => {
 
 
 router.post('/api/save-workflow-id', async (req, res) => {
+
     try {
-        const { userId, workflowRunId } = req.body;
+        const { userId, workflowRunId, title, output } = req.body;
+
+        const newWorkflowRun = {
+            title: title, // Title from request body
+            output: output, // Output from request body
+            runId: workflowRunId
+        };
 
         const newRun = await modelUsers.findByIdAndUpdate(
             userId,
             {
-                $push:{workflowRunId: workflowRunId}
+                $push:{workflowRunId: newWorkflowRun}
             },
             {new: true}
         )
@@ -450,10 +457,10 @@ router.post("/api/webhook", (req, res) => {
     const workflow_run_id = req.body.workflow_run_id;
 
     const current_index = data.workflow_run_output.length;
-    console.log(current_index);
-    const workflow_run_output = data.workflow_run_output[current_index - 1].content;
+    // const workflow_name = data.workflow_title;
+    // const workflow_run_output = data.workflow_run_output[current_index - 1].content;
 
-    io.to(workflow_run_id).emit("updateTextarea", { message: JSON.stringify(workflow_run_output, null, 2)});
+    io.to(workflow_run_id).emit("updateTextarea", { message: JSON.stringify(data, null, 2), index: current_index});
     return res.status(200).send("Data sent to client");
 });
 

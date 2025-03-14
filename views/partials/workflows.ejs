@@ -287,6 +287,7 @@ function createWorkflow(){
             data, // Send workflow details
         });
 
+        // Workflow Run Id
         const workflowRunId = response.data.workflow_run_id; // Use the response from the backend
         console.log(`Workflow Run ID: ${workflowRunId}`);
 
@@ -299,10 +300,26 @@ function createWorkflow(){
             console.log(message);
         });
 
-        socket.on("updateTextarea", ({message}) => {
-            const parsedData = JSON.parse(message); // Convert string back to an object if needed
-            console.log(parsedData); // Use or display the parsed data
-            contentWorkflow.value += message + "\n";
+        socket.on("updateTextarea", async ({ data }) => {
+            const index = data.index;
+            contentWorkflow.value += data.message + "\n"; // Append message to workflow
+
+            const dbUrl = `/api/save-workflow-id`; // Backend API endpoint
+            const saveData = { 
+                userId: userId, // Replace with the actual user ID
+                workflowRunId: workflowRunId, // Replace with the workflow run ID
+                output: data.message, // Include the message in the payload
+                title: "test title"
+            };
+            try {
+                // Make the POST request to save data to the backend
+                const saveResponse = await axios.post(dbUrl, saveData, {
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            console.log('Saved to database:', saveResponse.data); // Log success response
+            } catch (error) {
+                console.error('Error saving to database:', error); // Use the correct error object
+            }
         });
 
     } catch (error) {
