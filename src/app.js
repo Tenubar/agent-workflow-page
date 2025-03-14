@@ -12,6 +12,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { EventEmitter } from 'events';
 import cors from 'cors';
+import axios from 'axios';
 
 
 const eventEmitter = new EventEmitter();
