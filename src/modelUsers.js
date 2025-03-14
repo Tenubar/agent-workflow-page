@@ -31,6 +31,9 @@ const userSchema = new mongoose.Schema(
         workflowRunId:[{
             type: String
         }],
+        socketId:{
+            type: String
+        },
         agents: [
             { title: {type: String}, background: {type: String}}
         ]

@@ -63,6 +63,7 @@ router.post('/register', async(req, res)=>{
             agentCount: 0,
             workflowCount: 0,
             agents,
+            socketId: "",
             workflowRunId
         });
         await user.save();
@@ -356,10 +357,16 @@ router.post("/create-workflow/:id", async (req,res) =>{
 io.on("connection", (socket) => {
     console.log("Client connected");
 
-    // Register the workflow-run-id
-    // socket.on("registerWorkflow", ({ workflowRunId }) => {
-    //     database.set(workflowRunId, { socketId: socket.id });
-    // });
+    socket.on("registerSocket", async ({ userId }) => {
+        try {
+            // Update the user's socketId in the database
+            await User.findByIdAndUpdate(userId, { socketId: socket.id });
+
+            console.log(`Socket ID ${socket.id} registered for user: ${userId}`);
+        } catch (error) {
+            console.error("Error registering socket ID:", error);
+        }
+    });
 
     // Handle client disconnect
     socket.on("disconnect", () => {
@@ -392,24 +399,59 @@ router.post('/api/save-workflow-id', async (req, res) => {
     }
 });
 
-router.post("/api/webhook", (req, res) => {
+// router.post("/api/webhook", (req, res) => {
 
-    const data = req.body;
-    console.log(data);
-    // const { workflowRunId, data } = req.body;
+//     const data = req.body;
+//     console.log(data);
+//     // const { workflowRunId, data } = req.body;
 
-    // // Match query in the database
-    // const workflow = database.get(workflowRunId);
-    // if (workflow) {
-    //     const { socketId } = workflow;
+//     // // Match query in the database
+//     // const workflow = database.get(workflowRunId);
+//     // if (workflow) {
+//     //     const { socketId } = workflow;
 
-    //     // Emit data to the corresponding client
-    //     io.to(socketId).emit("updateTextarea", { message: data });
-    //     return res.status(200).send("Data sent to client");
-    // }
+//     //     // Emit data to the corresponding client
+//     //     io.to(socketId).emit("updateTextarea", { message: data });
+//     //     return res.status(200).send("Data sent to client");
+//     // }
 
-    // res.status(404).send("Workflow not found");
+//     // res.status(404).send("Workflow not found");
+// });
+
+router.post("/api/webhook", async (req, res) => {
+    try {
+        // Extract the workflowRunId from the request body
+        const workflowRunIdObject = req.body.find(item => item.key === "workflow_run_id");
+        const dataObject = req.body.find(item => item.key === "workflow_run_output");
+
+        if (!workflowRunIdObject || !dataObject) {
+            return res.status(400).send("Invalid payload format");
+        }
+
+        const workflowRunId = workflowRunIdObject.value; // Workflow Run ID
+        const data = dataObject.value; // Workflow Run Output
+
+        // Search in the database for a user with the specified workflowRunId
+        const user = await modelUsers.findOne({ workflowRunId: workflowRunId });
+
+        if (user) {
+            // Assume each user document has a `socketId` field (you may need to add this)
+            const socketId = user.socketId;
+
+            // Emit data to the corresponding client
+            io.to(socketId).emit("updateTextarea", { message: data });
+
+            return res.status(200).send("Data sent to client");
+        }
+
+        res.status(404).send("WorkflowRunId not found");
+    } catch (error) {
+        console.error("Error processing webhook:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
+
+
 
 
 // let webhookData = [];

@@ -323,7 +323,7 @@ buttonSaveDiv.addEventListener('click',()=>{
 
                 // Socket.io Logic
                 const socket = io(); // Connect to server WebSocket
-                // socket.emit("registerWorkflow", { workflowRunId });
+                socket.emit("registerSocket", { userId });
 
                 socket.on("updateTextarea", (data) => {
                     contentWorkflow.value += data.message + "\n";
