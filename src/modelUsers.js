@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
         workflowCount:{
             type: Number
         },
-        webhookData:[{
+        workflowRunId:[{
             type: String
         }],
         agents: [

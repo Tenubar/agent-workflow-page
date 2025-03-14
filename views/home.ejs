@@ -11,12 +11,13 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-
+    <script src="/socket.io/socket.io.js"></script>
     <script>
         const id = "<%= id %>";
         const agentCount = "<%= agentCount %>";
         const workflowCount = "<%= workflowCount %>";
     </script>
+
 
 
     <% if (welcomeMessage) { %>
@@ -27,7 +28,7 @@
 
     <%- include('partials/workflows') %>
 
-    
+
 
     <nav>
         <div class ="container">

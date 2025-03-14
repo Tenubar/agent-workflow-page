@@ -277,35 +277,87 @@ function createWorkflow(){
 
 // const userId = id;
 
+// buttonSaveDiv.addEventListener('click',()=>{
+//     async function fetchStatus() {
+        
+//         try {
+//             const response = await fetch('/test'); 
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! status: ${response.status}`);
+//             }
+//             const data = await response.json();
+
+//             console.log(data);
+
+//             // Update the textarea with the server's message
+//             contentWorkflow.value = JSON.stringify(data, null, 2);
+
+//         } catch (error) {
+//             console.error('Error fetching status:', error);
+//         }
+//     }
+// setInterval(fetchStatus, 2000);
+// });
+
 buttonSaveDiv.addEventListener('click',()=>{
     async function fetchStatus() {
-        try {
+        const userId = id;
+            try {
+            const apiKey = 'sk--dUmIovpvZ3Vb83tCd9Ieg20250313174645';
+            const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=67d31c6b83d521810bc0c88e&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&google_api_key=${apiKey}&groq_api_key=${apiKey}`;
+            const headers = {
+            'accept': 'application/json',
+            'x-api-key': apiKey,
+            'Content-Type': 'application/json'
+            };
+            const data = {
+            "Goal of the Email Campaign": "none",
+            "References": "none",
+            "Target Audience": "Adults"
+            };
+            axios.post(url, data, { headers })
+            .then(async(response) => {
 
-            const response = await fetch('/test'); // Changed to fetch from the correct route
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+
+                const workflowRunId = response.data.workflow_run_id; 
+                console.log(workflowRunId);
+
+                // Socket.io Logic
+                const socket = io(); // Connect to server WebSocket
+                // socket.emit("registerWorkflow", { workflowRunId });
+
+                socket.on("updateTextarea", (data) => {
+                    contentWorkflow.value += data.message + "\n";
+                });
+
+                // Save to your database
+                const dbUrl = `/api/save-workflow-id`; // Endpoint to save data
+
+                    const saveData = { 
+                        userId: userId, // Pass user ID
+                        workflowRunId: workflowRunId // Pass the Workflow Run ID
+                    };
+
+                    try {
+                        // POST request to save workflowRunId to database
+                        const saveResponse = await axios.post(dbUrl, saveData, {
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        console.log('Saved to database:', saveResponse.data);
+                    } catch (dbError) {
+                        console.error('Error saving to database:', dbError);
+                    }
+            })
+                
+            .catch(error => console.error('Error:', error));
+
+            } catch (error) {
+                console.error('Error in fetchStatus:', error);
             }
-            const data = await response.json();
-
-            console.log(data);
-
-            // Update the textarea with the server's message
-            contentWorkflow.value = JSON.stringify(data, null, 2);
-
-
-            // const response = await fetch('/webhook');
-            // const data = await response.json();
-
-            // console.log(data);
-
-            // // Update the textarea with the server's message
-            // contentWorkflow.value = JSON.stringify(data, null, 2);
-        } catch (error) {
-            console.error('Error fetching status:', error);
         }
-    }
-setInterval(fetchStatus, 2000);
+        fetchStatus();
 });
+
 stepDiv.appendChild(contentWorkflow);
 
 

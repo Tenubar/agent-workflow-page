@@ -1,3 +1,5 @@
+import { createServer } from "http";
+import { Server } from "socket.io";
 import express from 'express';
 import { Router } from 'express';
 import { modelUsers } from './modelUsers.js';
@@ -11,10 +13,13 @@ import dotenv from 'dotenv';
 import { EventEmitter } from 'events';
 import cors from 'cors';
 
+
 const eventEmitter = new EventEmitter();
 
 dotenv.config();
 const app = express();
+const server = createServer(app);
+const io = new Server(server);
 const router = Router();
 const PORT = 3000;
 
@@ -48,7 +53,7 @@ router.post('/register', async(req, res)=>{
         const {username, password} = req.body;
         const authTokenKey = crypto.randomBytes(32).toString('hex');
         const agents = [];
-        const webhookData = [];
+        const workflowRunId = [];
         const user = new modelUsers({
             username,
             password,
@@ -58,7 +63,7 @@ router.post('/register', async(req, res)=>{
             agentCount: 0,
             workflowCount: 0,
             agents,
-            webhookData
+            workflowRunId
         });
         await user.save();
         res.send(`
@@ -347,36 +352,93 @@ router.post("/create-workflow/:id", async (req,res) =>{
     }
 });
 
+// WebSocket connection
+io.on("connection", (socket) => {
+    console.log("Client connected");
+
+    // Register the workflow-run-id
+    // socket.on("registerWorkflow", ({ workflowRunId }) => {
+    //     database.set(workflowRunId, { socketId: socket.id });
+    // });
+
+    // Handle client disconnect
+    socket.on("disconnect", () => {
+        console.log("Client disconnected");
+    });
+});
 
 
-
-let webhookData = [];
-
-// Webhook route
-router.post('/webhook', (req, res) => {
+router.post('/api/save-workflow-id', async (req, res) => {
     try {
-        webhookData = req.body; // Assuming the body is properly formatted
-        res.status(200).json({ message: 'Webhook data received', webhookData });
+        const { userId, workflowRunId } = req.body;
+
+        const newRun = await modelUsers.findByIdAndUpdate(
+            userId,
+            {
+                $push:{workflowRunId: workflowRunId}
+            },
+            {new: true}
+        )
+
+        // Validate the request body
+        if(!newRun){
+            return res.status(404).json({ error: "Error at creating the new agent" });
+        }
+        res.status(200).json({ message: "Workflow triggered successfully", newRun });
+
     } catch (error) {
-        console.error('Error in /webhook route:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
     }
 });
 
-// Frontend route
-router.get('/test', (req, res) => {
-    try {
-        const workflowRunOutput = Array.isArray(webhookData)
-            ? webhookData.find(item => item.key === 'workflow_run_output')
-            : null;
+router.post("/api/webhook", (req, res) => {
 
-        const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
-        res.status(200).json(contents);
-    } catch (error) {
-        console.error('Error in /test route:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
+    const data = req.body;
+    console.log(data);
+    // const { workflowRunId, data } = req.body;
+
+    // // Match query in the database
+    // const workflow = database.get(workflowRunId);
+    // if (workflow) {
+    //     const { socketId } = workflow;
+
+    //     // Emit data to the corresponding client
+    //     io.to(socketId).emit("updateTextarea", { message: data });
+    //     return res.status(200).send("Data sent to client");
+    // }
+
+    // res.status(404).send("Workflow not found");
 });
+
+
+// let webhookData = [];
+
+// // Webhook route
+// router.post('/webhook', (req, res) => {
+//     try {
+//         webhookData = req.body; // Assuming the body is properly formatted
+//         res.status(200).json({ message: 'Webhook data received', webhookData });
+//     } catch (error) {
+//         console.error('Error in /webhook route:', error);
+//         res.status(500).json({ message: 'Internal Server Error' });
+//     }
+// });
+
+// // Frontend route
+// router.get('/test', (req, res) => {
+//     try {
+//         const workflowRunOutput = Array.isArray(webhookData)
+//             ? webhookData.find(item => item.key === 'workflow_run_output')
+//             : null;
+
+//         const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
+//         res.status(200).json(contents);
+//     } catch (error) {
+//         console.error('Error in /test route:', error);
+//         res.status(500).json({ message: 'Internal Server Error' });
+//     }
+// });
 
 
 
