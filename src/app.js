@@ -412,7 +412,7 @@ router.post('/api/save-workflow-id', async (req, res) => {
 
 router.post("/api/webhook", (req, res) => {
     // Add CORS headers for this specific route
-    res.setHeader("Access-Control-Allow-Origin", "https://agent-workflow-page.onrender.com");
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, x-api-key");
 
@@ -420,9 +420,10 @@ router.post("/api/webhook", (req, res) => {
     console.log(data);
 
     const workflow_run_id = req.body.workflow_run_id;
+    console.log(workflow_run_id);
 
-    io.to(workflow_run_id).emit("updateTextarea", { message: data });
-    return res.status(200).send("Data sent to client");
+    // io.to(workflow_run_id).emit("updateTextarea", { message: data });
+    // return res.status(200).send("Data sent to client");
 });
 
     // const { workflowRunId, data } = req.body;
@@ -529,7 +530,7 @@ router.post("/api/webhook", (req, res) => {
 // User Routes
 router.get('/home', authenticateToken, (req, res) => {
 
-    res.setHeader("Access-Control-Allow-Origin", "https://agent-workflow-page.onrender.com");
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, x-api-key");
 
