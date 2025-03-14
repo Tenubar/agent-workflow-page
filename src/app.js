@@ -450,6 +450,7 @@ router.post("/api/webhook", (req, res) => {
     const workflow_run_id = req.body.workflow_run_id;
 
     const current_index = data.workflow_run_output.length;
+    console.log(current_index);
     const workflow_run_output = data.workflow_run_output[current_index - 1].content;
 
     io.to(workflow_run_id).emit("updateTextarea", { message: JSON.stringify(workflow_run_output, null, 2)});
