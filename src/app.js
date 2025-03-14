@@ -414,9 +414,10 @@ router.post('/api/save-workflow-id', async (req, res) => {
 // Proxy route for making the external API request
 app.post("/proxy/workflow", async (req, res) => {
     try {
+        const workflowTitle = 'new name'
         const apiKey = "sk--dUmIovpvZ3Vb83tCd9Ieg20250313174645"; // Keep API keys secure in the backend
         const workflowID = req.body.workflowID; // Retrieve workflow ID from client request
-        const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workflowID}&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&google_api_key=${apiKey}&groq_api_key=${apiKey}`;
+        const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workflowID}&workflow_run_title=${workflowTitle}&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&google_api_key=${apiKey}&groq_api_key=${apiKey}`;
 
         // Headers for the external API
         const headers = {
@@ -445,18 +446,10 @@ app.post("/proxy/workflow", async (req, res) => {
 
 
 router.post("/api/webhook", (req, res) => {
-    // Add CORS headers for this specific route
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, x-api-key");
-
     const data = req.body;
-    console.log(data);
-
     const workflow_run_id = req.body.workflow_run_id;
-    console.log(workflow_run_id);
 
-    io.to(workflow_run_id).emit("updateTextarea", { message: JSON.stringify(data)});
+    io.to(workflow_run_id).emit("updateTextarea", { message: JSON.stringify(data, null, 2)});
     return res.status(200).send("Data sent to client");
 });
 
