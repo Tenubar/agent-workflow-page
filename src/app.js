@@ -497,6 +497,6 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log(`Listening to port ${PORT}`);
 });
