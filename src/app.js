@@ -23,7 +23,12 @@ const io = new Server(server);
 const router = Router();
 const PORT = 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: "https://agent-workflow-page.onrender.com", // Your frontend domain
+    methods: ["GET", "POST"],
+    credentials: true // Allow cookies or authentication tokens
+}));
+app.options("*", cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
