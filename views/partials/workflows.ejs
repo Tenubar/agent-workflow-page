@@ -305,26 +305,26 @@ buttonSaveDiv.addEventListener('click',()=>{
                     console.log(message);
                 });
 
-                const getDataBtn = document.createElement('div');
-                getDataBtn.classList.add('get-workflow-by-id');
-                getDataBtn.addEventListener('click',()=>{
-                    pollForWorkflowOutput(workflowRunId, headers);
-                })
-                Object.assign(getDataBtn.style,{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    columnGap: "0.4rem",
-                    padding: "6px",
-                    borderRadius: "var(--border-radius-1)",
-                    background: "var(--color-background)",
-                    color: "var(--color-info-dark)",
-                    cursor: "pointer",
-                    width: "50vw",
-                    height: "10vh",
-                    padding: "12px",
-                }); 
-                stepDiv.appendChild(getDataBtn);
+                // const getDataBtn = document.createElement('div');
+                // getDataBtn.classList.add('get-workflow-by-id');
+                // getDataBtn.addEventListener('click',()=>{
+                //     pollForWorkflowOutput(workflowRunId, headers);
+                // })
+                // Object.assign(getDataBtn.style,{
+                //     display: "flex",
+                //     alignItems: "center",
+                //     justifyContent: "center",
+                //     columnGap: "0.4rem",
+                //     padding: "6px",
+                //     borderRadius: "var(--border-radius-1)",
+                //     background: "var(--color-background)",
+                //     color: "var(--color-info-dark)",
+                //     cursor: "pointer",
+                //     width: "50vw",
+                //     height: "10vh",
+                //     padding: "12px",
+                // }); 
+                // stepDiv.appendChild(getDataBtn);
 
                 socket.on("updateTextarea", (data) => {
                     contentWorkflow.value += data.message + "\n";
@@ -360,59 +360,59 @@ buttonSaveDiv.addEventListener('click',()=>{
 stepDiv.appendChild(contentWorkflow);
 
 
-function pollForWorkflowOutput(workflowRunId, headers) {
-    const getUrl = `https://api-v3.mindpal.io/api/workflow-run-result/retrieve-by-id?run_id=${workflowRunId}`;
-    let interval;
+// function pollForWorkflowOutput(workflowRunId, headers) {
+//     const getUrl = `https://api-v3.mindpal.io/api/workflow-run-result/retrieve-by-id?run_id=${workflowRunId}`;
+//     let interval;
 
-    // Start the polling interval
-    // interval = setInterval(() => {
-        // Perform the GET request
-        axios.get(getUrl, { headers })
-            .then(getResponse => {
-                console.log('GET Response:', getResponse.data);
+//     // Start the polling interval
+//     // interval = setInterval(() => {
+//         // Perform the GET request
+//         axios.get(getUrl, { headers })
+//             .then(getResponse => {
+//                 console.log('GET Response:', getResponse.data);
 
-                // GET Request Output Data
-                const workflowData = getResponse.data;
+//                 // GET Request Output Data
+//                 const workflowData = getResponse.data;
 
-                // Workflow input and output arrays
-                const workflowInput = workflowData.workflow_run_input; // Array
-                const workflowOutput = workflowData.workflow_run_output; // Array
+//                 // Workflow input and output arrays
+//                 const workflowInput = workflowData.workflow_run_input; // Array
+//                 const workflowOutput = workflowData.workflow_run_output; // Array
 
-                // Check the last index of workflow_run_input
-                const lastInputIndex = workflowInput.length - 1; // Zero-based index
-                if (workflowInput[lastInputIndex]) {
-                    console.log("Last input index reached. Info received.");
-                }
+//                 // Check the last index of workflow_run_input
+//                 const lastInputIndex = workflowInput.length - 1; // Zero-based index
+//                 if (workflowInput[lastInputIndex]) {
+//                     console.log("Last input index reached. Info received.");
+//                 }
 
-                // Check the last index of workflow_run_output
-                const lastOutputIndex = workflowOutput.length - 1; // Zero-based index
-                if (workflowOutput[lastOutputIndex]) {
-                    console.log("Last output index reached. Info received.");
-                }
+//                 // Check the last index of workflow_run_output
+//                 const lastOutputIndex = workflowOutput.length - 1; // Zero-based index
+//                 if (workflowOutput[lastOutputIndex]) {
+//                     console.log("Last output index reached. Info received.");
+//                 }
 
-                // Optional: Log lengths and verify content
-                // console.log('Number of workflow_run_input indexes:', workflowInput.length);
-                // console.log('Number of workflow_run_output indexes:', workflowOutput.length);
+//                 // Optional: Log lengths and verify content
+//                 // console.log('Number of workflow_run_input indexes:', workflowInput.length);
+//                 // console.log('Number of workflow_run_output indexes:', workflowOutput.length);
 
-                // Additional logic for updating textarea
-                let workflowDataJSON = JSON.stringify(workflowData, null, 2);
-                if (workflowDataJSON.length > contentWorkflow.value.length) {
-                    contentWorkflow.value = workflowDataJSON; // Update textarea
-                } else if(workflowDataJSON.length === contentWorkflow.value.length && workflowOutput[lastOutputIndex]){
-                    console.log('They have the same length and limit reached');
-                }
+//                 // Additional logic for updating textarea
+//                 let workflowDataJSON = JSON.stringify(workflowData, null, 2);
+//                 if (workflowDataJSON.length > contentWorkflow.value.length) {
+//                     contentWorkflow.value = workflowDataJSON; // Update textarea
+//                 } else if(workflowDataJSON.length === contentWorkflow.value.length && workflowOutput[lastOutputIndex]){
+//                     console.log('They have the same length and limit reached');
+//                 }
 
-                console.log('workflowDataJSON Length: ' + workflowDataJSON.length);
-                console.log('textarea length: ' + contentWorkflow.value.length);
-                })
+//                 console.log('workflowDataJSON Length: ' + workflowDataJSON.length);
+//                 console.log('textarea length: ' + contentWorkflow.value.length);
+//                 })
 
 
-            .catch(error => {
-                console.error('Error during polling:', error);
-                clearInterval(interval); // Stop polling on error
-            });
-    // }, 3000); // Poll every 3 seconds
-};
+//             .catch(error => {
+//                 console.error('Error during polling:', error);
+//                 clearInterval(interval); // Stop polling on error
+//             });
+//     // }, 3000); // Poll every 3 seconds
+// };
 
 // Helper function to determine if polling is complete
 // function isPollingComplete(workflowOutput) {

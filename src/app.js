@@ -529,6 +529,10 @@ router.post("/api/webhook", (req, res) => {
 // User Routes
 router.get('/home', authenticateToken, (req, res) => {
 
+    res.setHeader("Access-Control-Allow-Origin", "https://agent-workflow-page.onrender.com");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, x-api-key");
+
     const welcomeMessage = req.cookies.welcomeMessage || '';
     res.clearCookie('welcomeMessage');
 
