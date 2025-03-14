@@ -281,9 +281,9 @@ function createWorkflow(){
         async function fetchStatus() {
             try {
                 const userId = id;
-                const response = await axios.post('/webhook');
-                // const data = await response.json();
-                const data = response.data;
+                const response = await fetch('/webhook');
+                const data = await response.json();
+                // const data = response.data;
 
                 console.log(data);
 
