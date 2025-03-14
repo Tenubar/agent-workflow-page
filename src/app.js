@@ -346,17 +346,6 @@ router.post("/create-workflow/:id", async (req,res) =>{
         res.status(500).json({ error: "Internal server error" });
     }
 });
-// webhooks
-// router.post('/webhook', (req, res)=>{
-//     console.log('Webhook received:', req.body);
-//     webhookData = req.body;
-//     res.status(200).send('Webhook received successfully');
-// });
-
-
-
-
-// let webhookData = [];
 
 // // Webhook endpoint
 // router.post('/webhook', authenticateToken, async (req, res) => {
@@ -380,11 +369,27 @@ router.post("/create-workflow/:id", async (req,res) =>{
 // Global Value (Changed for Database)
 // let webhookData = {};
 
-router.post('/webhook', (req, res) => {
-    const Webhookdata = req.body; 
-    console.log(Webhookdata);
-    // res.status(200).send('Webhook received successfully');
-    res.status(200).json(Webhookdata);
+
+
+
+
+
+
+
+
+
+// router.post('/webhook', (req, res) => {
+//     const Webhookdata = req.body; 
+//     console.log(Webhookdata);
+//     res.status(200).json(Webhookdata);
+// });
+
+// webhooks
+router.post('/webhook', (req, res)=>{
+    let webhookData = [];
+    console.log('Webhook received:', req.body);
+    webhookData = req.body;
+    res.status(200).send('Webhook received successfully');
 });
 
 // router.post('/webhook/:id', async (req, res) => {

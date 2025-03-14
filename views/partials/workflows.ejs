@@ -275,27 +275,26 @@ function createWorkflow(){
 
    
 
+// const userId = id;
 
+buttonSaveDiv.addEventListener('click',()=>{
+    async function fetchStatus() {
+        try {
 
-    buttonSaveDiv.addEventListener('click',()=>{
-        async function fetchStatus() {
-            try {
-                // const userId = id;
-                const response = await fetch('https://agent-workflow-page.onrender.com/webhook');
-                const data = await response.json();
-                // const data = response.data;
+            const response = await fetch('https://agent-workflow-page.onrender.com/webhook');
+            const data = await response.json();
 
-                console.log(data);
+            console.log(data);
 
-                // Update the textarea with the server's message
-                contentWorkflow.value = JSON.stringify(data, null, 2);
-            } catch (error) {
-                console.error('Error fetching status:', error);
-            }
+            // Update the textarea with the server's message
+            contentWorkflow.value = JSON.stringify(data, null, 2);
+        } catch (error) {
+            console.error('Error fetching status:', error);
         }
-        setInterval(fetchStatus, 2000);
-    });
-            stepDiv.appendChild(contentWorkflow);
+    }
+setInterval(fetchStatus, 2000);
+});
+stepDiv.appendChild(contentWorkflow);
 
 
         
