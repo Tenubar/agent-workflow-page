@@ -23,8 +23,7 @@ const io = new Server(server);
 const router = Router();
 const PORT = 3000;
 
-
-
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -361,7 +360,7 @@ io.on("connection", (socket) => {
     socket.on("registerSocket", async ({ userId }) => {
         try {
             // Update the user's socketId in the database
-            await User.findByIdAndUpdate(userId, { socketId: socket.id });
+            await modelUsers.findByIdAndUpdate(userId, { socketId: socket.id });
 
             console.log(`Socket ID ${socket.id} registered for user: ${userId}`);
         } catch (error) {
@@ -400,6 +399,27 @@ router.post('/api/save-workflow-id', async (req, res) => {
     }
 });
 
+
+router.post("/api/webhook", (req, res) => {
+
+    const data = req.body;
+    console.log(data);
+    // const { workflowRunId, data } = req.body;
+
+    // // Match query in the database
+    // const workflow = database.get(workflowRunId);
+    // if (workflow) {
+    //     const { socketId } = workflow;
+
+    //     // Emit data to the corresponding client
+    //     io.to(socketId).emit("updateTextarea", { message: data });
+    //     return res.status(200).send("Data sent to client");
+    // }
+
+    // res.status(404).send("Workflow not found");
+});
+
+
 // router.post("/api/webhook", (req, res) => {
 
 //     const data = req.body;
@@ -419,38 +439,38 @@ router.post('/api/save-workflow-id', async (req, res) => {
 //     // res.status(404).send("Workflow not found");
 // });
 
-router.post("/api/webhook", async (req, res) => {
-    try {
-        // Extract the workflowRunId from the request body
-        const workflowRunIdObject = req.body.find(item => item.key === "workflow_run_id");
-        const dataObject = req.body.find(item => item.key === "workflow_run_output");
+// router.post("/api/webhook", async (req, res) => {
+//     try {
+//         // Extract the workflowRunId from the request body
+//         const workflowRunIdObject = req.body.find(item => item.key === "workflow_run_id");
+//         const dataObject = req.body.find(item => item.key === "workflow_run_output");
 
-        if (!workflowRunIdObject || !dataObject) {
-            return res.status(400).send("Invalid payload format");
-        }
+//         if (!workflowRunIdObject || !dataObject) {
+//             return res.status(400).send("Invalid payload format");
+//         }
 
-        const workflowRunId = workflowRunIdObject.value; // Workflow Run ID
-        const data = dataObject.value; // Workflow Run Output
+//         const workflowRunId = workflowRunIdObject.value; // Workflow Run ID
+//         const data = dataObject.value; // Workflow Run Output
 
-        // Search in the database for a user with the specified workflowRunId
-        const user = await modelUsers.findOne({ workflowRunId: workflowRunId });
+//         // Search in the database for a user with the specified workflowRunId
+//         const user = await modelUsers.findOne({ workflowRunId: workflowRunId });
 
-        if (user) {
-            // Assume each user document has a `socketId` field (you may need to add this)
-            const socketId = user.socketId;
+//         if (user) {
+//             // Assume each user document has a `socketId` field (you may need to add this)
+//             const socketId = user.socketId;
 
-            // Emit data to the corresponding client
-            io.to(socketId).emit("updateTextarea", { message: data });
+//             // Emit data to the corresponding client
+//             io.to(socketId).emit("updateTextarea", { message: data });
 
-            return res.status(200).send("Data sent to client");
-        }
+//             return res.status(200).send("Data sent to client");
+//         }
 
-        res.status(404).send("WorkflowRunId not found");
-    } catch (error) {
-        console.error("Error processing webhook:", error);
-        res.status(500).send("Internal Server Error");
-    }
-});
+//         res.status(404).send("WorkflowRunId not found");
+//     } catch (error) {
+//         console.error("Error processing webhook:", error);
+//         res.status(500).send("Internal Server Error");
+//     }
+// });
 
 
 
