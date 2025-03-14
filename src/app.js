@@ -412,8 +412,10 @@ router.post('/api/save-workflow-id', async (req, res) => {
 
 router.post("/api/webhook", (req, res) => {
     // Add CORS headers for this specific route
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    
+    res.setHeader("Access-Control-Allow-Origin", "https://agent-workflow-page.onrender.com");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, x-api-key");
+
     const data = req.body;
     console.log(data);
 
