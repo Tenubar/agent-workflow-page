@@ -456,7 +456,7 @@ router.post("/api/webhook", (req, res) => {
     const workflow_run_id = req.body.workflow_run_id;
     console.log(workflow_run_id);
 
-    io.to(workflow_run_id).emit("updateTextarea", { message: data });
+    io.to(workflow_run_id).emit("updateTextarea", { message: JSON.stringify(data)});
     return res.status(200).send("Data sent to client");
 });
 

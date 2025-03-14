@@ -300,10 +300,12 @@ function createWorkflow(){
             console.log(message);
         });
 
-        socket.on("updateTextarea", (data) => {
-            contentWorkflow.value += data.message + "\n";
+        socket.on("updateTextarea", ({message}) => {
+            const parsedData = JSON.parse(message); // Convert string back to an object if needed
+            console.log(parsedData); // Use or display the parsed data
+            contentWorkflow.value += message + "\n";
         });
-        
+
     } catch (error) {
         console.error("Error:", error.response ? error.response.data : error.message);
     }
