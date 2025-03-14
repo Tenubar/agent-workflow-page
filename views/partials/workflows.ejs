@@ -273,7 +273,6 @@ function createWorkflow(){
 });
 
 buttonSaveDiv.addEventListener('click',()=>{
-    async function fetchStatus() {
         const userId = id;
             // Trigger Workflow
             try {
@@ -301,9 +300,9 @@ buttonSaveDiv.addEventListener('click',()=>{
                 socket.emit("registerSocket", { workflowRunId });
 
                 // Handle a response from the server (if the server emits a confirmation event)
-                socket.on("socketRegistered", ({ message }) => {
-                    console.log(message);
-                });
+                // socket.on("socketRegistered", ({ message }) => {
+                //     console.log(message);
+                // });
 
                 // const getDataBtn = document.createElement('div');
                 // getDataBtn.classList.add('get-workflow-by-id');
@@ -326,9 +325,9 @@ buttonSaveDiv.addEventListener('click',()=>{
                 // }); 
                 // stepDiv.appendChild(getDataBtn);
 
-                socket.on("updateTextarea", (data) => {
-                    contentWorkflow.value += data.message + "\n";
-                });
+                // socket.on("updateTextarea", (data) => {
+                //     contentWorkflow.value += data.message + "\n";
+                // });
 
                 const dbUrl = `/api/save-workflow-id`; // Endpoint to save data
 
@@ -353,8 +352,6 @@ buttonSaveDiv.addEventListener('click',()=>{
             } catch (error) {
                 console.error('Error in fetchStatus:', error);
             }
-        }
-        fetchStatus();
 });
 
 stepDiv.appendChild(contentWorkflow);
