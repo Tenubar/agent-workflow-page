@@ -347,114 +347,36 @@ router.post("/create-workflow/:id", async (req,res) =>{
     }
 });
 
-// // Webhook endpoint
-// router.post('/webhook', authenticateToken, async (req, res) => {
-//     webhookData = req.body; 
-//     res.status(200).send('Webhook received successfully');
-// });
 
 
-// // Frontend route
-// router.get('/test', (req, res) => {
-//     try {
-//         const workflowRunOutput = webhookData.find(item => item.key === 'workflow_run_output');
-//         const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
-//         res.status(200).json(contents);
-//     } catch (error) {
-//         console.error('Error in /test route:', error);
-//         res.status(500).json({ message: 'Internal Server Error' });
-//     }
-// });
 
-// Global Value (Changed for Database)
+let webhookData = [];
 
-
-let webhookData = {};
-
-// router.post('/webhook', (req, res) => {
-//     const Webhookdata = req.body; 
-//     console.log(Webhookdata);
-//     res.status(200).json(Webhookdata);
-// });
-
-// webhooks
-router.post('/webhook', (req, res)=>{
-    webhookData = req.body;
-    res.status(200).send(webhookData);
+// Webhook route
+router.post('/webhook', (req, res) => {
+    try {
+        webhookData = req.body; // Assuming the body is properly formatted
+        res.status(200).json({ message: 'Webhook data received', webhookData });
+    } catch (error) {
+        console.error('Error in /webhook route:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 });
 
-// router.post('/webhook/:id', async (req, res) => {
-//     const userId = req.params.id;
-//     const webhookText = req.body;
-
-//     try {
-//         const newWebhook = await modelUsers.findByIdAndUpdate(
-//             userId,
-//             { $push: { webhookData: { webhookText } } },
-//             { new: true }
-//         );
-
-//         if (!newWebhook) {
-//             return res.status(404).json({ error: "Error at creating the new agent" });
-//         }
-//         res.status(200).json({ message: "Webhook Data created", newWebhook });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Internal server error" });
-//     }
-// });
-
-
-// router.get('/webhook/:id', async (req, res) => {
-//     const userId = req.params.id;
-
-//     try {
-//         const user = await modelUsers.findById(userId);
-//         if (!user) {
-//             return res.status(404).json({ error: "User not found" });
-//         }
-//         res.status(200).json(user.webhookData); // Return webhook data
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Internal server error" });
-//     }
-// });
-
-
-
-// router.get('/webhook/:id', async (req, res) => {
-//     const userId = req.params.id;
-
-//     try {
-//         const user = await modelUsers.findById(userId);
-//         if (!user) {
-//             return res.status(404).json({ error: "User not found" });
-//         }
-//         res.status(200).json(user.webhookData); // Return webhook data
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Internal server error" });
-//     }
-// });
-
-
-
-    // webhookData = req.body;
-    // console.log('data:' + webhookData);
-    // res.status(200).send('Webhook received successfully');
-
-
 // Frontend route
-// router.get('/test', (req, res) => {
-//     try {
-//         const workflowRunOutput = webhookData?.find(item => item.key === 'workflow_run_output');
-//         const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
-//         res.status(200).json(contents);
-//     } catch (error) {
-//         console.error('Error in /test route:', error);
-//         res.status(500).json({ message: 'Internal Server Error' });
-//     }
-// });
+router.get('/test', (req, res) => {
+    try {
+        const workflowRunOutput = Array.isArray(webhookData)
+            ? webhookData.find(item => item.key === 'workflow_run_output')
+            : null;
+
+        const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
+        res.status(200).json(contents);
+    } catch (error) {
+        console.error('Error in /test route:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 
 
