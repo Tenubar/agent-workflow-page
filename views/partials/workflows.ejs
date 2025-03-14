@@ -285,6 +285,8 @@ function createWorkflow(){
                 // const data = await response.json();
                 const data = response.data;
 
+                console.log(data);
+
                 // Update the textarea with the server's message
                 contentWorkflow.value = JSON.stringify(data, null, 2);
             } catch (error) {
