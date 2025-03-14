@@ -464,6 +464,26 @@ router.post("/api/webhook", (req, res) => {
     return res.status(200).send("Data sent to client");
 });
 
+
+router.get('/api/get-workflow/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        // Find user by ID and select workflowRunId
+        const user = await modelUsers.findById(userId).select("workflowRunId");
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Return the workflowRunId array
+        res.status(200).json({ workflowRunId: user.workflowRunId });
+    } catch (error) {
+        console.error("Error retrieving workflows:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
     // const { workflowRunId, data } = req.body;
 
     // // Match query in the database

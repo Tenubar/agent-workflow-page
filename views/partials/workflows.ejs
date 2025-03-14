@@ -273,6 +273,33 @@ function createWorkflow(){
 });
 
 
+    (async () => {
+        try {
+            const response = await fetch(`/api/get-workflow/${userId}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch workflow data");
+            }
+
+            const data = await response.json();
+
+            // Assuming workflowRunId is an array, get the last output
+            if (data.workflowRunId && data.workflowRunId.length > 0) {
+                const lastWorkflow = data.workflowRunId[data.workflowRunId.length - 1];
+                contentWorkflow.value = lastWorkflow.output || ""; // Populate textarea with last output
+            } else {
+                contentWorkflow.value = "No workflows available"; // Fallback message
+            }
+        } catch (error) {
+            console.error("Error fetching workflow data:", error);
+            contentWorkflow.value = "Error loading workflows"; // Error fallback
+        }
+    })();
+
+
     // Method 2 Proxy
 
     buttonSaveDiv.addEventListener("click", async () => {
