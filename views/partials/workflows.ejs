@@ -300,7 +300,7 @@ function createWorkflow(){
             console.log(message);
         });
 
-        socket.on("updateTextarea", async ({ data }) => {
+        socket.on("updateTextarea", async (data) => {
             // const index = data.index;
             contentWorkflow.value += data.message + "\n"; // Append message to workflow
 
