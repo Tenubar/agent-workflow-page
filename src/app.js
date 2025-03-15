@@ -379,6 +379,10 @@ io.on("connection", (socket) => {
         socket.emit("socketRegistered", { message: `Registered to room ${workflowRunId}` });
     });
 
+    socket.on("closeConexion", ({ workflowRunId }) => {
+        socket.leave(workflowRunId);
+    });
+
     // Handle client disconnect
     socket.on("disconnect", () => {
         console.log("Client disconnected");

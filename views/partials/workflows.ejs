@@ -424,13 +424,15 @@ function createWorkflow(){
                 const saveResponse = await axios.post(dbUrl, saveData, {
                     headers: { 'Content-Type': 'application/json' }
                 });
+
+
             console.log('Saved to database:', saveResponse.data); // Log success response
             } catch (error) {
                 console.error('Error saving to database:', error); // Use the correct error object
             }
             loadingScreen.remove();
             contentWorkflow.readOnly = false;
-
+            socket.emit("closeConexion", { workflowRunId });
         });
 
     } catch (error) {
