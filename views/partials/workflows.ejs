@@ -269,7 +269,7 @@ function createWorkflow(){
         height: "60vh",
         padding: "12px",
         overflowY: "auto",
-        background: "var(--color-light)"
+        background: "var(--color-light)",
 });
 
 
@@ -289,13 +289,40 @@ function createWorkflow(){
             // Assuming workflowRunId is an array, get the last output
             if (data.workflowRunId && data.workflowRunId.length > 0) {
                 const lastWorkflow = data.workflowRunId[data.workflowRunId.length - 1];
-                contentWorkflow.value = lastWorkflow.output || ""; // Populate textarea with last output
+                // contentWorkflow.value = lastWorkflow.output || "";
+
+                // Convert to JSON
+                const workflowOutputString = lastWorkflow.output;
+                const workflowOutput = JSON.parse(workflowOutputString);
+
+                // Get the Number of Indexes
+                const workflowIndex = workflowOutput.workflow_run_output.length;
+
+                let text = "";
+
+                // Go Trough all indexes and find the Index
+                workflowOutput.workflow_run_output.forEach(item => {
+                    text += item.content + "\n";
+                    contentWorkflow.value = text.replace(/\*/g, '');
+                });
+
+
+                // const workflowResult = workflowOutput.workflow_run_output.find(item => item.index === 1)
+                // Set the content Workflow.value to the result || ""
+
+                
+
+                // contentWorkflow.value = workflowResult.content || "";
+
+
             } else {
-                contentWorkflow.value = "No workflows available"; // Fallback message
+                contentWorkflow.innerHTML = "No workflows available"; // Fallback message
             }
+
+
         } catch (error) {
             console.error("Error fetching workflow data:", error);
-            contentWorkflow.value = "Error loading workflows"; // Error fallback
+            contentWorkflow.innerHTML = "Error loading workflows"; // Error fallback
         }
     })();
 
@@ -303,6 +330,43 @@ function createWorkflow(){
     // Method 2 Proxy
 
     buttonSaveDiv.addEventListener("click", async () => {
+
+        // Create the loading screen container
+        const loadingScreen = document.createElement('div');
+        loadingScreen.id = 'loading-screen';
+        loadingScreen.style.position = 'fixed';
+        loadingScreen.style.top = '0';
+        loadingScreen.style.left = '0';
+        loadingScreen.style.width = '100%';
+        loadingScreen.style.height = '100%';
+        loadingScreen.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        loadingScreen.style.zIndex = '9999';
+
+        // Create the spinner element
+        const spinner = document.createElement('div');
+        spinner.classList.add('spinner');
+
+        // Apply spinner styles dynamically
+        spinner.style.border = '5px solid #f3f3f3';
+        spinner.style.borderTop = '5px solid #3498db';
+        spinner.style.borderRadius = '50%';
+        spinner.style.width = '50px';
+        spinner.style.height = '50px';
+        spinner.style.animation = 'spin 2s linear infinite';
+        spinner.style.margin = 'auto';
+        spinner.style.position = 'absolute';
+        spinner.style.top = '0';
+        spinner.style.bottom = '0';
+        spinner.style.left = '0';
+        spinner.style.right = '0';
+
+        // Append the spinner to the loading screen
+        loadingScreen.appendChild(spinner);
+
+        // Append the loading screen to the body
+        document.body.appendChild(loadingScreen);
+
+
     try {
         const workflowID = "67d47dae4a63a8f936bca702"; // Workflow ID
         const data = {
@@ -329,7 +393,7 @@ function createWorkflow(){
 
         socket.on("updateTextarea", async (data) => {
             // const index = data.index;
-            contentWorkflow.value += data.message + "\n"; // Append message to workflow
+            contentWorkflow.innerHTML += data.message + "\n"; // Append message to workflow
 
             const dbUrl = `/api/save-workflow-id`; // Backend API endpoint
             const saveData = { 
@@ -347,6 +411,7 @@ function createWorkflow(){
             } catch (error) {
                 console.error('Error saving to database:', error); // Use the correct error object
             }
+            loadingScreen.remove();
         });
 
     } catch (error) {
