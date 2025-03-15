@@ -316,13 +316,13 @@ function createWorkflow(){
 
 
             } else {
-                contentWorkflow.innerHTML = "No workflows available"; // Fallback message
+                contentWorkflow.value = "No workflows available"; // Fallback message
             }
 
 
         } catch (error) {
             console.error("Error fetching workflow data:", error);
-            contentWorkflow.innerHTML = "Error loading workflows"; // Error fallback
+            contentWorkflow.value = "Error loading workflows"; // Error fallback
         }
     })();
 
@@ -366,6 +366,7 @@ function createWorkflow(){
         // Append the loading screen to the body
         document.body.appendChild(loadingScreen);
 
+        contentWorkflow.value = "";
 
     try {
         const workflowID = "67d47dae4a63a8f936bca702"; // Workflow ID
@@ -393,7 +394,7 @@ function createWorkflow(){
 
         socket.on("updateTextarea", async (data) => {
             // const index = data.index;
-            contentWorkflow.innerHTML += data.message + "\n"; // Append message to workflow
+            contentWorkflow.value += data.message + "\n"; // Append message to workflow
 
             const dbUrl = `/api/save-workflow-id`; // Backend API endpoint
             const saveData = { 
