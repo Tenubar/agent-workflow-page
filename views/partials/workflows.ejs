@@ -394,8 +394,23 @@ function createWorkflow(){
         });
 
         socket.on("updateTextarea", async (data) => {
-            // const index = data.index;
-            contentWorkflow.value += data.message + "\n"; // Append message to workflow
+
+
+        const workflowContent = JSON.parse(data.message);
+
+        // Get the Number of Indexes
+        const workflowIndex = workflowContent.workflow_run_output.length;
+
+        let text = "";
+
+        // Go Trough all indexes and find the Index
+        workflowContent.workflow_run_output.forEach(item => {
+            text += item.content + "\n";
+            contentWorkflow.value = text.replace(/\*/g, '');
+        });
+
+            // Format Text
+            // contentWorkflow.value += data.message + "\n";
 
             const dbUrl = `/api/save-workflow-id`; // Backend API endpoint
             const saveData = { 
@@ -414,6 +429,8 @@ function createWorkflow(){
                 console.error('Error saving to database:', error); // Use the correct error object
             }
             loadingScreen.remove();
+            contentWorkflow.readOnly = false;
+
         });
 
     } catch (error) {
