@@ -381,6 +381,7 @@ io.on("connection", (socket) => {
 
     socket.on("closeConexion", ({ workflowRunId }) => {
         socket.leave(workflowRunId);
+        console.log(`Socket ${socket.id} leaved the room: ${workflowRunId}`);
     });
 
     // Handle client disconnect
