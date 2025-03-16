@@ -358,17 +358,6 @@ router.post("/create-workflow/:id", async (req,res) =>{
 io.on("connection", (socket) => {
     console.log("Client connected");
 
-    // socket.on("registerSocket", async ({ userId }) => {
-    //     try {
-    //         // Update the user's socketId in the database
-    //         await modelUsers.findByIdAndUpdate(userId, { socketId: socket.id });
-
-    //         console.log(`Socket ID ${socket.id} registered for user: ${userId}`);
-    //     } catch (error) {
-    //         console.error("Error registering socket ID:", error);
-    //     }
-    // });
-
     // Listen for the registerSocket event from the client
     socket.on("registerSocket", ({ workflowRunId }) => {
         // Join the client to the room identified by workflowRunId
@@ -426,9 +415,9 @@ router.post('/api/save-workflow-id', async (req, res) => {
 // Proxy route for making the external API request
 app.post("/proxy/workflow", async (req, res) => {
     try {
-        const workflowTitle = 'new name'
+        const workflowTitle = 'new run';
+        const { workflowID, data, userId } = req.body;
         const apiKey = "sk--dUmIovpvZ3Vb83tCd9Ieg20250313174645"; // Keep API keys secure in the backend
-        const workflowID = req.body.workflowID; // Retrieve workflow ID from client request
         const url = `https://api-v3.mindpal.io/api/workflow/run?workflow_id=${workflowID}&workflow_run_title=${workflowTitle}&openai_api_key=${apiKey}&anthropic_api_key=${apiKey}&google_api_key=${apiKey}&groq_api_key=${apiKey}`;
 
         // Headers for the external API
@@ -439,7 +428,22 @@ app.post("/proxy/workflow", async (req, res) => {
         };
 
         // Data to send to the external API
-        const data = req.body.data; // The workflow details, e.g., "Goal" and "Target Audience"
+        // const data = req.body.data; // The workflow details, e.g., "Goal" and "Target Audience"
+        
+        const incWorkflowCount = await modelUsers.findByIdAndUpdate(
+            userId,
+            { 
+                // $pull: { agents: { _id: agentID } }, 
+                $inc: { workflowCount: 1 }
+            },
+            {
+                new: true 
+            }
+        );
+        
+        if (!incWorkflowCount) {
+            return res.status(404).json({ error: "User not found" });
+        }
 
         // Make the request to the external API
         const apiResponse = await axios.post(url, data, { headers });
@@ -469,7 +473,7 @@ router.post("/api/webhook", (req, res) => {
     return res.status(200).send("Data sent to client");
 });
 
-
+// GET WORKFLOW
 router.get('/api/get-workflow/:userId', async (req, res) => {
     try {
         const { userId } = req.params;
@@ -489,106 +493,33 @@ router.get('/api/get-workflow/:userId', async (req, res) => {
     }
 });
 
-    // const { workflowRunId, data } = req.body;
 
-    // // Match query in the database
-    // const workflow = database.get(workflowRunId);
-    // if (workflow) {
-    //     const { socketId } = workflow;
-
-    //     // Emit data to the corresponding client
-    //     io.to(socketId).emit("updateTextarea", { message: data });
-    //     return res.status(200).send("Data sent to client");
-    // }
-
-    // res.status(404).send("Workflow not found");
-
-
-// router.post("/api/webhook", (req, res) => {
-
-//     const data = req.body;
-//     console.log(data);
-//     // const { workflowRunId, data } = req.body;
-
-//     // // Match query in the database
-//     // const workflow = database.get(workflowRunId);
-//     // if (workflow) {
-//     //     const { socketId } = workflow;
-
-//     //     // Emit data to the corresponding client
-//     //     io.to(socketId).emit("updateTextarea", { message: data });
-//     //     return res.status(200).send("Data sent to client");
-//     // }
-
-//     // res.status(404).send("Workflow not found");
-// });
-
-// router.post("/api/webhook", async (req, res) => {
-//     try {
-//         // Extract the workflowRunId from the request body
-//         const workflowRunIdObject = req.body.find(item => item.key === "workflow_run_id");
-//         const dataObject = req.body.find(item => item.key === "workflow_run_output");
-
-//         if (!workflowRunIdObject || !dataObject) {
-//             return res.status(400).send("Invalid payload format");
-//         }
-
-//         const workflowRunId = workflowRunIdObject.value; // Workflow Run ID
-//         const data = dataObject.value; // Workflow Run Output
-
-//         // Search in the database for a user with the specified workflowRunId
-//         const user = await modelUsers.findOne({ workflowRunId: workflowRunId });
-
-//         if (user) {
-//             // Assume each user document has a `socketId` field (you may need to add this)
-//             const socketId = user.socketId;
-
-//             // Emit data to the corresponding client
-//             io.to(socketId).emit("updateTextarea", { message: data });
-
-//             return res.status(200).send("Data sent to client");
-//         }
-
-//         res.status(404).send("WorkflowRunId not found");
-//     } catch (error) {
-//         console.error("Error processing webhook:", error);
-//         res.status(500).send("Internal Server Error");
-//     }
-// });
-
-
-
-
-// let webhookData = [];
-
-// // Webhook route
-// router.post('/webhook', (req, res) => {
-//     try {
-//         webhookData = req.body; // Assuming the body is properly formatted
-//         res.status(200).json({ message: 'Webhook data received', webhookData });
-//     } catch (error) {
-//         console.error('Error in /webhook route:', error);
-//         res.status(500).json({ message: 'Internal Server Error' });
-//     }
-// });
-
-// // Frontend route
-// router.get('/test', (req, res) => {
-//     try {
-//         const workflowRunOutput = Array.isArray(webhookData)
-//             ? webhookData.find(item => item.key === 'workflow_run_output')
-//             : null;
-
-//         const contents = workflowRunOutput?.value.map(item => item.content) || ['Waiting for message'];
-//         res.status(200).json(contents);
-//     } catch (error) {
-//         console.error('Error in /test route:', error);
-//         res.status(500).json({ message: 'Internal Server Error' });
-//     }
-// });
-
-
-
+// REMOVE WORKFLOW
+// Endpoint to remove the workflow ID
+app.post('/api/removeWorkflowId', async (req, res) => {
+    const { runId } = req.body;
+  
+    if (!runId) {
+      return res.status(400).json({ error: 'WorkflowId is required' });
+    }
+  
+    try {
+      // Update the document by removing the workflowRunId field for the given workflowId
+      const result = await modelUsers.updateOne(
+        { 'workflowRunId.runId': runId },
+        { $pull: { workflowRunId: { runId: runId } } }
+      );
+  
+      if (result) {
+        res.status(200).json({ message: 'WorkflowRunId removed successfully', user: result });
+      } else {
+        res.status(404).json({ error: 'Workflow ID not found' });
+      }
+    } catch (error) {
+      console.error('Error removing WorkflowRunId:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 
 // User Routes
 router.get('/home', authenticateToken, (req, res) => {

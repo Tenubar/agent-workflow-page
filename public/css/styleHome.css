@@ -477,6 +477,7 @@ main .insights h5{
     color: var(--color-light);
 }
 
+
 .proyects h1, .team h1, .content h1, .conversations h1{
     font-size: 1.8rem;
     font-weight: 500;

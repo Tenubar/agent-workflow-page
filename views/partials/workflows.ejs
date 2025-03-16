@@ -29,15 +29,16 @@ function createWorkflow(){
     Object.assign(stepDiv.style, {
     display: 'grid',
     position: 'fixed',
-    top: '10vh',
+    top: '3vh',
     left: '50%',
     transform: 'translateX(-50%)',
     background: 'white',
     zIndex: '1',
-    padding: '18px 24px 32px 24px',
-    maxHeight: '82vh',
+    padding: '18px 24px 18px',
+    // maxHeight: '82vh',
     borderRadius: 'var(--border-radius-2)',
-    rowGap: '0.72rem'
+    rowGap: '0.72rem',
+    border: '2px solid var(--color-info-dark)'
     });
 
     const outline = document.createElement('div');
@@ -64,18 +65,20 @@ function createWorkflow(){
 
     // Close button
     const closeButton = document.createElement('div');
+    closeButton.textContent = "\u00D7";
     Object.assign(closeButton.style, {
-        display: 'block',
-        width: '1rem',
-        height: '1rem',
-        backgroundColor: '#f44336',
-        color: 'white',
-        borderRadius: '4px',
+        display: 'flex',
+        width: '2rem',
+        height: '2rem',
+        color: 'var(--color-info-dark)',
         cursor: 'pointer',
         textAlign: 'center',
         fontWeight: 'bold',
         userSelect: 'none',
-        marginLeft: 'auto'
+        marginLeft: 'auto',
+        justifyContent: 'center',
+        fontSize: '26px',
+        alignItems: 'center'
     });
 
     closeButton.addEventListener('click', () => {
@@ -115,7 +118,127 @@ function createWorkflow(){
     span.textContent = 'stylus_note';
     generateAiBtnDiv.appendChild(span);
 
-    
+    // Workflow History
+    const workflow_history = document.createElement('div');
+    workflow_history.classList.add('history-workflow');
+    workflow_history.addEventListener('click',()=>{
+        // Hide textarea
+        document.querySelector('.workflow-textarea').style.display = "none";
+
+        const workflow_history_grid = document.createElement('div');
+        Object.assign(workflow_history_grid.style,{
+        display: "grid",
+        gridTemplateColumns: "1fr",
+        width: "50vw",
+        padding: "12px",
+        overflowY: "auto",
+        background: "var(--color-light)",
+        border: "2px solid var(--color-dark-variant)"
+    });
+
+    // Create a grid with div 
+    const workflow_history_flex = document.createElement('div');
+        Object.assign(workflow_history_flex.style,{
+        display: "flex",
+        background: "var(--color-light)",
+        justifyContent: "space-between",
+        alignItems: "center"
+    });
+
+        
+    const workflow_history_div = document.createElement('div');
+        Object.assign(workflow_history_div.style,{
+        display: "flex",
+        background: "var(--color-light)",
+        border: "2px solid var(--color-dark-variant)",
+        padding: "6px",
+        borderRadius: "var(--border-radius-1)",
+        cursor: "pointer"
+    });
+
+    const workflow_history_button = document.createElement('p');
+        Object.assign(workflow_history_button.style,{
+        display: "block",
+    });
+
+    const workflow_history_span = document.createElement('span');
+    workflow_history_span.textContent = "edit";
+        Object.assign(workflow_history_span.style,{
+        display: "block",
+        background: "var(--color-light)",
+    });
+
+    const workflow_history_title = document.createElement('h5');
+    workflow_history_title.textContent = "Workflow Run 1"
+        Object.assign(workflow_history_title.style,{
+        display: "block",
+    });
+
+    const workflow_history_description = document.createElement('p');
+    workflow_history_description.textContent = "ajdkhasdapwe adodp qwoeh qdjashdaskh qpwe hq hajpsdh";
+        Object.assign(workflow_history_description.style,{
+        display: "block",
+    });
+
+    const workflow_history_small = document.createElement('small');
+    workflow_history_small.setAttribute('class', 'text-muted');
+    workflow_history_small.textContent = "Workflow Run ID: 70eaiwp012y3123bv";
+        Object.assign(workflow_history_small.style,{
+        display: "block",
+    });
+
+        stepDiv.appendChild(workflow_history_grid);
+        workflow_history_grid.appendChild(workflow_history_flex);
+        workflow_history_flex.appendChild(workflow_history_title);
+
+        workflow_history_flex.appendChild(workflow_history_div);
+
+        workflow_history_div.appendChild(workflow_history_button);
+        workflow_history_div.appendChild(workflow_history_span);
+
+        workflow_history_grid.appendChild(workflow_history_description);
+        workflow_history_grid.appendChild(workflow_history_small);
+
+        // Container contents
+        // 
+
+
+    });
+
+    Object.assign(workflow_history.style,{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        columnGap: "0.4rem",
+        padding: "6px",
+        borderRadius: "var(--border-radius-1)",
+        background: "var(--color-background)",
+        color: "var(--color-info-dark)",
+        cursor: "pointer",
+        transition: "background-color 0.3s ease, color 0.3s ease",
+        border: '2px solid var(--color-info-dark)'
+    });
+
+   
+    workflow_history.addEventListener('mouseenter', () => {workflow_history.style.backgroundColor = "var(--color-primary)";workflow_history.style.color = "var(--color-white)";});
+    workflow_history.addEventListener('mouseleave', () => {workflow_history.style.backgroundColor = "var(--color-background)";workflow_history.style.color = "var(--color-info-dark)";});
+
+
+    // Add the icon span
+    const span_history = document.createElement('span');
+    span_history.classList.add('material-symbols-outlined');
+    span_history.textContent = 'history';
+    workflow_history.appendChild(span_history);
+
+    // Add the button with an onclick event
+    const buttonHistoryDiv = document.createElement('div');
+    buttonHistoryDiv.setAttribute('type', 'button');
+    buttonHistoryDiv.setAttribute('onclick', '');
+    buttonHistoryDiv.textContent = 'History (0)';
+    workflow_history.appendChild(buttonHistoryDiv);
+
+    // Append the AI button container to stepDiv
+    flexContainer.appendChild(workflow_history);
 
     // Save the workflow
     const saveContent = document.createElement('div');
@@ -130,7 +253,11 @@ function createWorkflow(){
         background: "var(--color-background)",
         color: "var(--color-info-dark)",
         cursor: "pointer",
+        transition: "background-color 0.3s ease, color 0.3s ease",
+        border: '2px solid var(--color-info-dark)'
     });
+    saveContent.addEventListener('mouseenter', () => {saveContent.style.backgroundColor = "var(--color-primary)";saveContent.style.color = "var(--color-white)";});
+    saveContent.addEventListener('mouseleave', () => {saveContent.style.backgroundColor = "var(--color-background)";saveContent.style.color = "var(--color-info-dark)";});
 
     // Add the icon span
     const span_save = document.createElement('span');
@@ -147,10 +274,11 @@ function createWorkflow(){
 
     // Append the AI button container to stepDiv
     flexContainer.appendChild(saveContent);
-    
+
     // Delete the workflow
     const deleteContent = document.createElement('div');
     deleteContent.classList.add('delete-workflow');
+
     Object.assign(deleteContent.style,{
         display: "flex",
         alignItems: "center",
@@ -161,7 +289,14 @@ function createWorkflow(){
         background: "var(--color-background)",
         color: "var(--color-info-dark)",
         cursor: "pointer",
+        transition: "background-color 0.3s ease, color 0.3s ease",
+        border: '2px solid var(--color-info-dark)'
     });
+
+   
+    deleteContent.addEventListener('mouseenter', () => {deleteContent.style.backgroundColor = "var(--color-primary)";deleteContent.style.color = "var(--color-white)";});
+    deleteContent.addEventListener('mouseleave', () => {deleteContent.style.backgroundColor = "var(--color-background)";deleteContent.style.color = "var(--color-info-dark)";});
+
 
     // Add the icon span
     const span_delete = document.createElement('span');
@@ -173,11 +308,12 @@ function createWorkflow(){
     const buttonDeleteDiv = document.createElement('div');
     buttonDeleteDiv.setAttribute('type', 'button');
     buttonDeleteDiv.setAttribute('onclick', '');
-    buttonDeleteDiv.textContent = 'Delete';
+    buttonDeleteDiv.textContent = 'Delete Run';
     deleteContent.appendChild(buttonDeleteDiv);
 
     // Append the AI button container to stepDiv
     flexContainer.appendChild(deleteContent);
+
 
     // Boolean
 
@@ -264,14 +400,21 @@ function createWorkflow(){
         buttonSaveDiv.textContent = 'Run Workflow';
 
         const contentWorkflow = document.createElement('textarea');
+        contentWorkflow.setAttribute('class', 'workflow-textarea');
         Object.assign(contentWorkflow.style,{
         width: "50vw",
         height: "60vh",
         padding: "12px",
         overflowY: "auto",
         background: "var(--color-light)",
-});
+        border: "2px solid var(--color-dark-variant)"
+    });
 
+        const runIdTxt = document.createElement('small');
+        runIdTxt.setAttribute('class', 'text-muted');
+
+    let isScreenActive = false; // Prevent multiple overlays
+    let deleteWorkflowbyid = false; // Prevent multiple overlays
 
     (async () => {
         try {
@@ -307,16 +450,160 @@ function createWorkflow(){
                 });
 
 
-                // const workflowResult = workflowOutput.workflow_run_output.find(item => item.index === 1)
-                // Set the content Workflow.value to the result || ""
+                runIdTxt.textContent = 'Workflow Run ID: ' + workflowOutput.workflow_run_id || "";
+                deleteContent.setAttribute('data-id', workflowOutput.workflow_run_id);
+                deleteContent.addEventListener('click', async (event)=>{
+                    event.preventDefault();
+                    const button = event.currentTarget;
+                    const workflowId = button.getAttribute('data-id');
+                    await deleteAgent(workflowId);
+                });
 
-                
+                function deleteAgent(workflowId){
 
-                // contentWorkflow.value = workflowResult.content || "";
+                if (isScreenActive || deleteWorkflowbyid) return; // Prevent multiple overlays
+                isScreenActive = true;
+
+                const runId = workflowId;
+
+                // Create confirmation screen container
+                const confirmationScreen = document.createElement('div');
+                confirmationScreen.id = 'confirmationScreen';
+                confirmationScreen.style = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgb(0 5 35 / 25%);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.5s ease;
+                    z-index: 4;
+                `;
+
+                // Create modal content
+                const modal = document.createElement('div');
+                modal.style = `
+                    background: #fff;
+                    padding: 20px;
+                    border-radius: 8px;
+                    text-align: center;
+                    user-select: none;
+                `;
+
+                // Add modal text
+                const modalText = document.createElement('p');
+                modalText.textContent = 'Delete this workflow run?';
+                modal.appendChild(modalText);
+
+                // Add Yes button
+                const yesBtn = document.createElement('button');
+                yesBtn.id = 'yesBtn';
+                yesBtn.textContent = 'Yes';
+                yesBtn.style = 'margin: 12px; padding: 10px 20px; font-size: 14px; cursor: pointer';
+                modal.appendChild(yesBtn);
+
+                // Add No button
+                const noBtn = document.createElement('button');
+                noBtn.id = 'noBtn';
+                noBtn.textContent = 'No';
+                noBtn.style = 'margin: 12px; padding: 10px 20px; font-size: 14px; cursor: pointer';
+                modal.appendChild(noBtn);
+
+                confirmationScreen.appendChild(modal);
+                document.body.appendChild(confirmationScreen);
+
+                // Trigger the overlay appearance
+                requestAnimationFrame(() => {
+                    confirmationScreen.style.opacity = '1';
+                    confirmationScreen.style.pointerEvents = 'all';
+                });
+
+                // Close confirmation function
+                function closeDelete() {
+                    confirmationScreen.style.opacity = '0';
+                    confirmationScreen.style.pointerEvents = 'none';
+
+                    // Wait for the opacity transition to end before removing elements
+                    setTimeout(() => {
+                        confirmationScreen.remove();
+                        isScreenActive = false; // Allow new overlays
+                    }, 500);
+                }
+
+                async function confirmDelete(){
+                    deleteWorkflowbyid = true;
+                    try {
+                    const response = await axios.post('/api/removeWorkflowId', { runId });
+                    console.log('Workflow ID removed:', response.data);
+
+                    // Step 2: If the first request is successful, fetch the updated workflow data
+                    const fetchResponse = await fetch(`/api/get-workflow/${userId}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    if (!fetchResponse.ok) {
+                        throw new Error('Failed to fetch workflow data');
+                    }
+
+                    const data = await fetchResponse.json();
+
+                    // Handle the fetched workflow data
+                    if (data.workflowRunId && data.workflowRunId.length > 0) {
+                        const lastWorkflow = data.workflowRunId[data.workflowRunId.length - 1];
+
+                        // Convert to JSON
+                        const workflowOutputString = lastWorkflow.output;
+                        const workflowOutput = JSON.parse(workflowOutputString);
+
+                        // Process workflow data
+                        let text = '';
+                        workflowOutput.workflow_run_output.forEach((item) => {
+                            text += item.content + '\n';
+                            contentWorkflow.value = text.replace(/\*/g, '');
+                        });
+
+                        runIdTxt.textContent = 'Workflow Run ID: ' + (workflowOutput.workflow_run_id || '');
+                        deleteContent.setAttribute('data-id', workflowOutput.workflow_run_id);
+
+                        // Set up the delete agent function
+                        deleteContent.addEventListener('click', async (event) => {
+                            event.preventDefault();
+                            const button = event.currentTarget;
+                            const workflowId = button.getAttribute('data-id');
+                            await deleteAgent(workflowId);
+                        });
+                        deleteWorkflowbyid = false;
+                    } else {
+                        contentWorkflow.value = 'No workflow run found. Consider creating a new one!';
+                    }
+                    } catch (error) {
+                        console.error('Error removing workflow ID:', error);
+                    }
+
+                    confirmationScreen.style.opacity = '0';
+                    confirmationScreen.style.pointerEvents = 'none';
+                    // Wait for the opacity transition to end before removing elements
+                    setTimeout(() => {
+                        confirmationScreen.remove();
+                        isScreenActive = false; // Allow new overlays
+                    }, 500);
+                }
+
+                // Add click events to Yes and No buttons
+                yesBtn.addEventListener('click', confirmDelete);
+                noBtn.addEventListener('click', closeDelete);
+            }
+
 
 
             } else {
-                contentWorkflow.value = "No workflows available"; // Fallback message
+                contentWorkflow.value = "No workflow run found. Consider creating a new one!"; // Fallback message
             }
 
 
@@ -378,6 +665,7 @@ function createWorkflow(){
         const response = await axios.post("/proxy/workflow", {
             workflowID, // Send workflowID to backend
             data, // Send workflow details
+            userId
         });
 
         // Workflow Run Id
@@ -408,6 +696,8 @@ function createWorkflow(){
             text += item.content + "\n";
             contentWorkflow.value = text.replace(/\*/g, '');
         });
+
+        runIdTxt.textContent = 'Workflow Run ID: ' + workflowContent.workflow_run_id || "";
 
             // Format Text
             // contentWorkflow.value += data.message + "\n";
@@ -524,7 +814,7 @@ function createWorkflow(){
 // });
 
 stepDiv.appendChild(contentWorkflow);
-
+stepDiv.appendChild(runIdTxt);
 
 // function pollForWorkflowOutput(workflowRunId, headers) {
 //     const getUrl = `https://api-v3.mindpal.io/api/workflow-run-result/retrieve-by-id?run_id=${workflowRunId}`;
