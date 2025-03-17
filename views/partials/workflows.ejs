@@ -135,7 +135,7 @@ function createWorkflow(){
 
 
 document.querySelector('.workflow-textarea').style.display = "none";
-document.querySelector('.run-workflow-container').style.display = "none";
+// document.querySelector('.run-workflow-container').style.display = "none";
 document.querySelector('.run-id-txt-small').style.display = "none" ;
 
 let saveWorkflow = document.querySelector('.save-workflow');
@@ -469,8 +469,7 @@ try {
         const runWorkflow = document.createElement('div');
             runWorkflow.classList.add('run-workflow-container');
             Object.assign(runWorkflow.style,{
-                // display: "flex",
-                display: "none",
+                display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 columnGap: "0.4rem",
@@ -716,7 +715,7 @@ try {
         workflow_history.style.backgroundColor = workflowTap === 1 ? "var(--color-primary)" : "var(--color-background)";workflow_history.style.color = workflowTap === 1 ? "var(--color-white)" : "var(--color-info-dark)";
     
         // Hide
-        document.querySelector('.workflow-history-grid').style.display = "none";
+        // document.querySelector('.workflow-history-grid').style.display = "none";
         
         // Show
         document.querySelector('.workflow-textarea').style.display = "block";
