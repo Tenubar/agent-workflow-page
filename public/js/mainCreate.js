@@ -72,6 +72,17 @@ $('.contact-user').click(function(){
   window.open('/chat', '_blank');
 })
 
+
+const urlParams = new URLSearchParams(window.location.search);
+const activeParam = urlParams.get('active'); // e.g., "workflows"
+const agentsElement = document.getElementById('agents');
+const workflowsElement = document.getElementById('workflows');
+if (activeParam === 'workflows') {
+  agentsElement.classList.remove('active'); // Remove 'active' from agents
+  workflowsElement.classList.add('active'); // Add 'active' to workflows
+
+}
+
 });
 
 

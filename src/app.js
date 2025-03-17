@@ -494,6 +494,29 @@ router.get('/api/get-workflow/:userId', async (req, res) => {
 });
 
 
+// GET ALL WORKFLOWIDS IN HISTORY
+router.get('/api/get-workflowid-history/:id', async (req, res) => {
+    const userId = req.params.id;
+    try {
+        // Find user by ID
+        const getWorkflowId = await modelUsers.findById(userId);
+
+        if (getWorkflowId && getWorkflowId.workflowRunId) {
+            // Retrieve all runIds
+            const runIds = getWorkflowId.workflowRunId.map(workflowRun => workflowRun.runId);
+            
+            res.status(200).json({ message: "agentFound", runIds });
+        } else {
+            res.status(404).json({ message: "No agents found or the data is null" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+
+
 // REMOVE WORKFLOW
 // Endpoint to remove the workflow ID
 app.post('/api/removeWorkflowId', async (req, res) => {
