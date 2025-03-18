@@ -1,5 +1,10 @@
 let flag0 = 0;
 
+const params = new URLSearchParams(window.location.search);
+const agentid = params.get('agentid');
+console.log(userId);
+console.log(agentid);
+
 setTimeout(function() {
     var aiMessage = "Hello";
     var aiResponse = "Assistant: " + aiMessage;
@@ -16,6 +21,7 @@ function sendMessage() {
     input.value = '';
 
     flag0 = 1;
+    saveUserConversation(message);
 
     // AI Response Simulation
     setTimeout(function() {
@@ -23,6 +29,9 @@ function sendMessage() {
     var aiResponse = "Assistant: " + aiMessage;
     appendMessage(aiResponse, 'ai');
     flag0 = 0;
+    // Save conversation to Database
+    saveAssistantConversation(aiMessage);
+
     }, 500);
 }
 
@@ -43,3 +52,39 @@ document.addEventListener("keydown", function(event) {
       sendMessage();
     }
 })
+
+
+async function saveAssistantConversation(aiMessage){
+    const agentId = agentid;
+
+    const storeChat = aiMessage;
+
+    try {
+        const response = await axios.post(`/chat-assistant-storage/${userId}/${agentId}`,{
+            assistant: storeChat,
+        });
+
+        console.log("Server response received:", response.data);
+    } catch (error) {
+        console.error(error.response.data.error);
+        alert("An error occurred while creating new agent.");
+    }
+}
+
+
+async function saveUserConversation(message){
+    const agentId = agentid;
+
+    const storeChat = message;
+
+    try {
+        const response = await axios.post(`/chat-user-storage/${userId}/${agentId}`,{
+            userChat: storeChat,
+        });
+
+        console.log("Server response received:", response.data);
+    } catch (error) {
+        console.error(error.response.data.error);
+        alert("An error occurred while creating new agent.");
+    }
+}

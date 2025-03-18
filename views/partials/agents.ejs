@@ -217,10 +217,10 @@ async function getAgentById(agentId){
 
         // Form container
         const formContainer = document.createElement('div');
+        formContainer.classList.add('form-container');
         formContainer.style.position = 'fixed';
         formContainer.style.top = '10%';
         formContainer.style.left = '50%';
-        formContainer.style.width = "40vw";
         formContainer.style.transform = "translateX(-50%)";
         formContainer.style.backgroundColor = 'white';
         formContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
@@ -395,8 +395,41 @@ async function getAgentById(agentId){
             const agentId = button.getAttribute('data-id');
             await deleteAgent(agentId);
         });
-        buttonsDiv.appendChild(deleteButton);
 
+        // Delete Button
+        const historyButton = document.createElement('button');
+        historyButton.textContent = 'History';
+        historyButton.setAttribute('data-id', agentID);
+        historyButton.style.position = 'relative';
+        historyButton.style.display = "flex";
+        historyButton.style.justifyContent = "center";
+        historyButton.style.background = "var(--color-primary)";
+        historyButton.style.padding = "6px 12px"
+        historyButton.style.textAlign = "center";
+        historyButton.style.fontSize = "14px";
+        historyButton.style.borderRadius = "var(--border-radius-1)";
+        historyButton.style.color = "var(--color-light)";
+        historyButton.style.cursor = "pointer";
+        historyButton.addEventListener('click', async (event)=>{
+            event.preventDefault();
+            const button = event.currentTarget;
+            const agentId = button.getAttribute('data-id');
+            form.style.display = "none";
+
+            const historyContainer = document.createElement('div');
+            historyContainer.classList.add('history-container');
+            Object.assign(historyContainer.style,{
+                width: "50vw",
+                display: "grid",
+                rowGap: "0.6rem"
+            });
+            formContainer.appendChild(historyContainer);
+            
+            await historyAgent(agentId);
+        });
+
+        buttonsDiv.appendChild(deleteButton);
+        buttonsDiv.appendChild(historyButton);
         formContainer.appendChild(form);
         document.body.appendChild(formContainer);
 
@@ -469,6 +502,7 @@ async function deleteAgent(agentID) {
     }
 }
 
+// Chat Agent
 async function chatAgent(chatId){
     const userId = id;
     const agentID = chatId;
@@ -477,7 +511,7 @@ async function chatAgent(chatId){
 
     if (response.status === 200) {
     const { title, background } = response.data;
-    window.location.href = `/chat?title=${encodeURIComponent(title)}&background=${encodeURIComponent(background)}`;
+    window.location.href = `/chat?agentid=${agentID}&title=${encodeURIComponent(title)}&background=${encodeURIComponent(background)}`;
     }else{
         console.error('Error changing the location');
     }
@@ -485,6 +519,61 @@ async function chatAgent(chatId){
         console.error("Error fetching agent data:", error.message);    
     }
 }
+
+
+// History
+async function historyAgent(chatId){
+    const userId = id;
+    const agentID = chatId;
+    const formContainerDiv = document.querySelector('.form-container');
+    const historyContainer = document.querySelector('.history-container');
+    try {
+        const response = await axios.get(`/chat-history-agent/${userId}/${agentID}`);
+
+    if (response.status === 200) {
+    const { title, background, chat } = response.data;
+
+    formContainerDiv.appendChild(historyContainer);
+
+    // User Chat
+    chat.forEach(userChatObj => {
+        // User
+        if(userChatObj.userChat){
+
+            const userChat = document.createElement('input');
+            Object.assign(userChat.style,{
+                width: "20vw",
+                display: "block"
+            })
+            userChat.value = 'User:  ' + userChatObj.userChat;
+
+            historyContainer.appendChild(userChat);
+
+            console.log(userChatObj.userChat);
+        }else{
+
+            const assistantChat = document.createElement('input');
+            Object.assign(assistantChat.style,{
+                width: "20vw",
+                display: "block"
+            })
+            assistantChat.value = 'Assistant:  ' + userChatObj.assistant;
+
+            historyContainer.appendChild(assistantChat);
+
+            console.log(userChatObj.assistant);
+        }
+    });
+
+
+    }else{
+        console.error('Error changing the location');
+    }
+    }catch(error){
+        console.error("Error fetching agent data:", error.message);    
+    }
+}
+
 
 
 

@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
             type: String
         },
         agents: [
-            { title: {type: String}, background: {type: String}}
+            { title: {type: String}, background: {type: String}, chat: [{assistant: {type: String}, userChat:{type: String}}]}
         ]
     },
 );

@@ -231,7 +231,9 @@ router.post("/create-agent/:id", async (req,res) =>{
             userId,
             {
                 $inc: { agentCount: 1 },
+                // $push: {agents: {title: title, background: background, chat: {assistant: 'hello', userChat: 'I respond'}}}
                 $push: {agents: {title: title, background: background}}
+
             },
             {new: true}
         )
@@ -320,6 +322,84 @@ router.get("/chat-agent/:userId/:agentID", async (req, res) => {
 
         const agentDetails = getAgent.agents[0]; // The matched agent
         return res.json({ title: agentDetails.title, background: agentDetails.background });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+// HISTORY CHAT
+router.get("/chat-history-agent/:userId/:agentID", async (req, res) => {
+    const { userId, agentID} = req.params;
+
+    try {
+        const getAgent = await modelUsers.findOne(
+            { _id: userId, "agents._id": agentID },
+            { "agents.$": 1, _id: 0 }
+        );
+
+        if (!getAgent || !getAgent.agents) {
+            return res.status(404).json({ error: "Agent not found" });
+        }
+
+        const agentDetails = getAgent.agents[0]; // The matched agent
+        return res.json({ title: agentDetails.title, background: agentDetails.background, chat: agentDetails.chat});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+
+
+
+
+// STORAGE ASSISTANT CHAT
+router.post("/chat-assistant-storage/:userId/:agentId", async (req, res) => {
+    const { userId, agentId } = req.params;
+    const { assistant } = req.body;
+
+    try {
+        const updateChat = await modelUsers.findOneAndUpdate(
+            { _id: userId, "agents._id": agentId }, // Match the user and specific agent
+            { 
+                $push: { "agents.$.chat": { assistant: assistant } } // Add the assistant message
+            },
+            { new: true } // Return updated document
+        );
+
+        if (!updateChat) {
+            return res.status(404).json({ error: "User or agent not found" });
+        }
+
+        res.status(200).json({ message: "Assistant chat saved successfully", updatedChat: updateChat });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+
+// STORAGE USER CHAT
+router.post("/chat-user-storage/:userId/:agentId", async (req, res) => {
+    const { userId, agentId } = req.params;
+    const { userChat } = req.body;
+
+    try {
+        const updateChat = await modelUsers.findOneAndUpdate(
+            { _id: userId, "agents._id": agentId }, 
+            { 
+                $push: { "agents.$.chat": { userChat: userChat } }
+            },
+            { new: true } 
+        );
+
+        if (!updateChat) {
+            return res.status(404).json({ error: "User or Agent not found" });
+        }
+
+        res.status(200).json({ message: "Chat saved successfully", updatedAgent: updateChat });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
@@ -583,10 +663,13 @@ router.get('/content', authenticateToken, (req, res) => {
 });
 
 router.get('/chat', authenticateToken, (req, res) => {
-    const { title, background } = req.query;
+    const { title, background, agentid } = req.query;
     res.render('chat', {
+        username: req.user.username,
+        id: req.user._id,
         title, 
-        background 
+        background,
+        agentid
     });
 });
   
