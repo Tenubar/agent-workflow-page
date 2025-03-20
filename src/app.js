@@ -13,7 +13,7 @@ import dotenv from 'dotenv';
 import { EventEmitter } from 'events';
 import cors from 'cors';
 import axios from 'axios';
-
+import OpenAI from "openai";
 
 const eventEmitter = new EventEmitter();
 
@@ -24,6 +24,7 @@ const io = new Server(server);
 const router = Router();
 const PORT = 3000;
 
+
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
@@ -32,10 +33,7 @@ app.use(express.static(path.join(path.resolve(), 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(path.resolve(), 'views'));
 app.use(router);
-
-
 dbconnect();
-
 // Options for HTTP-only cookies
 const cookieOptions = {
     httpOnly: true,
@@ -43,18 +41,22 @@ const cookieOptions = {
     sameSite: 'Strict',
     maxAge: 24 * 60 * 60 * 1000, // 1 day
 };
-
 const cookieOnboard = { httpOnly: true, maxAge: 10000 }; // Expires after 10 seconds
 
 
 
+// Open Ai Logic
 
+
+
+// Routes
 router.post('/register', async(req, res)=>{
     try {
         const {username, password} = req.body;
         const authTokenKey = crypto.randomBytes(32).toString('hex');
         const agents = [];
         const workflowRunId = [];
+        const trainingInfo = [];
         const user = new modelUsers({
             username,
             password,
@@ -65,7 +67,8 @@ router.post('/register', async(req, res)=>{
             workflowCount: 0,
             agents,
             socketId: "",
-            workflowRunId
+            workflowRunId,
+            trainingInfo
         });
         await user.save();
         res.send(`
@@ -328,6 +331,44 @@ router.get("/chat-agent/:userId/:agentID", async (req, res) => {
     }
 });
 
+// Check if there is any training data created
+router.get("/check-training-info/:userId", async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        // Find the user and check if `trainingInfo` exists and has data
+        const user = await modelUsers.findOne({ _id: userId });
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Check if `trainingInfo` exists and is not empty
+        if (!user.trainingInfo || user.trainingInfo.length === 0) {
+            // Push default information to `trainingInfo`
+            const defaultTrainingInfo = {
+                yourself: "",
+                niche: "",
+                offer: "",
+                business: "",
+                website: ""
+            };
+
+            user.trainingInfo = [defaultTrainingInfo]; // Initialize with the default info
+            await user.save(); // Save the updated user document
+
+            return res.status(200).json({ message: "Default trainingInfo added.", data: user.trainingInfo });
+        }
+
+        // If `trainingInfo` already has data, do nothing
+        return res.status(200).json({ message: "TrainingInfo already exists.", data: user.trainingInfo });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+
 // HISTORY CHAT
 router.get("/chat-history-agent/:userId/:agentID", async (req, res) => {
     const { userId, agentID} = req.params;
@@ -343,7 +384,7 @@ router.get("/chat-history-agent/:userId/:agentID", async (req, res) => {
         }
 
         const agentDetails = getAgent.agents[0]; // The matched agent
-        return res.json({ title: agentDetails.title, background: agentDetails.background, chat: agentDetails.chat});
+        return res.json({ title: agentDetails.title, background: agentDetails.background, chat: agentDetails.chat, chatLength: agentDetails.chat.length});
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
@@ -383,13 +424,13 @@ router.post("/chat-assistant-storage/:userId/:agentId", async (req, res) => {
 // STORAGE USER CHAT
 router.post("/chat-user-storage/:userId/:agentId", async (req, res) => {
     const { userId, agentId } = req.params;
-    const { userChat } = req.body;
+    const { user } = req.body;
 
     try {
         const updateChat = await modelUsers.findOneAndUpdate(
             { _id: userId, "agents._id": agentId }, 
             { 
-                $push: { "agents.$.chat": { userChat: userChat } }
+                $push: { "agents.$.chat": { user: user } }
             },
             { new: true } 
         );
@@ -408,7 +449,6 @@ router.post("/chat-user-storage/:userId/:agentId", async (req, res) => {
 
 
 // WORKFLOW CRUD
-
 // CREATE WORKFLOW
 router.post("/create-workflow/:id", async (req,res) =>{
     const userId = req.params.id;
@@ -490,6 +530,75 @@ router.post('/api/save-workflow-id', async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+
+// Get training info
+router.get("/api/personal-context/:userId", async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        // Assuming you have a User model and trainingInfo is a field in the schema
+        const user = await modelUsers.findById(userId).select("trainingInfo");
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ trainingInfo: user.trainingInfo });
+    } catch (err) {
+        console.error("Error fetching personal context data:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+
+// Post new training info
+router.post("/api/personal-context/:userId", async (req, res) => {
+    const { yourself, offer, niche, business, website } = req.body; // Destructure the incoming data
+    const { userId } = req.params;
+
+    try {
+        // Find the user document
+        const user = await modelUsers.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Ensure the `trainingInfo` array exists in the document
+        if (user.trainingInfo && user.trainingInfo.length > 0) {
+            // Find the entry to update (assuming you have a specific logic for the entry's structure)
+            const existingEntry = user.trainingInfo[0]; // Assuming `trainingInfo` has one object
+
+            // Update only the fields that exist
+            if (existingEntry) {
+                if (yourself) existingEntry.yourself = yourself;
+                if (offer) existingEntry.offer = offer;
+                if (niche) existingEntry.niche = niche;
+                if (business) existingEntry.business = business;
+                if (website) existingEntry.website = website;
+            }
+        } else {
+            user.trainingInfo.push({ yourself, offer, niche, business, website });
+            // return res.status(400).json({ message: 'No existing trainingInfo found to update.' });
+        }
+
+        // Save the updated document
+        await user.save();
+
+        res.status(200).json({ message: 'Training information updated successfully', data: user });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error updating data', error: err });
+    }
+});
+
+
+// Get Training Info
+// router.get("/api/personal-context/:userId", async (req, res) => {
+//     const { yourself, offer, niche, business, website } = req.body; // Destructure the incoming data
+//     const { userId } = req.params;
+// });
 
 
 // Proxy route for making the external API request
@@ -624,6 +733,46 @@ app.post('/api/removeWorkflowId', async (req, res) => {
     }
   });
 
+
+// Chat Bot Open AI 
+router.post('/api/chat', async (req, res) => {
+    const message = req.body.message;
+    const chatHistory = req.body.formattedChat;
+    const context = req.body.context;
+    const userName = req.body.userName;
+
+
+    try {
+        const response = await axios.post(
+            'https://api.openai.com/v1/chat/completions',
+            {
+                model: 'gpt-4o-mini',
+                messages: [
+                    { role: 'system', content: `Hi, my name is ${userName}, Here's a short bio about me: ${context.yourself}, I'm passionate about ${context.niche}, These are the services/products I offer${context.offer}, My business specializes in ${context.business}.` },
+                    ...chatHistory,
+
+                    { role: 'user', content: message }
+                ],
+                max_tokens: 150,
+                temperature: 0.7,
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${process.env.API_OPENAI}`,
+                    'Content-Type': 'application/json',
+                }
+            }
+        );
+
+        // Send the OpenAI response back to the frontend
+        res.json({ reply: response.data.choices[0].message.content });
+    } catch (error) {
+        console.error("Error calling OpenAI API:", error);
+        res.status(500).json({ error: "An error occurred." });
+    }
+});
+
+
 // User Routes
 router.get('/home', authenticateToken, (req, res) => {
 
@@ -644,6 +793,7 @@ router.get('/home', authenticateToken, (req, res) => {
 
 router.get('/training', authenticateToken, (req, res) => {
     res.render('training',{
+        id: req.user._id,
         username: req.user.username
     });
 });

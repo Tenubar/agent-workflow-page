@@ -25,6 +25,9 @@ const userSchema = new mongoose.Schema(
         agentCount:{
             type: Number
         },
+        trainingInfo:[
+            {yourself: {type: String}, offer: {type: String}, niche: {type: String}, business: {type: String}, website: {type: String}}
+        ],
         workflowCount:{
             type: Number
         },
@@ -35,7 +38,7 @@ const userSchema = new mongoose.Schema(
             type: String
         },
         agents: [
-            { title: {type: String}, background: {type: String}, chat: [{assistant: {type: String}, userChat:{type: String}}]}
+            { title: {type: String}, background: {type: String}, chat: [{assistant: {type: String}, user:{type: String}}]}
         ]
     },
 );

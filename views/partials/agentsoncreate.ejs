@@ -7,143 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const userId = id;
     const userAgents = agentCount;
-
+    let agentFlag = false;
+    
     getAgents();
-
-    // // Create new Agent
-    // const trigger_new_agent = document.getElementById('button-new-agent');
-    // trigger_new_agent.addEventListener('click', () => {
-        
-    //     // Form container
-    //     const formContainer = document.createElement('div');
-    //     formContainer.style.position = 'fixed';
-    //     formContainer.style.top = '10%';
-    //     formContainer.style.left = '50%';
-    //     formContainer.style.width = "40vw";
-    //     formContainer.style.transform = "translateX(-50%)";
-    //     formContainer.style.backgroundColor = 'white';
-    //     formContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-    //     formContainer.style.padding = '20px';
-    //     formContainer.style.zIndex = '1000';
-    //     formContainer.style.borderRadius = 'var(--border-radius-2)';
-
-    //     // Close button
-    //     const closeButton = document.createElement('button');
-    //     closeButton.textContent = "\u00D7";
-    //     closeButton.style.float = 'right';
-    //     closeButton.style.marginBottom = '10px';
-    //     closeButton.style.background = "transparent";
-    //     closeButton.style.fontSize = "25px";
-    //     closeButton.style.color = "var(--color-info-dark)";
-    //     closeButton.style.cursor = "pointer";
-    //     closeButton.addEventListener('click', () => {
-    //         document.body.removeChild(formContainer);
-    //     });
-    //     formContainer.appendChild(closeButton);
-
-    //     // Form
-    //     const form = document.createElement('form');
-    //     form.addEventListener('submit', async (event) => {
-    //         event.preventDefault();
-    //         await createAgent();
-    //     });
-    //     form.style.display = "grid";
-    //     form.style.rowGap = "0.6rem";
-
-    //       // Create with Ai Button
-    //     const createAi = document.createElement('div');
-    //     createAi.setAttribute('id','fill-agent-ai');
-    //     createAi.style.display ="flex";
-    //     createAi.style.gap = "0.5rem";
-    //     createAi.style.alignItems = "center";
-    //     createAi.style.justifyContent = "center";
-    //     createAi.style.cursor = "pointer";
-    //     createAi.style.padding = "8px";
-    //     createAi.style.background = "var(--color-light)";
-    //     createAi.style.borderRadius = "var(--border-radius-1)";
-    //     createAi.style.color = "var(--color-info-dark)";
-    //     createAi.style.marginBottom = "8px";
-    //     createAi.style.maxWidth = 'fit-content';
-    //     const createAiP = document.createElement('p');
-    //     createAiP.textContent = "Create with Ai";
-    //     const spanElement = document.createElement('span');
-    //     spanElement.setAttribute('class', 'material-symbols-outlined');
-    //     spanElement.textContent = 'bolt';
-
-
-    //     createAi.appendChild(spanElement);
-    //     createAi.appendChild(createAiP);
-    //     form.appendChild(createAi);
-        
-
-    //     // Agent title label and input
-    //     const titleLabel = document.createElement('label');
-    //     titleLabel.setAttribute('for', 'agent-title');
-    //     titleLabel.textContent = 'Agent Title: ';
-    //     form.appendChild(titleLabel);
-
-    //     const titleInput = document.createElement('input');
-    //     titleInput.setAttribute('type', 'text');
-    //     titleInput.setAttribute('id', 'agent-title');
-    //     titleInput.setAttribute('name', 'title');
-    //     titleInput.style.display = 'block';
-    //     titleInput.style.marginBottom = '10px';
-    //     titleInput.style.background = "var(--color-background)";
-    //     titleInput.style.borderRadius = "var(--border-radius-1)";
-    //     titleInput.style.height = "32px";
-    //     titleInput.style.width = "100%";
-    //     titleInput.style.padding = "8px";
-    //     titleInput.style.border = "solid 2px var(--color-primary)";
-    //     form.appendChild(titleInput);   
-
-
-    //     // Agent background label and textarea
-    //     const backgroundLabel = document.createElement('label');
-    //     backgroundLabel.setAttribute('for', 'agent-background');
-    //     backgroundLabel.textContent = 'Agent Background: ';
-    //     form.appendChild(backgroundLabel);
-
-    //     const backgroundTextarea = document.createElement('textarea');
-    //     backgroundTextarea.setAttribute('id', 'agent-background');
-    //     backgroundTextarea.setAttribute('name', 'background');
-    //     backgroundTextarea.style.display = 'block';
-    //     backgroundTextarea.style.marginBottom = '10px';
-    //     backgroundTextarea.style.background = "var(--color-background)";
-    //     backgroundTextarea.style.borderRadius = "var(--border-radius-1)";
-    //     backgroundTextarea.style.height = "250px";
-    //     backgroundTextarea.style.width = "100%";
-    //     backgroundTextarea.style.padding = "8px";
-    //     backgroundTextarea.style.border = "2px solid var(--color-primary)";
-    //     backgroundTextarea.style.resize = "none";
-    //     backgroundTextarea.style.overflow = "auto";
-    //     form.appendChild(backgroundTextarea);
-
-
-    //     // Submit button
-    //     const submitButton = document.createElement('button');
-    //     submitButton.setAttribute('type', 'submit');
-    //     submitButton.textContent = 'Submit';
-    //     submitButton.style.position = 'relative';
-    //     submitButton.style.left = "50%";
-    //     submitButton.style.transform = "translateX(-50%)";
-    //     submitButton.style.display = "flex";
-    //     submitButton.style.justifyContent = "center";
-    //     submitButton.style.marginTop = "0.5rem";
-    //     submitButton.style.background = "var(--color-primary)";
-    //     submitButton.style.padding = "8px 18px"
-    //     submitButton.style.width = "72px";
-    //     submitButton.style.textAlign = "center";
-    //     submitButton.style.fontSize = "14px";
-    //     submitButton.style.borderRadius = "var(--border-radius-1)";
-    //     submitButton.style.color = "var(--color-light)";
-    //     submitButton.style.cursor = "pointer";
-    //     form.appendChild(submitButton);
-    //     formContainer.appendChild(form);
-
-
-    //     document.body.appendChild(formContainer);
-    // });
-
 
 // GET ALL AGENTS-ID BY USER ID
 async function getAgents() {
@@ -250,11 +116,16 @@ async function getAgents() {
     }
 }
 
-// GET AGENT-ID BY USER ID
+// Chat with agent by ID
 async function getAgentById(agentId){
     const userId = id;
     const agentID = agentId;
 
+    if(agentFlag){
+        return;
+    }
+    agentFlag = true;
+    // * Prevent the event from happening again when already open
     try {
         // Fetch the agent data from the database
         const response = await axios.get(`/get-agent/${userId}/${agentId}`);
@@ -262,10 +133,10 @@ async function getAgentById(agentId){
 
         // Form container
         const formContainer = document.createElement('div');
+        formContainer.classList.add('form-container');
         formContainer.style.position = 'fixed';
-        formContainer.style.top = '10%';
+        formContainer.style.top = '5%';
         formContainer.style.left = '50%';
-        formContainer.style.width = "40vw";
         formContainer.style.transform = "translateX(-50%)";
         formContainer.style.backgroundColor = 'white';
         formContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
@@ -284,13 +155,15 @@ async function getAgentById(agentId){
         closeButton.style.cursor = "pointer";
         closeButton.addEventListener('click', () => {
             document.body.removeChild(formContainer);
+            agentFlag = false;
         });
         formContainer.appendChild(closeButton);
 
 
         // Form
         const form = document.createElement('form');
-        form.setAttribute('data-id',agentID);
+        form.classList.add('form-new-agent');
+        form.setAttribute('data-id', agentID);
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
             const button = event.currentTarget;
@@ -300,9 +173,10 @@ async function getAgentById(agentId){
         form.style.display = "grid";
         form.style.rowGap = "0.6rem";
 
-        // Create with Ai Button
+        // Chat History Button
         const createAi = document.createElement('div');
         createAi.setAttribute('id','fill-agent-ai');
+        createAi.setAttribute('data-id', agentID);
         createAi.style.display ="flex";
         createAi.style.gap = "0.5rem";
         createAi.style.alignItems = "center";
@@ -315,23 +189,50 @@ async function getAgentById(agentId){
         createAi.style.marginBottom = "8px";
         createAi.style.maxWidth = 'fit-content';
         const createAiP = document.createElement('p');
-        createAiP.textContent = "Create with Ai";
+        createAiP.textContent = "Chat History";
         const spanElement = document.createElement('span');
         spanElement.setAttribute('class', 'material-symbols-outlined');
         spanElement.textContent = 'bolt';
+
+        createAi.addEventListener('click', async (event)=>{
+            event.preventDefault();
+            const button = event.currentTarget;
+            const agentId = button.getAttribute('data-id');
+            form.style.display = "none";
+
+            const historyContainer = document.createElement('div');
+            historyContainer.classList.add('history-container');
+            Object.assign(historyContainer.style,{
+                width: "70vw",
+                height: "70vh",
+                display: "grid",
+                rowGap: "0.6rem",
+                overflowY: "auto"     
+            });
+            formContainer.appendChild(historyContainer);
+            
+            await historyAgent(agentId);
+        });
 
 
         createAi.appendChild(spanElement);
         createAi.appendChild(createAiP);
         form.appendChild(createAi);
+    
         
+        // Create a parent div container
+        const divContainer = document.createElement('div');
+        divContainer.classList.add('div-agent-container');
+        divContainer.style.display = "grid";
+        divContainer.style.rowGap = "0.6rem";
+
+        form.appendChild(divContainer);
 
         // Agent title label and input
         const titleLabel = document.createElement('label');
         titleLabel.setAttribute('for', 'agent-title');
         titleLabel.textContent = 'Agent Title: ';
-        form.appendChild(titleLabel);
-
+        divContainer.appendChild(titleLabel);
 
         const titleInput = document.createElement('input');
         titleInput.setAttribute('type', 'text');
@@ -345,15 +246,15 @@ async function getAgentById(agentId){
         titleInput.style.width = "100%";
         titleInput.style.padding = "8px";
         titleInput.style.border = "solid 2px var(--color-primary)";
-        titleInput.value = agentData.title;
-        form.appendChild(titleInput);   
+        titleInput.value = response.data.title;
+        divContainer.appendChild(titleInput);   
 
 
         // Agent background label and textarea
         const backgroundLabel = document.createElement('label');
         backgroundLabel.setAttribute('for', 'agent-background');
         backgroundLabel.textContent = 'Agent Background: ';
-        form.appendChild(backgroundLabel);
+        divContainer.appendChild(backgroundLabel);
 
         const backgroundTextarea = document.createElement('textarea');
         backgroundTextarea.setAttribute('id', 'agent-background');
@@ -368,16 +269,19 @@ async function getAgentById(agentId){
         backgroundTextarea.style.border = "2px solid var(--color-primary)";
         backgroundTextarea.style.resize = "none";
         backgroundTextarea.style.overflow = "auto";
-        backgroundTextarea.value = agentData.background;
-        form.appendChild(backgroundTextarea);
+        backgroundTextarea.value = response.data.background;
+        divContainer.appendChild(backgroundTextarea);
 
 
+        // Buttons part
         const buttonsDiv = document.createElement('div');
-        buttonsDiv.className = 'buttons';
+        buttonsDiv.className = 'agent-buttons';
         buttonsDiv.style.display = 'flex';
         buttonsDiv.style.alignItems = 'center';
         buttonsDiv.style.justifyContent = 'center';
         buttonsDiv.style.columnGap = "2rem";
+        buttonsDiv.style.marginLeft = "5rem";
+        buttonsDiv.style.marginRight = "5rem";
 
         form.appendChild(buttonsDiv);
 
@@ -440,15 +344,15 @@ async function getAgentById(agentId){
             const agentId = button.getAttribute('data-id');
             await deleteAgent(agentId);
         });
-        buttonsDiv.appendChild(deleteButton);
 
+        buttonsDiv.appendChild(deleteButton);
+        // buttonsDiv.appendChild(historyButton);
         formContainer.appendChild(form);
         document.body.appendChild(formContainer);
 
     } catch (error) {
         alert("An error occurred while retrieving the agent");
     }
-
 }
 
 // UPDATE AGENT
@@ -491,6 +395,8 @@ async function deleteAgent(agentID) {
     }
 }
 
+
+// Chat with Agent
 async function chatAgent(chatId){
     const userId = id;
     const agentID = chatId;
@@ -508,106 +414,161 @@ async function chatAgent(chatId){
     }
 }
 
-// // POST NEW AGENT
-// async function createAgent(){
-//     const userId = id;
+// Get Chat History of Agent by ID
+async function historyAgent(chatId){
+    const userId = id;
+    const agentID = chatId;
+    const formContainerDiv = document.querySelector('.form-container');
+    const historyContainer = document.querySelector('.history-container');
+    const formNewAgent = document.querySelector('.form-new-agent');
+    try {
+        const response = await axios.get(`/chat-history-agent/${userId}/${agentID}`);
 
-//     const titleInput = document.getElementById('agent-title').value;
-//     const backgroundInput = document.getElementById('agent-background').value;
+    if (response.status === 200) {
+    const { title, background, chat, chatLength } = response.data;
 
-//     try {
-//         const response = await axios.post(`/create-agent/${userId}`,{
-//             title: titleInput,
-//             background: backgroundInput
-//         });
+    const chatLengthString = JSON.stringify(chatLength);
 
-//         console.log("Server response received:", response.data);
-//         alert("Agent created successfully!");
-//         window.location.href = '/home'
-//     } catch (error) {
-//         console.error(error.response.data.error);
-//         alert("An error occurred while creating new agent.");
-//     }
+    // *Remove Span
+    const returnChat = document.createElement('span');
+    returnChat.classList.add('material-symbols-outlined');
+    returnChat.textContent = 'arrow_back';
+    returnChat.style.textAlign = "left";
+    returnChat.style.fontSize = "1.6rem";
+    returnChat.style.fontWeight = "bold";
+    returnChat.style.color = "var(--color-info-dark)";
+    returnChat.style.padding = "8px";
+    returnChat.style.cursor = "pointer";
 
-// }
+    formContainerDiv.appendChild(returnChat);
 
-// // UPDATE AGENT
-// async function updateAgent(agentID) {
-//     // You also need the agentId
-//     const userId = id;
+    formContainerDiv.appendChild(historyContainer);
 
-//     const titleInput = document.getElementById('agent-title').value;
-//     const backgroundInput = document.getElementById('agent-background').value;
+    // *Group all of these elements into one div, after you press return, remove the div.
+    const chatFooter = document.createElement('div');
+    chatFooter.classList.add('chat-footer');
 
-//     try {
-//         const response = await axios.put(`/update-agent/${userId}/${agentID}`, {
-//             newTitle: titleInput,
-//             newBackground: backgroundInput
-//         });
+    formContainerDiv.appendChild(chatFooter);
 
-//         console.log(response.data.message);
-//         alert("Agent updated successfully!");
-//         window.location.href = '/home'
+    const chatAmount = document.createElement('p');
+    chatAmount.style.textAlign = "center";
+    chatAmount.style.fontSize = "14px";
+    chatAmount.style.padding = "12px";
+    
+    chatFooter.appendChild(chatAmount);
 
-//     } catch (error) {
-//         console.error(error.response.data.error);
-//         alert("An error occurred while updating agent count.");
-//     }
-//     }
+    const chatPage = document.createElement('div');
+    chatPage.style.display = "block";
+    chatPage.style.position = "relative";
+    chatPage.style.height = "8px";
+    chatPage.style.width = "8px";
+    chatPage.style.borderRadius = "50%";
+    chatPage.style.background = "var(--color-dark-variant)";
+    chatPage.style.left = "50%";
+    chatPage.style.transform = "translateX(-50%)";
 
-
-// // DELETE AGENT
-// async function deleteAgent(agentID) {
-//     const userId = id;
-
-//     try {
-//         const response = await axios.delete(`/delete-agent/${userId}/${agentID}`);
-
-//         alert("Agent deleted successfully!");
-//         window.location.href = '/home'
-
-//     } catch (error) {
-//         console.error(error.response.data.error);
-//         alert("An error occurred while updating agent count.");
-//     }
-// }
-
-// async function chatAgent(chatId){
-//     const userId = id;
-//     const agentID = chatId;
-//     try {
-//         const response = await axios.get(`/chat-agent/${userId}/${agentID}`);
-
-//     if (response.status === 200) {
-//     const { title, background } = response.data;
-//     window.location.href = `/chat?title=${encodeURIComponent(title)}&background=${encodeURIComponent(background)}`;
-//     }else{
-//         console.error('Error changing the location');
-//     }
-//     }catch(error){
-//         console.error("Error fetching agent data:", error.message);    
-//     }
-// }
+    chatFooter.appendChild(chatPage);
 
 
+    returnChat.addEventListener('click', async (event) => {
+        event.preventDefault();
+        formContainerDiv.removeChild(historyContainer);
+        formContainerDiv.style.display = "block";
+        formNewAgent.style.display = "block";
+        returnChat.remove();
+        chatFooter.remove();
+    });
 
 
-// async function chatAgent(chatId){
-//     const userId = id;
-//     const agentId = chatId;
+    // User Chat
+    chat.forEach((userChatObj,index) => {
 
-//     try {
-//         const response = await axios.get(`/chat-agent/${userId}/${agentId}`);
-//         const agentData = response.data;
+        chatAmount.textContent = `${index + 1} / ${chatLengthString}`;
 
-//         if (agentData) {
-//             window.location.href = `/chat?title=${agentData.title}&background=${agentData.background}`;
-//         }else{
-//             console.error("Agent data not found!");
-//         } 
-//     }catch(error){
-//         console.error("Error fetching agent data:", error.message);    }
-// }
+        // Create the user container div
+        const userContainer = document.createElement('div');
+        userContainer.style.display = "flex";
+        userContainer.style.alignItems = "flex-start";
+        userContainer.style.border = "1px solid #ddd";
+        userContainer.style.borderRadius = "8px";
+        userContainer.style.padding = "10px";
+        userContainer.style.width = "100%";
+        userContainer.style.fontFamily = "Arial, sans-serif";
+        userContainer.style.alignItems = "center";
+
+        // Create the user avatar span
+        const userAvatar = document.createElement('span');
+        userAvatar.classList.add('material-symbols-outlined');
+        userAvatar.style.display = "inline-block";
+        userAvatar.style.borderRadius = "50%";
+        userAvatar.style.backgroundColor = "var(--color-light)";
+        userAvatar.style.padding = "2px";
+        userAvatar.style.color = "var(--color-primary)";
+        userAvatar.style.fontSize ="16px";
+        userAvatar.style.marginRight = "12px";
+
+        // Create the user info div
+        const userInfo = document.createElement('div');
+        userInfo.style.flexGrow = "1";
+
+        // Create the user name paragraph
+        const userName = document.createElement('p');
+        userName.style.fontSize = "14px";
+        userName.style.fontWeight = "bold";
+        userName.style.margin = "0";
+        
+
+        // Create the user text paragraph
+        const userText = document.createElement('p');
+        userText.textContent = userChatObj.userChat;
+        Object.assign(userText.style, {
+            textAlign: "left",
+            fontSize: "12px",
+            margin: "4px 0px 0px",
+            color: "rgb(85, 85, 85)",
+            "overflowWrap": "anywhere",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: "12", 
+            WebkitBoxOrient: "vertical"
+        });
+
+        userText.style.fontSize = "12px";
+        userText.style.color = "#555";
+        userText.style.margin = "4px 0 0";
+
+        // Assemble the structure
+        userInfo.appendChild(userName);
+        userInfo.appendChild(userText);
+        userContainer.appendChild(userAvatar);
+        userContainer.appendChild(userInfo);
+
+        // Append the user container to the body (or another element)
+        historyContainer.appendChild(userContainer);
+
+        if(userChatObj.userChat){
+            userText.textContent = userChatObj.userChat;
+            userAvatar.textContent = "person";
+            userName.textContent = "User";
+        }else{
+            userText.textContent = userChatObj.assistant;
+            userAvatar.textContent = "smart_toy";
+            userName.textContent = "Assistant";
+        }
+
+    });
+
+    }
+    else{
+        console.error('Error changing the location');
+    }
+    }catch(error){
+        console.error("Error fetching agent data:", error.message);    
+    }
+}
+
+
 
 });
 
